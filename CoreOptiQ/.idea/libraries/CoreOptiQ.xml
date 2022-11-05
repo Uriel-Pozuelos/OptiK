@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="CoreOptiQ">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/CoreOptiQ.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

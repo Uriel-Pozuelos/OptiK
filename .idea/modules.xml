@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CoreOptiQ/CoreOptiQ.iml" filepath="$PROJECT_DIR$/CoreOptiQ/CoreOptiQ.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/OptiQ.iml" filepath="$PROJECT_DIR$/.idea/OptiQ.iml" />
+      <module fileurl="file://$PROJECT_DIR$/modelOptiQ/modelOptiQ.iml" filepath="$PROJECT_DIR$/modelOptiQ/modelOptiQ.iml" />
+    </modules>
+  </component>
+</project>
