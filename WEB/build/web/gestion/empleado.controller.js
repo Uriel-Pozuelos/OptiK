@@ -226,11 +226,29 @@ async function updateService(empleado) {
 //eliminar un empleado del arreglo de empleados
 const eliminar = document.getElementById('eliminar');
 eliminar.addEventListener('click', eliminarEmpleado);
-function eliminarEmpleado() {
+async function eliminarEmpleado() {
 	const index = document.getElementById('index').value;
-	empleados.splice(index, 1);
-	mostrarTabla(empleados);
+	const em = empleados[index];
+
+	const resp = await fetch(
+		'http://localhost:8080/Optik/api/empleado/deleteempleado',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams({ idEmpleado: em.IdEmpleado })
+		}
+	);
+
+	data = await resp.json();
+	if (data.error) {
+		alert(data.error);
+		return;
+	}
+
 	limpiarForm();
+	tablaEmpleado();
 }
 
 //convertir 1901-01-01 a 01/01/1901

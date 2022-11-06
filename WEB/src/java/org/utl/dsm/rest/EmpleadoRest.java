@@ -78,7 +78,29 @@ public class EmpleadoRest extends Application{
         out = gson.toJson(empleado);
     return  Response.status(Response.Status.OK).entity(out).build();
     }
-   
+
+    @Path("deleteempleado")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteEmpleado(@FormParam("idEmpleado") @DefaultValue("") String idEmpleado){
+        EmpleadoController objCE = new EmpleadoController();
+        String out="";
+        String result="";
+        try{
+            result = objCE.eliminarEmpleado(Integer.parseInt(idEmpleado));
+            
+        }catch(Exception ex){
+            out="{\"error\":"+ex.toString()+"}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        out = """
+                {
+                    "result": "Empleado eliminado correctamente"
+                }
+                """;
+              
+    return  Response.status(Response.Status.OK).entity(out).build();
+}
 }
 
 

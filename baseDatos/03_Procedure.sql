@@ -141,6 +141,7 @@ CALL insertarEmpleado('Lizbeth', 'garnica', 'negrete', 'F', '01/01/1901', -- Dat
                       'lizbeth', '909090', 'Administrador',         -- Datos de Seguridad
                       @out1, @out2, @out3, @out4, @out5);
 -- procedimiento para eliminar empleado actualiza el estatus a 0
+DROP procedure IF EXISTS eliminarEmpleado;
 DELIMITER //
 CREATE PROCEDURE eliminarEmpleado(IN var_idEmpleado INT)
 BEGIN
