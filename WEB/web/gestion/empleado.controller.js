@@ -41,7 +41,10 @@ async function empleadoService(empleado) {
 	console.log(data);
 }
 const btnMostrar = document.getElementById('mostrar');
-btnMostrar.addEventListener('click', tablaEmpleado);
+btnMostrar.addEventListener('click', () => {
+	ocultarForm();
+	tablaEmpleado();
+});
 
 //tabla con los datos del empleado
 async function tablaEmpleado(empleado) {
@@ -80,9 +83,13 @@ async function mostrarTabla(data) {
 		<tr>
 				<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
 				<td>${persona.genero}</td>
+				<td>${persona.fechaNacimiento}</td>
 				<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
+				<td>${persona.telCasa}</td>
+				<td>${persona.telMovil}</td>
 				<td>${usuario.nombre}</td>
 				<td>${persona.email}</td>
+				<td>${usuario.rol}</td>
 				<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
 		</tr>
 		`;
@@ -255,4 +262,17 @@ async function eliminarEmpleado() {
 function convertirFecha(fecha) {
 	const f = fecha.split('-');
 	return `${f[2]}/${f[1]}/${f[0]}`;
+}
+
+//ocultar el formulario y mostrar la tabla
+function ocultarForm() {
+	const formulario = document.getElementById('showForm');
+	const tabla = document.getElementById('showTable');
+	if (formulario.style.display === 'none') {
+		formulario.style.display = 'block';
+		tabla.style.display = 'none';
+	} else {
+		formulario.style.display = 'none';
+		tabla.style.display = 'block';
+	}
 }

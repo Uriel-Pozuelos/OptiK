@@ -1,29 +1,6 @@
-<main class="container is-fullhd has-background-info p-5 pantalla">
+<main class="pantalla">
 	<div class="center has-text-light">
 		<h1>Gestión de Empleados</h1>
-	</div>
-	<div>
-		<h3>Tabla de empleados</h3>
-		<div>
-			<div class="container is-fullhd">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Genero</th>
-							<th>Dirección</th>
-							<th>usuario</th>
-							<th>correo</th>
-							<th>Botón</th>
-						</tr>
-					</thead>
-					<tbody class="tabla"></tbody>
-				</table>
-				<button id="mostrar" class="button is-primary">
-					Mostrar
-				</button>
-			</div>
-		</div>
 	</div>
 
 	<form id="form">
@@ -285,7 +262,7 @@
 				</div>
 			</div>
 		</div>
-		<button class="button is-success">Aceptar</button>
+		<button class="button is-success">Guardar</button>
 		<button class="button is-danger" type="button" id="eliminar">
 			Borrar
 		</button>
@@ -295,6 +272,33 @@
 		<button class="button is-warning" type="button" id="limpiar">
 			Limpiar
 		</button>
+		<button id="mostrar" class="button is-primary">
+			Ver empleados
+		</button>
 	</form>
 	<input type="text" id="index" style="display: none" />
+	<div>
+		<h3 class="">Tabla de empleados</h3>
+		<div>
+			<div class="has-text-light scroll">
+				<table class="table is-striped is-hoverable is-fullwidth">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Genero</th>
+							<th>Fecha de nacimiento</th>
+							<th>Dirección</th>
+							<th>Teléfono casa</th>
+							<th>Teléfono móvil</th>
+							<th>Usuario</th>
+							<th>Correo</th>
+							<th>Rol</th>
+							<th>Botón</th>
+						</tr>
+					</thead>
+					<tbody class="tabla"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </main>
