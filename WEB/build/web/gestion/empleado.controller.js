@@ -2,6 +2,12 @@ const form = document.querySelectorAll('form');
 let empleados = [];
 form[1].addEventListener('submit', e => {
 	e.preventDefault();
+	//validar formulario
+	if (validarForm() === false) {
+		console.log('formulario invalido');
+		return;
+	}
+
 	let persona = Object.fromEntries(new FormData(form[0]));
 	const usuario = Object.fromEntries(new FormData(form[1]));
 	//convertir fecha a dd/mm/yyyy
@@ -15,6 +21,8 @@ form[1].addEventListener('submit', e => {
 	console.log(empleado);
 	//mandar por urlEncoded el objeto empleado al servicio
 	empleadoService(empleado);
+	//limpiar el formulario
+	limpiarForm();
 });
 
 const fecha = document.getElementById('fechaNacimiento');
@@ -23,9 +31,7 @@ fecha.addEventListener('change', e => {
 	console.log(fechaNacimiento);
 });
 
-// funcion que envia el objeto empleado al servicio
 async function empleadoService(empleado) {
-	//convetir empleado a urlEncoded
 	const urlEncoded = new URLSearchParams(empleado);
 	const reponse = await fetch(
 		'http://localhost:8080/Optik/api/empleado/guardar',
@@ -42,7 +48,6 @@ async function empleadoService(empleado) {
 }
 const btnMostrar = document.getElementById('mostrar');
 btnMostrar.addEventListener('click', () => {
-	ocultarForm();
 	tablaEmpleado();
 });
 
@@ -142,7 +147,7 @@ function limpiarForm() {
 	document.getElementById('cp').value = '';
 	document.getElementById('numero').value = '';
 	document.getElementById('ciudad').value = '';
-	document.getElementById('estado').value = '';
+	document.getElementById('estado').value = 'Aguascalientes';
 	document.getElementById('email').value = '';
 	document.getElementById('nombreUsuario').value = '';
 	document.getElementById('contrasenia').value = '';
@@ -157,6 +162,10 @@ function actualizarEmpleado() {
 	//obtener los datos del formulario y ponerlos en un objeto empleado
 	const index = document.getElementById('index').value;
 	const em = empleados[index];
+	if (validarForm() === false) {
+		console.log('formulario invalido');
+		return;
+	}
 
 	const { persona, usuario } = em;
 	const empleado = {
@@ -274,5 +283,171 @@ function ocultarForm() {
 	} else {
 		formulario.style.display = 'none';
 		tabla.style.display = 'block';
+	}
+}
+
+const regexValidar = {
+	//validar solo letras y números
+	letrasNumeros: /^[a-zA-Z0-9]+$/,
+	//validar solo letras y espacios
+	letras: /^[a-zA-Z ]+$/,
+	//validar solo números
+	numeros: /^[0-9]+$/,
+	//validar correo
+	correo: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+	//validar contraseña (al menos 8 caracteres, al menos una letra y un número)
+	contrasenia: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+};
+
+function validarForm() {
+	//arreglo para poner false si hay un error
+	let errores = [];
+	const body = document.querySelector('body');
+
+	const nombre = document.getElementById('nombre');
+	const apellidoPaterno = document.getElementById('apellidoPaterno');
+	const apellidoMaterno = document.getElementById('apellidoMaterno');
+	const telCasa = document.getElementById('telCasa');
+	const telMovil = document.getElementById('telMovil');
+	const calle = document.getElementById('calle');
+	const numero = document.getElementById('numero');
+	const colonia = document.getElementById('colonia');
+	const cp = document.getElementById('cp');
+	const ciudad = document.getElementById('ciudad');
+	const email = document.getElementById('email');
+	const nombreUsuario = document.getElementById('nombreUsuario');
+	const contrasenia = document.getElementById('contrasenia');
+	//validar nombre usando regex regexValidar.letrasNumeros
+	if (!regexValidar.letras.test(nombre.value)) {
+		nombre.classList.add('error');
+		document.getElementById('nombreP').style.display = 'block';
+		body.addEventListener('click', () => {
+			nombre.classList.remove('error');
+			document.getElementById('nombreP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letras.test(apellidoPaterno.value)) {
+		apellidoPaterno.classList.add('error');
+		document.getElementById('apellidoPaternoP').style.display =
+			'block';
+		body.addEventListener('click', () => {
+			apellidoPaterno.classList.remove('error');
+			document.getElementById('apellidoPaternoP').style.display =
+				'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letras.test(apellidoMaterno.value)) {
+		apellidoMaterno.classList.add('error');
+		document.getElementById('apellidoMaternoP').style.display =
+			'block';
+		body.addEventListener('click', () => {
+			apellidoMaterno.classList.remove('error');
+			document.getElementById('apellidoMaternoP').style.display =
+				'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.numeros.test(telCasa.value)) {
+		telCasa.classList.add('error');
+		document.getElementById('telCasaP').style.display = 'block';
+		body.addEventListener('click', () => {
+			telCasa.classList.remove('error');
+			document.getElementById('telCasaP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.numeros.test(telMovil.value)) {
+		telMovil.classList.add('error');
+		document.getElementById('telMovilP').style.display = 'block';
+		body.addEventListener('click', () => {
+			telMovil.classList.remove('error');
+			document.getElementById('telMovilP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letras.test(calle.value)) {
+		calle.classList.add('error');
+		document.getElementById('calleP').style.display = 'block';
+		body.addEventListener('click', () => {
+			calle.classList.remove('error');
+			document.getElementById('calleP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.numeros.test(numero.value)) {
+		numero.classList.add('error');
+		document.getElementById('numeroP').style.display = 'block';
+		body.addEventListener('click', () => {
+			numero.classList.remove('error');
+			document.getElementById('numeroP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letras.test(colonia.value)) {
+		colonia.classList.add('error');
+		document.getElementById('coloniaP').style.display = 'block';
+		body.addEventListener('click', () => {
+			colonia.classList.remove('error');
+			document.getElementById('coloniaP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letrasNumeros.test(cp.value)) {
+		cp.classList.add('error');
+		document.getElementById('cpP').style.display = 'block';
+		body.addEventListener('click', () => {
+			cp.classList.remove('error');
+			document.getElementById('cpP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letras.test(ciudad.value)) {
+		ciudad.classList.add('error');
+		document.getElementById('ciudadP').style.display = 'block';
+		body.addEventListener('click', () => {
+			ciudad.classList.remove('error');
+			document.getElementById('ciudadP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.correo.test(email.value)) {
+		email.classList.add('error');
+		document.getElementById('emailP').style.display = 'block';
+		body.addEventListener('click', () => {
+			email.classList.remove('error');
+			document.getElementById('emailP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.letrasNumeros.test(nombreUsuario.value)) {
+		nombreUsuario.classList.add('error');
+		document.getElementById('nombreUsuarioP').style.display = 'block';
+		body.addEventListener('click', () => {
+			nombreUsuario.classList.remove('error');
+			document.getElementById('nombreUsuarioP').style.display =
+				'none';
+		});
+		errores.push('error');
+	}
+	if (!regexValidar.contrasenia.test(contrasenia.value)) {
+		contrasenia.classList.add('error');
+		document.getElementById('contraseniaP').style.display = 'block';
+		body.addEventListener('click', () => {
+			contrasenia.classList.remove('error');
+			document.getElementById('contraseniaP').style.display = 'none';
+		});
+		errores.push('error');
+	}
+	console.log('hay errores', errores.length);
+	//si no hay errores
+	if (errores.length === 0) {
+		return true;
+	}
+	if (errores.length > 0) {
+		//limpiar el arreglo
+		errores = [];
+		return false;
 	}
 }

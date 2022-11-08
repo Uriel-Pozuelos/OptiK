@@ -16,6 +16,13 @@
 							name="nombre"
 							id="nombre"
 						/>
+						<p
+							class="help is-danger"
+							id="nombreP"
+							style="display: none"
+						>
+							El nombre es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -30,6 +37,13 @@
 							type="text"
 							placeholder="Apellido Paterno"
 						/>
+						<p
+							class="help is-danger"
+							id="apellidoPaternoP"
+							style="display: none"
+						>
+							El apellido paterno es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -44,6 +58,13 @@
 							type="text"
 							placeholder="Apellido Materno"
 						/>
+						<p
+							class="help is-danger"
+							id="apellidoMaternoP"
+							style="display: none"
+						>
+							El apellido materno es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -90,6 +111,13 @@
 							type="number"
 							placeholder="Teléfono de Casa"
 						/>
+						<p
+							class="help is-danger"
+							id="telCasaP"
+							style="display: none"
+						>
+							El teléfono de casa es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -104,6 +132,13 @@
 							type="number"
 							placeholder="Teléfono Movil"
 						/>
+						<p
+							class="help is-danger"
+							id="telMovilP"
+							style="display: none"
+						>
+							El teléfono móvil es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -120,6 +155,13 @@
 							type="email"
 							placeholder="Correo Electrónico"
 						/>
+						<p
+							class="help is-danger"
+							id="emailP"
+							style="display: none"
+						>
+							El correo electrónico es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -137,6 +179,13 @@
 							name="calle"
 							id="calle"
 						/>
+						<p
+							class="help is-danger"
+							id="calleP"
+							style="display: none"
+						>
+							La calle es incorrecta
+						</p>
 					</div>
 				</div>
 			</div>
@@ -151,6 +200,13 @@
 							name="numero"
 							id="numero"
 						/>
+						<p
+							class="help is-danger"
+							id="numeroP"
+							style="display: none"
+						>
+							El número es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -165,6 +221,13 @@
 							name="colonia"
 							id="colonia"
 						/>
+						<p
+							class="help is-danger"
+							id="coloniaP"
+							style="display: none"
+						>
+							La colonia es incorrecta
+						</p>
 					</div>
 				</div>
 			</div>
@@ -179,6 +242,9 @@
 							type="text"
 							placeholder="Código Postal"
 						/>
+						<p class="help is-danger" id="cpP" style="display: none">
+							El código postal es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -196,20 +262,61 @@
 							name="ciudad"
 							id="ciudad"
 						/>
+						<p
+							class="help is-danger"
+							id="ciudadP"
+							style="display: none"
+						>
+							La ciudad es incorrecta
+						</p>
 					</div>
 				</div>
 			</div>
 			<div class="column">
 				<div class="field">
 					<label class="label has-text-light">Estado</label>
-					<div class="control">
-						<input
-							class="input"
-							type="text"
-							placeholder="Estado"
-							name="estado"
-							id="estado"
-						/>
+					<div class="select">
+						<select id="estado" name="estado">
+							<!-- estados de México -->
+							<option value="Aguascalientes">Aguascalientes</option>
+							<option value="Baja California">Baja California</option>
+							<option value="Baja California Sur">
+								Baja California Sur
+							</option>
+							<option value="Campeche">Campeche</option>
+							<option value="Chiapas">Chiapas</option>
+							<option value="Chihuahua">Chihuahua</option>
+							<option value="Ciudad de México">
+								Ciudad de México
+							</option>
+							<option value="Coahuila">Coahuila</option>
+							<option value="Colima">Colima</option>
+							<option value="Durango">Durango</option>
+							<option value="Estado de México">
+								Estado de México
+							</option>
+							<option value="Guanajuato">Guanajuato</option>
+							<option value="Guerrero">Guerrero</option>
+							<option value="Hidalgo">Hidalgo</option>
+							<option value="Jalisco">Jalisco</option>
+							<option value="Michoacan">Michoacan</option>
+							<option value="Morelos">Morelos</option>
+							<option value="Nayarit">Nayarit</option>
+							<option value="Nuevo León">Nuevo León</option>
+							<option value="Oaxaca">Oaxaca</option>
+							<option value="Puebla">Puebla</option>
+							<option value="Queretaro">Queretaro</option>
+							<option value="Quintana Roo">Quintana Roo</option>
+							<option value="San Luis Potosí">San Luis Potosí</option>
+							<option value="Sinaloa">Sinaloa</option>
+							<option value="Sonora">Sonora</option>
+							<option value="Tabasco">Tabasco</option>
+							<option value="Tamaulipas">Tamaulipas</option>
+							<option value="Tlaxcala">Tlaxcala</option>
+							<option value="Veracruz">Veracruz</option>
+							<option value="Yucatan">Yucatan</option>
+							<option value="Zacatecas">Zacatecas</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -231,6 +338,13 @@
 							type="text"
 							placeholder="Nombre de Usuario"
 						/>
+						<p
+							class="help is-danger"
+							id="nombreUsuarioP"
+							style="display: none"
+						>
+							El nombre de usuario es incorrecto
+						</p>
 					</div>
 				</div>
 			</div>
@@ -245,6 +359,14 @@
 							type="password"
 							placeholder="Contraseña"
 						/>
+						<p
+							class="help is-danger"
+							id="contraseniaP"
+							style="display: none"
+						>
+							La contraseña es incorrecta al menos 8 caracteres, al
+							menos una letra y un número
+						</p>
 					</div>
 				</div>
 			</div>
@@ -272,7 +394,7 @@
 		<button class="button is-warning" type="button" id="limpiar">
 			Limpiar
 		</button>
-		<button id="mostrar" class="button is-primary">
+		<button id="mostrar" class="button is-primary" type="button">
 			Ver empleados
 		</button>
 	</form>
