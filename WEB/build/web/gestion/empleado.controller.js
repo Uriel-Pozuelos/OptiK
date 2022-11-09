@@ -3,10 +3,10 @@ let empleados = [];
 form[1].addEventListener('submit', e => {
 	e.preventDefault();
 	//validar formulario
-	if (validarForm() === false) {
-		console.log('formulario invalido');
-		return;
-	}
+	// if (validarForm() === false) {
+	// 	console.log('formulario invalido');
+	// 	return;
+	// }
 
 	let persona = Object.fromEntries(new FormData(form[0]));
 	const usuario = Object.fromEntries(new FormData(form[1]));
@@ -162,10 +162,10 @@ function actualizarEmpleado() {
 	//obtener los datos del formulario y ponerlos en un objeto empleado
 	const index = document.getElementById('index').value;
 	const em = empleados[index];
-	if (validarForm() === false) {
-		console.log('formulario invalido');
-		return;
-	}
+	// if (validarForm() === false) {
+	// 	console.log('formulario invalido');
+	// 	return;
+	// }
 
 	const { persona, usuario } = em;
 	const empleado = {
@@ -450,4 +450,71 @@ function validarForm() {
 		errores = [];
 		return false;
 	}
+}
+
+const buscar = document.getElementById('buscar');
+const buscarP = document.getElementById('buscarP');
+buscarP.addEventListener('click', realizarBusqueda);
+//mostrar en la tabla si coincide la búsqueda en los elementos de alumnos
+function realizarBusqueda() {
+	//buscar si el valor de busqueda esta en el objeto empleado en alguna de sus propiedades
+	//si lo encuentra, mostrarlo en la tabla
+	//si no lo encuentra, mostrar un mensaje de que no se encontró
+	const busqueda = buscar.value;
+	const coincidencias = [];
+	for (let i = 0; i < empleados.length; i++) {
+		const empleado = empleados[i];
+		//nombre sin importar mayusculas o minusculas
+		if (
+			empleado.persona.nombre
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.apellidoPaterno
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.apellidoMaterno
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.telCasa
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.telMovil
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.calle
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.numero
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.colonia
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.cp
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.ciudad
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.email
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.usuario.nombre
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.genero
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.persona.fechaNacimiento
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			empleado.usuario.rol
+				.toLowerCase()
+				.includes(busqueda.toLowerCase())
+		) {
+			coincidencias.push(empleado);
+		}
+	}
+	console.table(coincidencias);
+	mostrarTabla(coincidencias);
 }

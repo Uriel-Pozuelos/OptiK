@@ -384,21 +384,38 @@
 				</div>
 			</div>
 		</div>
-		<button class="button is-success">Guardar</button>
-		<button class="button is-danger" type="button" id="eliminar">
-			Borrar
-		</button>
-		<button class="button is-primary" type="button" id="actualizar">
-			Actualizar
-		</button>
-		<button class="button is-warning" type="button" id="limpiar">
-			Limpiar
-		</button>
-		<button id="mostrar" class="button is-primary" type="button">
-			Ver empleados
-		</button>
+		<div class="column">
+			<button class="button is-success">Guardar</button>
+			<button class="button is-danger" type="button" id="eliminar">
+				Borrar
+			</button>
+			<button class="button is-primary" type="button" id="actualizar">
+				Actualizar
+			</button>
+			<button class="button is-warning" type="button" id="limpiar">
+				Limpiar
+			</button>
+			<button id="mostrar" class="button is-primary" type="button">
+				Ver empleados
+			</button>
+			<div class="control">
+				<label for="buscar " class="label has-text-light"
+					>Buscar</label
+				>
+				<input
+					type="text"
+					id="buscar"
+					placeholder="buscar"
+					class="input"
+				/>
+				<button id="buscarP" class="button is-primary" type="button">
+					Buscar
+				</button>
+			</div>
+		</div>
 	</form>
 	<input type="text" id="index" style="display: none" />
+
 	<div>
 		<h3 class="">Tabla de empleados</h3>
 		<div>
