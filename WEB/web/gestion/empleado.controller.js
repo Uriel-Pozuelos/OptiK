@@ -48,11 +48,16 @@ async function empleadoService(empleado) {
 }
 const btnMostrar = document.getElementById('mostrar');
 btnMostrar.addEventListener('click', () => {
-	tablaEmpleado();
+	tablaEmpleado('1');
+});
+
+const btnMostrarD = document.getElementById('mostrarD');
+btnMostrarD.addEventListener('click', () => {
+	tablaEmpleado('0');
 });
 
 //tabla con los datos del empleado
-async function tablaEmpleado(empleado) {
+async function tablaEmpleado(estatus) {
 	//fetch para obtener los datos del empleado
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/empleado/getallempleado',
@@ -61,7 +66,7 @@ async function tablaEmpleado(empleado) {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
-			body: new URLSearchParams({ estatus: '1' })
+			body: new URLSearchParams({ estatus: estatus })
 		}
 	);
 	const data = await response.json();
@@ -81,25 +86,67 @@ async function mostrarTabla(data) {
 	let contenido = '';
 	data.forEach((empleado, index) => {
 		const { persona, usuario } = empleado;
-
-		contenido +=
-			/*HTML*/
-			`  
-		<tr>
-				<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
-				<td>${persona.genero}</td>
-				<td>${persona.fechaNacimiento}</td>
-				<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
-				<td>${persona.telCasa}</td>
-				<td>${persona.telMovil}</td>
-				<td>${usuario.nombre}</td>
-				<td>${persona.email}</td>
-				<td>${usuario.rol}</td>
-				<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
-		</tr>
+		if (empleado.estatus === 0) {
+			contenido +=
+				/*HTML*/
+				`  
+			<tr>
+			<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
+			<td>${persona.genero}</td>
+			<td>${persona.fechaNacimiento}</td>
+			<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
+			<td>${persona.telCasa}</td>
+			<td>${persona.telMovil}</td>
+			<td>${usuario.nombre}</td>
+			<td>${persona.email}</td>
+			<td>${usuario.rol}</td>
+			<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
+			<td><button class="button is-success" type='button' onclick="activarEmpleado(${empleados[index].IdEmpleado})">Activar</button></td>
+			</tr>
 		`;
+		} else {
+			contenido +=
+				/*HTML*/
+				`  
+			<tr>
+			<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
+			<td>${persona.genero}</td>
+			<td>${persona.fechaNacimiento}</td>
+			<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
+			<td>${persona.telCasa}</td>
+			<td>${persona.telMovil}</td>
+			<td>${usuario.nombre}</td>
+			<td>${persona.email}</td>
+			<td>${usuario.rol}</td>
+			<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
+			<td><button class="button is-danger" type='button' onclick="eliminarEmpleado(${empleados[index].IdEmpleado})">Desactivar</button></td>
+			</tr>
+			`;
+		}
 	});
 	document.querySelector('tbody').innerHTML = contenido;
+}
+
+async function activarEmpleado(idEmpleado) {
+	console.log(idEmpleado);
+	const response = await fetch(
+		'http://localhost:8080/Optik/api/empleado/activateempleado',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams({ idEmpleado: idEmpleado })
+		}
+	);
+	const data = await response.json();
+	console.log(data);
+	if (data.error) {
+		alert(data.error);
+		return;
+	}
+	alert(data.result);
+	tablaEmpleado('0');
 }
 
 //funcion para cargar el formulario con los datos del empleado
@@ -239,13 +286,7 @@ async function updateService(empleado) {
 	tablaEmpleado();
 }
 
-//eliminar un empleado del arreglo de empleados
-const eliminar = document.getElementById('eliminar');
-eliminar.addEventListener('click', eliminarEmpleado);
-async function eliminarEmpleado() {
-	const index = document.getElementById('index').value;
-	const em = empleados[index];
-
+async function eliminarEmpleado(idEmpleado) {
 	const resp = await fetch(
 		'http://localhost:8080/Optik/api/empleado/deleteempleado',
 		{
@@ -253,7 +294,7 @@ async function eliminarEmpleado() {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
-			body: new URLSearchParams({ idEmpleado: em.IdEmpleado })
+			body: new URLSearchParams({ idEmpleado })
 		}
 	);
 
@@ -264,7 +305,7 @@ async function eliminarEmpleado() {
 	}
 
 	limpiarForm();
-	tablaEmpleado();
+	tablaEmpleado('1');
 }
 
 //convertir 1901-01-01 a 01/01/1901
@@ -458,8 +499,7 @@ buscarP.addEventListener('click', realizarBusqueda);
 //mostrar en la tabla si coincide la búsqueda en los elementos de alumnos
 function realizarBusqueda() {
 	//buscar si el valor de busqueda esta en el objeto empleado en alguna de sus propiedades
-	//si lo encuentra, mostrarlo en la tabla
-	//si no lo encuentra, mostrar un mensaje de que no se encontró
+	//si lo encuentra, mostrarlo en la tabla agregando a coincidencias
 	const busqueda = buscar.value;
 	const coincidencias = [];
 	for (let i = 0; i < empleados.length; i++) {

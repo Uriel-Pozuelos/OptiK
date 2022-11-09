@@ -101,6 +101,28 @@ public class EmpleadoRest extends Application{
               
     return  Response.status(Response.Status.OK).entity(out).build();
 }
+    @Path("activateempleado")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response activateEmpleado(@FormParam("idEmpleado") @DefaultValue("") String idEmpleado){
+        EmpleadoController objCE = new EmpleadoController();
+        String out="";
+        String result="";
+        try{
+            result = objCE.activarEmpleado(Integer.parseInt(idEmpleado));
+            
+        }catch(Exception ex){
+            out="{\"error\":"+ex.toString()+"}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        out = """
+                {
+                    "result": "Empleado actualizado correctamente"
+                }
+                """;
+              
+    return  Response.status(Response.Status.OK).entity(out).build();
+}
 }
 
 

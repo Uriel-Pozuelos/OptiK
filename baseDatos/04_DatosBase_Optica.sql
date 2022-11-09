@@ -11,7 +11,7 @@ USE optiqalumnos;
 -- Insercion del Usuario Raiz (Administrador):
 CALL insertarEmpleado('Lizbeth', 'garnica', 'negrete', 'F', '01/01/1901', -- Datos Personales
                       '23', 'santa maria', 'leon', '210909', 'leon', 'guanajuato', '4771234567', '4771234567', 'pepe@gmail',
-                      'mari', '909090', 'Administrador',         -- Datos de Seguridad
+                      'lizbeth', '909090', 'Administrador',         -- Datos de Seguridad
                       @out1, @out2, @out3, @out4, @out5); -- Parametros de salida
                       
 -- Insercion de Catalogos Base

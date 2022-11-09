@@ -234,4 +234,24 @@ public class EmpleadoController {
         objConect.close();
         return "Empleado eliminado";
     }
+    
+    public String activarEmpleado(int idEmpleado) throws Exception {
+        //query
+        String query = "{call activarEmpleado(?)}";
+        //conectar a la base de datos
+        ConexionMySQL objConect = new ConexionMySQL();
+        Connection conn = objConect.open();
+        //preparar el statement
+        CallableStatement cstmt = conn.prepareCall(query);
+        //asignar los valores a los parametros del procedimiento almacenado
+        //idEmpleado
+        cstmt.setInt(1, idEmpleado);
+        //ejeuctar el procedimiento almacenado
+        cstmt.execute();
+        //cerrar la conexion
+        conn.close();
+        cstmt.close();
+        objConect.close();
+        return "Empleado eliminado";
+    }
 }

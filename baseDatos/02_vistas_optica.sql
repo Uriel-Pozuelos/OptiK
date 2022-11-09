@@ -8,7 +8,7 @@ CREATE VIEW vista_empleados AS(
     INNER JOIN persona p ON e.idPersona = p.idPersona
     INNER JOIN usuario u ON e.idUsuario = u.idUsuario
 );
-SELECT * from vista_empleados;
+SELECT * from vista_empleados WHERE estatus = 1;
 SELECT  e.idEmpleado, p.nombre, p.apellidoPaterno, p.apellidoMaterno, p.genero, p.fechaNacimiento, p.calle,p.numero,p.colonia ,p.cp, p.ciudad, p.estado, p.telcasa, p.telmovil, p.email, u.contrasenia,u.nombre nombreUsuario ,u.rol, e.numeroUnico,e.estatus
     FROM empleado e
     INNER JOIN persona p ON e.idPersona = p.idPersona
@@ -50,6 +50,7 @@ CREATE VIEW vista_clientes_inactivos AS(
   WHERE c.estatus = 0
 );
 select * from vista_clientes_inactivos;
+SELECT * from producto;
 
 #crear vista de materiales menos el estatus
 #vista 3
@@ -81,7 +82,7 @@ select * from vista_tratamiento_inactivos;
 #crear la vista de armazon uniendo las tablas de armazon y producto
 DROP VIEW IF EXISTS vista_armazon;
 CREATE VIEW vista_armazon AS(
-  SELECT a.idArmazon, a.modelo, a.color, a.dimensiones, a.descripcion, a.fotografia, p.codigoBarras, p.nombre, p.marca, p.precioVenta, p.precioCompra,p.existencias
+  SELECT a.idArmazon,a.idProducto, a.modelo, a.color, a.dimensiones, a.descripcion, a.fotografia, p.codigoBarras, p.nombre, p.marca, p.precioVenta, p.precioCompra,p.existencias
   FROM armazon a
   INNER JOIN producto p 
   ON a.idProducto = p.idProducto
