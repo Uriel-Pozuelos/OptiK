@@ -76,49 +76,41 @@ async function tablaEmpleado(estatus) {
 		return;
 	}
 	//crear la tabla
-	mostrarTabla(data);
+	mostrarTabla(null, data);
 }
 
-async function mostrarTabla(data) {
+async function mostrarTabla(coincidencias, data) {
 	//obtener el tbody de la tabla con el id tabla-empleado
-	empleados = data;
+	if (coincidencias) {
+		data = coincidencias;
+	} else {
+		empleados = data;
+	}
 
 	let contenido = '';
 	data.forEach((empleado, index) => {
 		const { persona, usuario } = empleado;
+		contenido +=
+			/*HTML*/
+			`  
+	<tr>
+	<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
+	<td>${persona.genero}</td>
+	<td>${persona.fechaNacimiento}</td>
+	<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
+	<td>${persona.telCasa}</td>
+	<td>${persona.telMovil}</td>
+	<td>${usuario.nombre}</td>
+	<td>${persona.email}</td>
+	<td>${usuario.rol}</td>
+	<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>`;
 		if (empleado.estatus === 0) {
-			contenido +=
-				/*HTML*/
-				`  
-			<tr>
-			<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
-			<td>${persona.genero}</td>
-			<td>${persona.fechaNacimiento}</td>
-			<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
-			<td>${persona.telCasa}</td>
-			<td>${persona.telMovil}</td>
-			<td>${usuario.nombre}</td>
-			<td>${persona.email}</td>
-			<td>${usuario.rol}</td>
-			<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
+			contenido += `
 			<td><button class="button is-success" type='button' onclick="activarEmpleado(${empleados[index].IdEmpleado})">Activar</button></td>
 			</tr>
 		`;
 		} else {
-			contenido +=
-				/*HTML*/
-				`  
-			<tr>
-			<td>${persona.nombre} ${persona.apellidoPaterno} ${persona.apellidoMaterno} </td>
-			<td>${persona.genero}</td>
-			<td>${persona.fechaNacimiento}</td>
-			<td>${persona.calle} ${persona.numero} ${persona.colonia} ${persona.cp} ${persona.ciudad} ${persona.estado}</td>
-			<td>${persona.telCasa}</td>
-			<td>${persona.telMovil}</td>
-			<td>${usuario.nombre}</td>
-			<td>${persona.email}</td>
-			<td>${usuario.rol}</td>
-			<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>
+			contenido += `
 			<td><button class="button is-danger" type='button' onclick="eliminarEmpleado(${empleados[index].IdEmpleado})">Desactivar</button></td>
 			</tr>
 			`;
@@ -495,9 +487,12 @@ function validarForm() {
 
 const buscar = document.getElementById('buscar');
 const buscarP = document.getElementById('buscarP');
-buscarP.addEventListener('click', realizarBusqueda);
+buscarP.addEventListener('click', () => {
+	realizarBusqueda();
+});
 //mostrar en la tabla si coincide la búsqueda en los elementos de alumnos
 function realizarBusqueda() {
+	mostrarTabla(null, empleados);
 	//buscar si el valor de busqueda esta en el objeto empleado en alguna de sus propiedades
 	//si lo encuentra, mostrarlo en la tabla agregando a coincidencias
 	const busqueda = buscar.value;
@@ -556,5 +551,5 @@ function realizarBusqueda() {
 		}
 	}
 	console.table(coincidencias);
-	mostrarTabla(coincidencias);
+	mostrarTabla(coincidencias, null);
 }
