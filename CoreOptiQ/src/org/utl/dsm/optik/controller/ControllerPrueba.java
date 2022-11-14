@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package org.utl.dsm.optik.controller;
 
 import org.utl.dsm.optik.db.ConexionMySQL;
@@ -80,8 +77,6 @@ public class ControllerPrueba {
     public static List<Empleado> getAll(String filtro) throws Exception {
         //query con filtro
            String query = "SELECT * FROM vista_empleados WHERE estatus = " + filtro+"";
-
-
         //conectar a la base de datos
         ConexionMySQL objConect = new ConexionMySQL();
         Connection conn = objConect.open();

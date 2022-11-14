@@ -18,7 +18,6 @@ form[1].addEventListener('submit', e => {
 			usuario: usuario
 		})
 	};
-	console.log(empleado);
 	//mandar por urlEncoded el objeto empleado al servicio
 	empleadoService(empleado);
 	//limpiar el formulario
@@ -28,7 +27,6 @@ form[1].addEventListener('submit', e => {
 const fecha = document.getElementById('fechaNacimiento');
 fecha.addEventListener('change', e => {
 	const fechaNacimiento = e.target.value;
-	console.log(fechaNacimiento);
 });
 
 async function empleadoService(empleado) {
@@ -44,7 +42,6 @@ async function empleadoService(empleado) {
 		}
 	);
 	const data = await reponse.json();
-	console.log(data);
 }
 const btnMostrar = document.getElementById('mostrar');
 btnMostrar.addEventListener('click', () => {
@@ -103,15 +100,34 @@ async function mostrarTabla(coincidencias, data) {
 	<td>${usuario.nombre}</td>
 	<td>${persona.email}</td>
 	<td>${usuario.rol}</td>
-	<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">Ver</button></td>`;
+	<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">
+					<span class="icon">
+						<i class="fa fa-light fa-eye"></i>
+					</span>
+					<span>Ver</span>
+			</button>
+	</td>`;
 		if (empleado.estatus === 0) {
+			/*HTML*/
 			contenido += `
-			<td><button class="button is-success" type='button' onclick="activarEmpleado(${empleados[index].IdEmpleado})">Activar</button></td>
+			<td><button class="button is-success" type='button' onclick="activarEmpleado(${empleados[index].IdEmpleado})">
+			<span class="icon">
+			<i class="fa fa-thin fa-trash-arrow-up"></i>
+				</span>
+				<span>Activar</span>
+			</button></td>
 			</tr>
 		`;
 		} else {
+			/*HTML*/
 			contenido += `
-			<td><button class="button is-danger" type='button' onclick="eliminarEmpleado(${empleados[index].IdEmpleado})">Desactivar</button></td>
+			<td><button class="button is-danger" type='button' onclick="eliminarEmpleado(${empleados[index].IdEmpleado})">
+			<span class="icon">
+			<i class="fa fa-thin fa-trash"></i>
+				</span>
+				<span>Eliminar</span>
+			</button>
+			</td>
 			</tr>
 			`;
 		}
@@ -120,7 +136,6 @@ async function mostrarTabla(coincidencias, data) {
 }
 
 async function activarEmpleado(idEmpleado) {
-	console.log(idEmpleado);
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/empleado/activateempleado',
 		{
@@ -132,7 +147,6 @@ async function activarEmpleado(idEmpleado) {
 		}
 	);
 	const data = await response.json();
-	console.log(data);
 	if (data.error) {
 		alert(data.error);
 		return;
@@ -256,7 +270,6 @@ async function updateService(empleado) {
 	const e = {
 		datosEmpleados: JSON.stringify(obj)
 	};
-	console.log(e);
 
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/empleado/updateempleado',
@@ -269,7 +282,6 @@ async function updateService(empleado) {
 		}
 	);
 	const data = await response.json();
-	console.log(data);
 	if (data.error) {
 		alert(data.error);
 		return;
@@ -318,7 +330,6 @@ function ocultarForm() {
 		tabla.style.display = 'block';
 	}
 }
-
 const regexValidar = {
 	//validar solo letras y números
 	letrasNumeros: /^[a-zA-Z0-9]+$/,
@@ -473,7 +484,6 @@ function validarForm() {
 		});
 		errores.push('error');
 	}
-	console.log('hay errores', errores.length);
 	//si no hay errores
 	if (errores.length === 0) {
 		return true;

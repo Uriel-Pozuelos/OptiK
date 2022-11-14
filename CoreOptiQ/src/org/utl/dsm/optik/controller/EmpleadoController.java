@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import org.utl.dsm.optik.model.Persona;
 import org.utl.dsm.optik.model.Usuario;

@@ -6,7 +6,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.utl.dsm.optik.controller.ControllerPrueba;
 import org.utl.dsm.optik.controller.EmpleadoController;
 import org.utl.dsm.optik.model.Empleado;
 
