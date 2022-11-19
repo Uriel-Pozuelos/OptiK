@@ -148,3 +148,88 @@ BEGIN
     UPDATE empleado SET estatus = 0 WHERE idEmpleado = var_idEmpleado;
 END //
 DELIMITER ;
+
+
+
+CREATE TABLE producto(
+    idProducto          INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    codigoBarras        VARCHAR(65) NOT NULL DEFAULT '',
+    nombre              VARCHAR(255) NOT NULL,
+    marca               VARCHAR(129) NOT NULL,
+    precioCompra        DOUBLE NOT NULL DEFAULT 0.0,
+    precioVenta         DOUBLE NOT NULL DEFAULT 0.0,
+    existencias         INT NOT NULL DEFAULT 1,
+    estatus             INT NOT NULL DEFAULT 1 -- 1: Activo; 0: Inactivo o Eliminado
+);
+CREATE TABLE lente_contacto(
+    idLenteContacto     INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    idProducto          INT NOT NULL,
+    keratometria        INT NOT NULL DEFAULT 0, -- Se mide en milimicras
+    fotografia          LONGTEXT NOT NULL,
+    CONSTRAINT fk_lentecontacto_producto FOREIGN KEY (idProducto) 
+                REFERENCES producto(idProducto)
+);
+-- procedimiento de insertar lentes de contacto usando producto y lente de contacto
+DROP procedure IF EXISTS insertarLenteContacto;
+DELIMITER //
+CREATE PROCEDURE insertarLenteContacto(	
+                                        IN var_nombre VARCHAR(255) -- 2
+                                        ,IN var_marca VARCHAR(129) -- 3
+                                        ,IN var_precioCompra DOUBLE -- 4
+                                        ,IN var_precioVenta DOUBLE -- 5
+                                        ,IN var_existencias INT -- 6
+                                        ,IN var_keratometria INT -- 7
+                                        ,IN var_fotografia LONGTEXT -- 8
+                                        ,OUT var_idProducto INT -- 9
+                                        ,OUT var_idLenteContacto INT -- 10
+                                        ,OUT var_codigoBarras VARCHAR(65) -- 1
+                                        )
+BEGIN
+    INSERT INTO producto(nombre, marca, precioCompra, precioVenta, existencias) VALUES(var_nombre, var_marca, var_precioCompra, var_precioVenta, var_existencias);
+    SET var_idProducto = LAST_INSERT_ID();
+    SET var_codigoBarras = concat("OQ-",var_idProducto);
+    UPDATE producto SET codigoBarras = var_codigoBarras WHERE idProducto = var_idProducto;
+    INSERT INTO lente_contacto(idProducto, keratometria, fotografia) VALUES(var_idProducto, var_keratometria, var_fotografia);
+    SET var_idLenteContacto = LAST_INSERT_ID();
+END //
+DELIMITER ;
+call insertarLenteContacto('lentes de contacto', 'marca', 100.0, 200.0, 10, 100, 'fotografia', @out1, @out2);
+
+-- procedure para actualizar lente de contacto usando producto y lente de contacto
+DROP procedure IF EXISTS actualizarLenteContacto;
+DELIMITER //
+CREATE PROCEDURE actualizarLenteContacto(
+                                        IN var_idProducto INT -- 1
+                                        ,IN var_idLenteContacto INT -- 2
+                                        ,IN var_nombre VARCHAR(255) -- 3
+                                        ,IN var_marca VARCHAR(129) -- 4
+                                        ,IN var_precioCompra DOUBLE -- 5
+                                        ,IN var_precioVenta DOUBLE -- 6
+                                        ,IN var_existencias INT -- 7
+                                        ,IN var_keratometria INT -- 8
+                                        ,IN var_fotografia LONGTEXT -- 9
+                                        )
+BEGIN
+    UPDATE producto SET nombre = var_nombre, marca = var_marca, precioCompra = var_precioCompra, precioVenta = var_precioVenta, existencias = var_existencias WHERE idProducto = var_idProducto;
+    UPDATE lente_contacto SET keratometria = var_keratometria, fotografia = var_fotografia WHERE idLenteContacto = var_idLenteContacto;
+END //
+DELIMITER ;
+
+-- procedure para activar lente de contacto actualiza el estatus a 1
+DROP procedure IF EXISTS activarLenteContacto;
+DELIMITER //
+CREATE PROCEDURE activarLenteContacto(IN var_idProducto INT)
+BEGIN
+    UPDATE producto SET estatus = 1 WHERE idProducto = var_idProducto;
+END //
+DELIMITER ;
+
+-- procedure para eliminar lente de contacto actualiza el estatus a 0
+DROP procedure IF EXISTS eliminarLenteContacto;
+DELIMITER //
+CREATE PROCEDURE eliminarLenteContacto(IN var_idProducto INT)
+BEGIN
+    UPDATE producto SET estatus = 0 WHERE idProducto = var_idProducto;
+END //
+DELIMITER ;
+

@@ -1,5 +1,6 @@
+drop DATABASE if EXISTS db_bus;
 create database db_bus;
-
+use db_bus;
 create table conductor(
 idConductor int primary key not null auto_increment,
 nombre varchar(40),
@@ -21,8 +22,9 @@ create view v_bitacora AS Select idBitacora, nombre, ape_paterno,ape_materno,fec
 placa,lastTicket from bitacora b inner join conductor c on b.idConductor = c.idConductor;
 
 select * from v_bitacora;
-DELIMITER //
 drop procedure bitacora;
+DELIMITER //
+
 create procedure bitacora(
 							in v_idConductor int,
                             in v_placa varchar(20),
@@ -35,4 +37,4 @@ DELIMITER ;
 
 call bitacora(1,'bhsah78',123);
 
-select * from db_bus.v_bitacora;
+select * from v_bitacora;

@@ -15,6 +15,7 @@ SELECT  e.idEmpleado, p.nombre, p.apellidoPaterno, p.apellidoMaterno, p.genero, 
     INNER JOIN usuario u ON e.idUsuario = u.idUsuario
 	WHERE e.estatus = 1;
 #inactivos
+SELECT * from vista_empleados WHERE estatus =1;
 DROP VIEW IF EXISTS vista_empleados_inactivos;
 CREATE VIEW vista_empleados_inactivos AS(
     SELECT  e.idEmpleado, p.nombre, p.apellidoPaterno, p.apellidoMaterno, p.genero, p.fechaNacimiento, p.calle,p.numero,p.colonia ,p.cp, p.ciudad, p.estado, p.telcasa, p.telmovil, p.email, u.contrasenia,u.nombre nombreUsuario ,u.rol, e.numeroUnico
