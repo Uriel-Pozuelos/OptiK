@@ -172,10 +172,12 @@
 		</div>
 <div class="columns">
   <div class="column is-flex is-justify-content-space-between">
-    <button class="button is-success" type="button" id="guardar"
+    <button class="button is-success hass-icons-left" type="button" id="guardar"
     onclick="ml.guardar()"
     >
-    
+    <span class="icon is-left pt-2">
+      <icon-save></icon-save>
+    </span>
       <span>Guardar</span>
     </button>
     <button class="button is-primary has-icons-left" type="button" id="actualizar"
@@ -186,10 +188,13 @@
     </span>
       <span>Actualizar</span>
     </button>
-    <button class="button is-warning" type="button" id="limpiar"
+    <button class="button is-warning has-icons-left" type="button" id="limpiar"
     onclick="ml.limpiarForm()"
     >
-      Limpiar
+    <span class="icon is-left pt-2">
+      <icon-clean></icon-clean>
+    </span>
+      <span>Limpiar</span>
     </button>
     <button id="mostrar" class="button is-primary has-icons-left" type="button"
     onclick="ml.tablaLenteC('1')"
@@ -222,10 +227,14 @@
 					class="input"
 				/>
 			</div>
-			<button id="buscarP" class="button is-dark p-3" type="button"
+			<button id="buscarP" class="button is-dark p-3 has-icons-left" type="button"
       onclick="ml.realizarBusqueda()" 
       >
-				Buscar
+			<span class="icon is-left pt-2">
+        <icon-search></icon-search>
+      </span>
+        <span>Buscar</span>
+      </button>
 			</button>
 		</header>
 

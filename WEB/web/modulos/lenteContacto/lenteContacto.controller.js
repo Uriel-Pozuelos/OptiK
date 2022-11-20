@@ -147,15 +147,25 @@ function mostrarTabla(coincidencias, data) {
     <td>${keratometria}</td>
     <td><img src="${fotografia}" alt="fotografia" width="100px"/></td>
 		<td><button class="button is-primary has-icons-left" type='button' onclick="ml.cargarForm(${index})">
-		<span class="icon is-left pt-2 mx-1">
+		<span class="icon is-left pt-2">
 							<icon-eye></icon-eye>
 						</span>
-		ver</button></td>
+						
+		</button></td>
     `;
 		if (producto.estatus === 1) {
-			contenido += `<td><button class="button is-danger" type='button' onclick="ml.eliminarLente(${producto.idProducto})">Desactivar</button></td>`;
+			contenido += `<td><button class="button is-danger has-icons-left" type='button' onclick="ml.eliminarLente(${producto.idProducto})">
+			<span class="icon is-left pt-2">
+							<icon-delete></icon-delete>
+						</span>
+						
+			</button></td>`;
 		} else {
-			contenido += `<td><button class="button is-success" type='button' onclick="ml.activarLente(${producto.idProducto})">Activar</button></td>`;
+			contenido += `<td><button class="button is-success has-icons-left" type='button' onclick="ml.activarLente(${producto.idProducto})">
+			<span class="icon is-left pt-2">
+							<icon-check></icon-check>
+						</span>
+						</button></td>`;
 		}
 	});
 	document.querySelector('tbody').innerHTML = contenido;

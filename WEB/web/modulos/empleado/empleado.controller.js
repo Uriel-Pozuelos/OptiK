@@ -121,26 +121,29 @@ async function mostrarTabla(coincidencias, data) {
 	<td>${usuario.nombre}</td>
 	<td>${persona.email}</td>
 	<td>${usuario.rol}</td>
-	<td><button class="button is-primary" type='button' onclick="ma.cargarForm(${index})">
-				
-					<span>Ver</span>
+	<td><button class="button is-primary has-icons-left" type='button' onclick="ma.cargarForm(${index})">
+	<span class="icon is-left pt-2">
+	<icon-eye></icon-eye>
+</span>
 			</button>
 	</td>`;
 		if (empleado.estatus === 0) {
 			/*HTML*/
 			contenido += `
-			<td><button class="button is-success" type='button' onclick="ma.activarEmpleado(${empleados[index].IdEmpleado})">
-			
-				<span>Activar</span>
+			<td><button class="button is-success has-icons-left" type='button' onclick="ma.activarEmpleado(${empleados[index].IdEmpleado})">
+			<span class="icon is-left pt-2">
+							<icon-check></icon-check>
+						</span>
 			</button></td>
 			</tr>
 		`;
 		} else {
 			/*HTML*/
 			contenido += `
-			<td><button class="button is-danger" type='button' onclick="ma.eliminarEmpleado(${empleados[index].IdEmpleado})">
-			
-				<span>Eliminar</span>
+			<td><button class="button is-danger has-icons-left" type='button' onclick="ma.eliminarEmpleado(${empleados[index].IdEmpleado})">
+			<span class="icon is-left pt-2">
+							<icon-delete></icon-delete>
+						</span>
 			</button>
 			</td>
 			</tr>
