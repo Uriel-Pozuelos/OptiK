@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/EmpleadoRest.java</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/LoginRest.java</file>
             <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/LenteContactoRest.java</file>
         </group>
     </open-files>

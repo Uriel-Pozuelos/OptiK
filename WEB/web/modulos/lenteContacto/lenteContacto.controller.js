@@ -1,15 +1,20 @@
 let lentesContacto = [];
 let lenteContactoActual = null;
 
-const { fotografia } = getElements();
-fotografia.addEventListener('change', e => {
+fotografia.addEventListener('change', () => {
+	cambiarFoto();
+});
+
+export function cambiarFoto() {
+	const { fotografia } = getElements();
+	const file = fotografia.files[0];
 	var reader = new FileReader();
-	reader.readAsDataURL(e.target.files[0]);
-	reader.onload = function (e) {
+	reader.readAsDataURL(file);
+	reader.onload = function () {
 		const img = reader.result;
 		document.getElementById('imagen').src = img;
 	};
-});
+}
 
 function getElements() {
 	return {
@@ -24,9 +29,12 @@ function getElements() {
 	};
 }
 console.log('lenteContacto.controller.js');
-form = document.getElementById('form');
-form.addEventListener('submit', async function (e) {
-	e.preventDefault();
+form = document.getElementById('guardar');
+form.addEventListener('click', () => {
+	guardar();
+});
+
+export async function guardar() {
 	let {
 		nombre,
 		marca,
@@ -46,9 +54,13 @@ form.addEventListener('submit', async function (e) {
 	const image = fotografia.files[0];
 
 	imageToText(image, producto, keratometria.value);
-});
+}
 
-async function imageToText(fotografia, producto, keratometria) {
+export async function imageToText(
+	fotografia,
+	producto,
+	keratometria
+) {
 	let reader = new FileReader();
 	reader.readAsDataURL(fotografia);
 	reader.onload = async function () {
@@ -71,6 +83,14 @@ async function imageToText(fotografia, producto, keratometria) {
 			}
 		);
 		const data = await response.json();
+		if (data.error) {
+			mostrarAlerta(
+				'error',
+				'no se pudo guardar el lente de contacto'
+			);
+			return;
+		}
+		mostrarAlerta('success', 'se guardo el lente de contacto');
 		tablaLenteC(1);
 		limpiarForm();
 	};
@@ -84,7 +104,7 @@ mostrar.addEventListener('click', () => {
 	tablaLenteC(1);
 });
 
-async function tablaLenteC(estatus) {
+export async function tablaLenteC(estatus) {
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/lenteContacto/getalllente',
 		{
@@ -119,24 +139,28 @@ function mostrarTabla(coincidencias, data) {
 			`
     <tr>
     <td>${producto.nombre}</td>
+		<td>${producto.codigoBarras}</td>
     <td>${producto.marca}</td>
     <td>${producto.precioCompra}</td>
     <td>${producto.precioVenta}</td>
     <td>${producto.existencias}</td>
     <td>${keratometria}</td>
     <td><img src="${fotografia}" alt="fotografia" width="100px"/></td>
-		<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">ver</button></td>
+		<td><button class="button is-primary" type='button' onclick="ml.cargarForm(${index})">ver</button></td>
     `;
 		if (producto.estatus === 1) {
-			contenido += `<td><button class="button is-danger" type='button' onclick="eliminarLente(${producto.idProducto})">Desactivar</button></td>`;
+			contenido += `<td><button class="button is-danger" type='button' onclick="ml.eliminarLente(${producto.idProducto})">Desactivar</button></td>`;
 		} else {
-			contenido += `<td><button class="button is-success" type='button' onclick="activarLente(${producto.idProducto})">Activar</button></td>`;
+			contenido += `<td><button class="button is-success" type='button' onclick="ml.activarLente(${producto.idProducto})">Activar</button></td>`;
 		}
 	});
 	document.querySelector('tbody').innerHTML = contenido;
 }
+export function saludar() {
+	console.log('hola');
+}
 
-async function eliminarLente(index) {
+export async function eliminarLente(index) {
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/lenteContacto/deleteLente',
 		{
@@ -151,9 +175,13 @@ async function eliminarLente(index) {
 	);
 	const data = await response.json();
 	if (data.error) {
-		alert(data.error);
+		mostrarAlerta(
+			'error',
+			'no se pudo eliminar el lente de contacto'
+		);
 		return;
 	}
+	mostrarAlerta('success', 'se elimino el lente de contacto');
 	tablaLenteC('1');
 }
 
@@ -161,7 +189,7 @@ const mostrarD = document.getElementById('mostrarD');
 mostrarD.addEventListener('click', () => {
 	tablaLenteC(0);
 });
-async function activarLente(index) {
+export async function activarLente(index) {
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/lenteContacto/activateLente',
 		{
@@ -176,20 +204,25 @@ async function activarLente(index) {
 	);
 	const data = await response.json();
 	if (data.error) {
-		alert(data.error);
+		mostrarAlerta('error', 'no se pudo activar el lente de contacto');
 		return;
 	}
+	mostrarAlerta('success', 'se activo el lente de contacto');
 	tablaLenteC('0');
 }
 
 const limpiar = document.getElementById('limpiar');
 limpiar.addEventListener('click', () => {
-	document.getElementById('form').reset();
-	document.getElementById('imagen').src = './public/default.png';
-	lenteContactoActual = null;
+	limpiarForm();
 });
 
-function cargarForm(index) {
+export function limpiarForm() {
+	document.getElementById('form').reset();
+	document.getElementById('imagen').src = '../public/default.png';
+	lenteContactoActual = null;
+}
+
+export function cargarForm(index) {
 	const empleado = lentesContacto[index];
 	lenteContactoActual = empleado;
 	const { producto, keratometria, fotografia } = empleado;
@@ -208,7 +241,7 @@ const actualizar = document.getElementById('actualizar');
 actualizar.addEventListener('click', () => {
 	updateLenteC();
 });
-async function updateLenteC() {
+export async function updateLenteC() {
 	const { producto } = lenteContactoActual;
 	const datosLenteContacto = {
 		datosLenteContacto: JSON.stringify({
@@ -238,7 +271,69 @@ async function updateLenteC() {
 	);
 	const data = await response.json();
 	console.log(data);
-
+	if (data.error) {
+		mostrarAlerta(
+			'error',
+			'Nose pudo actualizar el lente de contacto'
+		);
+	}
+	mostrarAlerta('success', 'Lente de contacto actualizado');
 	tablaLenteC(`${producto.estatus}`);
 	limpiarForm();
+}
+
+const buscar = document.getElementById('buscar');
+const buscarP = document.getElementById('buscarP');
+buscarP.addEventListener('click', () => {
+	realizarBusqueda();
+});
+
+export function realizarBusqueda() {
+	//buscar si el valor de busqueda esta en el objeto empleado en alguna de sus propiedades
+	//si lo encuentra, mostrarlo en la tabla agregando a coincidencias
+	const busqueda = document.getElementById('buscar').value;
+	const coincidencias = [];
+	for (let i = 0; i < lentesContacto.length; i++) {
+		const lenteContacto = lentesContacto[i];
+		//nombre sin importar mayusculas o minusculas
+		if (
+			lenteContacto.producto.nombre
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			lenteContacto.producto.marca
+				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			lenteContacto.producto.precioCompra
+				.toString()
+				.includes(busqueda) ||
+			lenteContacto.producto.precioVenta
+				.toString()
+				.includes(busqueda) ||
+			lenteContacto.producto.existencias
+				.toString()
+				.includes(busqueda) ||
+			lenteContacto.keratometria
+				.toLowerCase()
+				.includes(busqueda.toLowerCase())
+		) {
+			coincidencias.push(lenteContacto);
+		}
+	}
+	console.table(coincidencias);
+	mostrarTabla(coincidencias, null);
+}
+
+function mostrarAlerta(icon, mensaje) {
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true
+	});
+
+	Toast.fire({
+		icon: icon,
+		title: mensaje
+	});
 }

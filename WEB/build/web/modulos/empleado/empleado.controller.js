@@ -1,33 +1,50 @@
-const form = document.querySelectorAll('form');
+const form = document.getElementById('guardar');
 let empleados = [];
-form[1].addEventListener('submit', e => {
-	e.preventDefault();
+form.addEventListener('click', () => {
+	guardar();
+});
+
+export function guardar() {
 	//validar formulario
 	// if (validarForm() === false) {
 	// 	console.log('formulario invalido');
 	// 	return;
 	// }
-
-	let persona = Object.fromEntries(new FormData(form[0]));
-	const usuario = Object.fromEntries(new FormData(form[1]));
-	//convertir fecha a dd/mm/yyyy
-	persona.fechaNacimiento = convertirFecha(persona.fechaNacimiento);
 	const empleado = {
 		datosEmpleados: JSON.stringify({
-			persona: persona,
-			usuario: usuario
+			persona: {
+				nombre: document.getElementById('nombre').value,
+				apellidoPaterno:
+					document.getElementById('apellidoPaterno').value,
+				apellidoMaterno:
+					document.getElementById('apellidoMaterno').value,
+				genero: document.getElementById('genero').value,
+				fechaNacimiento: convertirFecha(
+					document.getElementById('fechaNacimiento').value
+				),
+				telCasa: document.getElementById('telCasa').value,
+				telMovil: document.getElementById('telMovil').value,
+				calle: document.getElementById('calle').value,
+				numero: document.getElementById('numero').value,
+				colonia: document.getElementById('colonia').value,
+				cp: document.getElementById('cp').value,
+				ciudad: document.getElementById('ciudad').value,
+				estado: document.getElementById('estado').value,
+				email: document.getElementById('email').value
+			},
+			usuario: {
+				nombre: document.getElementById('nombreUsuario').value,
+				contrasenia: document.getElementById('contrasenia').value,
+				rol: document.getElementById('rol').value
+			}
 		})
 	};
 	//mandar por urlEncoded el objeto empleado al servicio
 	empleadoService(empleado);
 	//limpiar el formulario
 	limpiarForm();
-});
-
-const fecha = document.getElementById('fechaNacimiento');
-fecha.addEventListener('change', e => {
-	const fechaNacimiento = e.target.value;
-});
+	tablaEmpleado('1');
+}
 
 async function empleadoService(empleado) {
 	const urlEncoded = new URLSearchParams(empleado);
@@ -42,6 +59,11 @@ async function empleadoService(empleado) {
 		}
 	);
 	const data = await reponse.json();
+	if (data.error) {
+		mostrarAlerta('error', 'No se pudo guardar el empleado');
+		return;
+	}
+	mostrarAlerta('success', 'Empleado guardado correctamente');
 }
 const btnMostrar = document.getElementById('mostrar');
 btnMostrar.addEventListener('click', () => {
@@ -54,8 +76,7 @@ btnMostrarD.addEventListener('click', () => {
 });
 
 //tabla con los datos del empleado
-async function tablaEmpleado(estatus) {
-	console.log(estatus);
+export async function tablaEmpleado(estatus) {
 	//fetch para obtener los datos del empleado
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/empleado/getallempleado',
@@ -69,7 +90,7 @@ async function tablaEmpleado(estatus) {
 	);
 	const data = await response.json();
 	if (data.error) {
-		alert(data.error);
+		mostrarAlerta('error', 'No se pudo obtener los empleados');
 		return;
 	}
 	//crear la tabla
@@ -100,20 +121,16 @@ async function mostrarTabla(coincidencias, data) {
 	<td>${usuario.nombre}</td>
 	<td>${persona.email}</td>
 	<td>${usuario.rol}</td>
-	<td><button class="button is-primary" type='button' onclick="cargarForm(${index})">
-					<span class="icon">
-						<i class="fa fa-light fa-eye"></i>
-					</span>
+	<td><button class="button is-primary" type='button' onclick="ma.cargarForm(${index})">
+				
 					<span>Ver</span>
 			</button>
 	</td>`;
 		if (empleado.estatus === 0) {
 			/*HTML*/
 			contenido += `
-			<td><button class="button is-success" type='button' onclick="activarEmpleado(${empleados[index].IdEmpleado})">
-			<span class="icon">
-			<i class="fa fa-thin fa-trash-arrow-up"></i>
-				</span>
+			<td><button class="button is-success" type='button' onclick="ma.activarEmpleado(${empleados[index].IdEmpleado})">
+			
 				<span>Activar</span>
 			</button></td>
 			</tr>
@@ -121,10 +138,8 @@ async function mostrarTabla(coincidencias, data) {
 		} else {
 			/*HTML*/
 			contenido += `
-			<td><button class="button is-danger" type='button' onclick="eliminarEmpleado(${empleados[index].IdEmpleado})">
-			<span class="icon">
-			<i class="fa fa-thin fa-trash"></i>
-				</span>
+			<td><button class="button is-danger" type='button' onclick="ma.eliminarEmpleado(${empleados[index].IdEmpleado})">
+			
 				<span>Eliminar</span>
 			</button>
 			</td>
@@ -135,7 +150,7 @@ async function mostrarTabla(coincidencias, data) {
 	document.querySelector('tbody').innerHTML = contenido;
 }
 
-async function activarEmpleado(idEmpleado) {
+export async function activarEmpleado(idEmpleado) {
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/empleado/activateempleado',
 		{
@@ -148,15 +163,15 @@ async function activarEmpleado(idEmpleado) {
 	);
 	const data = await response.json();
 	if (data.error) {
-		alert(data.error);
+		mostrarAlerta('error', 'No se pudo activar el empleado');
 		return;
 	}
-	alert(data.result);
+	mostrarAlerta('success', 'Empleado activado correctamente');
 	tablaEmpleado('0');
 }
 
 //funcion para cargar el formulario con los datos del empleado
-function cargarForm(index) {
+export function cargarForm(index) {
 	const empleado = empleados[index];
 	const { persona, usuario } = empleado;
 	document.getElementById('nombre').value = persona.nombre;
@@ -186,7 +201,7 @@ function cargarForm(index) {
 
 const limpiar = document.getElementById('limpiar');
 limpiar.addEventListener('click', limpiarForm);
-function limpiarForm() {
+export function limpiarForm() {
 	document.getElementById('nombre').value = '';
 	document.getElementById('apellidoPaterno').value = '';
 	document.getElementById('apellidoMaterno').value = '';
@@ -211,7 +226,7 @@ function limpiarForm() {
 //actualizar los datos del empleado en el arreglo de empleados
 const actualizar = document.getElementById('actualizar');
 actualizar.addEventListener('click', actualizarEmpleado);
-function actualizarEmpleado() {
+export function actualizarEmpleado() {
 	//obtener los datos del formulario y ponerlos en un objeto empleado
 	const index = document.getElementById('index').value;
 	const em = empleados[index];
@@ -283,14 +298,15 @@ async function updateService(empleado) {
 	);
 	const data = await response.json();
 	if (data.error) {
-		alert(data.error);
+		mostrarAlerta('error', 'No se pudo actualizar el empleado');
 		return;
 	}
+	mostrarAlerta('success', 'Empleado actualizado correctamente');
 	//actualizar la tabla
 	tablaEmpleado('1');
 }
 
-async function eliminarEmpleado(idEmpleado) {
+export async function eliminarEmpleado(idEmpleado) {
 	const resp = await fetch(
 		'http://localhost:8080/Optik/api/empleado/deleteempleado',
 		{
@@ -302,12 +318,7 @@ async function eliminarEmpleado(idEmpleado) {
 		}
 	);
 
-	data = await resp.json();
-	if (data.error) {
-		alert(data.error);
-		return;
-	}
-
+	mostrarAlerta('success', 'Empleado eliminado correctamente');
 	limpiarForm();
 	tablaEmpleado('1');
 }
@@ -318,18 +329,6 @@ function convertirFecha(fecha) {
 	return `${f[2]}/${f[1]}/${f[0]}`;
 }
 
-//ocultar el formulario y mostrar la tabla
-function ocultarForm() {
-	const formulario = document.getElementById('showForm');
-	const tabla = document.getElementById('showTable');
-	if (formulario.style.display === 'none') {
-		formulario.style.display = 'block';
-		tabla.style.display = 'none';
-	} else {
-		formulario.style.display = 'none';
-		tabla.style.display = 'block';
-	}
-}
 const regexValidar = {
 	//validar solo letras y números
 	letrasNumeros: /^[a-zA-Z0-9]+$/,
@@ -495,17 +494,16 @@ function validarForm() {
 	}
 }
 
-const buscar = document.getElementById('buscar');
 const buscarP = document.getElementById('buscarP');
 buscarP.addEventListener('click', () => {
 	realizarBusqueda();
 });
 //mostrar en la tabla si coincide la búsqueda en los elementos de alumnos
-function realizarBusqueda() {
+export function realizarBusqueda() {
 	mostrarTabla(null, empleados);
 	//buscar si el valor de busqueda esta en el objeto empleado en alguna de sus propiedades
 	//si lo encuentra, mostrarlo en la tabla agregando a coincidencias
-	const busqueda = buscar.value;
+	const busqueda = document.getElementById('buscar').value;
 	const coincidencias = [];
 	for (let i = 0; i < empleados.length; i++) {
 		const empleado = empleados[i];
@@ -562,4 +560,18 @@ function realizarBusqueda() {
 	}
 	console.table(coincidencias);
 	mostrarTabla(coincidencias, null);
+}
+function mostrarAlerta(icon, mensaje) {
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000,
+		timerProgressBar: true
+	});
+
+	Toast.fire({
+		icon: icon,
+		title: mensaje
+	});
 }

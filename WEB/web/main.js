@@ -1,25 +1,47 @@
-const btn = document.querySelector('button');
+const login = document.getElementById('login');
+login.addEventListener('click', async function () {
+	console.log('login', contrasenia);
+	const datos = {
+		datosUsuario: JSON.stringify({
+			nombre: document.getElementById('nombre').value,
+			contrasenia: document.getElementById('contrasenia').value
+		})
+	};
 
-const cambiarEmpleado = async () => {
-	const res = await fetch('modulos/empleado/index.html');
-	const data = await res.text();
-	document.getElementById('app').innerHTML = data;
-	//cargar el script de empleado.controller.js
-	const script = document.createElement('script');
-	script.src = 'modulos/empleado/empleado.controller.js';
-	document.body.appendChild(script);
-};
-//cambiarContenido();
-btn.addEventListener('click', cambiarEmpleado);
+	console.log(datos);
+	const response = await fetch(
+		'http://localhost:8080/Optik/api/login/ingresar',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams(datos)
+		}
+	);
+	const data = await response.json();
+	if (data.result == 0) {
+		mostrarAlerta('error', 'Usuario o contraseña incorrectos');
+		return;
+	}
+	if (data.result == 1) {
+		mostrarAlerta('success', 'Bienvenido');
+		window.location.replace('modulos/');
+		return;
+	}
+});
 
-const cambiarLenteContacto = async () => {
-	const res = await fetch('modulos/lenteContacto/index.html');
-	const data = await res.text();
-	document.getElementById('app').innerHTML = data;
-	//cargar el script de lenteContacto.controller.js
-	const script = document.createElement('script');
-	script.src = 'modulos/lenteContacto/lenteContacto.controller.js';
-	document.body.appendChild(script);
-};
-cambiarLenteContacto();
-//cambiarEmpleado();
+function mostrarAlerta(icon, mensaje) {
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'center',
+		showConfirmButton: false,
+		timer: 500,
+		timerProgressBar: true
+	});
+
+	Toast.fire({
+		icon: icon,
+		title: mensaje
+	});
+}

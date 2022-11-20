@@ -385,28 +385,44 @@
 			</div>
 		</div>
 		<div class="column is-flex is-justify-content-space-between">
-			<button class="button is-success">
-				<span class="icon">
-					<i class="fa fa-light fa-floppy-disk"></i>
-				</span>
+			<button
+				class="button is-success"
+				type="button"
+				id="guardar"
+				onclick="ma.guardar()"
+			>
 				<span>Guardar</span>
 			</button>
-			<button class="button is-primary" type="button" id="actualizar">
+			<button
+				class="button is-primary"
+				type="button"
+				id="actualizar"
+				onclick="ma.actualizarEmpleado()"
+			>
 				Actualizar
 			</button>
-			<button class="button is-warning" type="button" id="limpiar">
+			<button
+				class="button is-warning"
+				type="button"
+				id="limpiar"
+				onclick="ma.limpiarForm()"
+			>
 				Limpiar
 			</button>
-			<button id="mostrar" class="button is-primary" type="button">
-				<span class="icon">
-					<i class="fa fa-light fa-eye"></i>
-				</span>
+			<button
+				id="mostrar"
+				class="button is-primary"
+				type="button"
+				onclick="ma.tablaEmpleado('1');"
+			>
 				<span>Ver empleados</span>
 			</button>
-			<button id="mostrarD" class="button is-link" type="button">
-				<span class="icon">
-					<i class="fa fa-light fa-eye"></i>
-				</span>
+			<button
+				id="mostrarD"
+				class="button is-link"
+				type="button"
+				onclick="ma.tablaEmpleado('0');"
+			>
 				<span>Ver empleados inactivos</span>
 			</button>
 		</div>
@@ -424,7 +440,12 @@
 					class="input"
 				/>
 			</div>
-			<button id="buscarP" class="button is-dark p-3" type="button">
+			<button
+				id="buscarP"
+				class="button is-dark p-3"
+				type="button"
+				onclick="ma.realizarBusqueda();"
+			>
 				Buscar
 			</button>
 		</header>

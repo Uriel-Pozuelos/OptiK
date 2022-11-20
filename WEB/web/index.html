@@ -3,27 +3,68 @@
 	<head>
 		<title>Optik</title>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="css/bulma.min.css" />
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="./css/bulma.min.css" />
+		<link rel="stylesheet" href="./css/style.css" />
 		<link
 			rel="stylesheet"
-			href="css/sweetalert2/sweetalert2.min.css"
+			href="./css/sweetalert2/sweetalert2.min.css"
 		/>
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
 	</head>
-	<body class="has-background-info">
-		<header>
-			<nav class="has-background-white flex">
-				<p>Qualite</p>
-			</nav>
-		</header>
-		<div id="app" style="padding-left: 20px; padding-right: 20px">
-			<button class="button is-link px-5">Ir a cliente</button>
+	<body class="has-background-info ">
+		<div id="app" style="padding-left: 20px; padding-right: 20px" >
+			<main style="height: 100vh;" class="flex2">
+				<div class="container is-max-desktop">
+					<div class="card">
+						<header class="card-header">
+							<p class="card-header-title" aling="center">Login</p>
+							<p class="card-header-title">
+								<span class="qua1">QUA</span
+								><span class="lite1">lite</span>
+							</p>
+						</header>
+            <div class="card-content ">
+              <div class="content">
+              
+                  <label class="label has-text-black">Nombre de Usuario</label>
+					<div class="control">
+						<input
+							name="nombre"
+							id="nombre"
+							class="input"
+							type="text"
+							placeholder="Nomnbre de Usuario"
+						/>
+                </div>
+                
+                
+                
+                  <label class="label has-text-black">Contraseña</label>
+					<div class="control">
+						<input
+							name="contrasenia"
+							id="contrasenia"
+							class="input"
+							type="password"
+							placeholder="Contraseña"
+						/>
+                
+              </div>
+            </div>
+					</div>
+          <footer class="card-footer is-flex is-justify-content-center is-align-content-center ">
+            <div align="center" class="m-5">
+              <button class="button is-success is-medium is-fullwidth" id="login">Ingresar</button>
+            </div>
+          </footer>
+				</div>
+			</main>
 		</div>
-		<script src="main.js" type="module"></script>
+		<script src="./main.js"></script>
 		<script src="./css/sweetalert2/sweetalert2.all.min.js"></script>
+		<script src="./components/Qualite.js"></script>
 	</body>
 </html>

@@ -233,3 +233,44 @@ BEGIN
 END //
 DELIMITER ;
 
+# procedimiento para saber si un usuario y contraseña son correctos
+DROP procedure IF EXISTS login;
+DELIMITER //
+CREATE PROCEDURE login(IN var_usuario VARCHAR(65), IN var_contrasena VARCHAR(65), OUT var_resultado INT)
+BEGIN
+    SELECT COUNT(*) INTO var_resultado FROM empleado WHERE usuario = var_usuario AND contrasena = var_contrasena;
+END //
+
+DELIMITER ;
+
+call login('admin', 'admin', @out1);
+
+
+-- procedimiento para insertar un armazon
+DROP procedure IF EXISTS insertarArmazon;
+DELIMITER //
+CREATE PROCEDURE insertarArmazon(
+                                IN var_nombre VARCHAR(255) -- 1
+                                ,IN var_marca VARCHAR(129) -- 2
+                                ,in var_modelo VARCHAR(129) -- 3
+                                ,in var_color VARCHAR(65)  -- 4
+                                ,in var_descripcion VARCHAR(255) -- 5
+                                ,in var_foto LONGTEXT -- 6
+                                ,in var_dimensiones VARCHAR(65) -- 7
+                                ,in var_precioCompra DOUBLE -- 8
+                                ,in var_precioVenta DOUBLE -- 9
+                                ,in var_existencias INT -- 10
+                                ,out var_idProducto INT -- 11
+                                ,out var_idArmazon INT -- 12
+                                ,out var_codigoBarras VARCHAR(65) -- 13
+                                )
+BEGIN
+    INSERT INTO producto(nombre, marca, precioCompra, precioVenta, existencias) VALUES(var_nombre, var_marca, var_precioCompra, var_precioVenta, var_existencias);
+    SET var_idProducto = LAST_INSERT_ID();
+    SET var_codigoBarras = concat("OA-",var_idProducto);
+    UPDATE producto SET codigoBarras = var_codigoBarras WHERE idProducto = var_idProducto;
+    INSERT INTO armazon(idProducto, modelo, color, descripcion, foto, dimensiones) VALUES(var_idProducto, var_modelo, var_color, var_descripcion, var_foto, var_dimensiones);
+    SET var_idArmazon = LAST_INSERT_ID();
+END //
+DELIMITER ;
+call insertarArmazon("Redonda", "Ray-Ban","Square", "Plateado", "Material de titanio", ".png", "34.4, 56.17", "200", "300", "4", @out1, @out2, @out3);
