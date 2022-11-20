@@ -146,7 +146,11 @@ function mostrarTabla(coincidencias, data) {
     <td>${producto.existencias}</td>
     <td>${keratometria}</td>
     <td><img src="${fotografia}" alt="fotografia" width="100px"/></td>
-		<td><button class="button is-primary" type='button' onclick="ml.cargarForm(${index})">ver</button></td>
+		<td><button class="button is-primary has-icons-left" type='button' onclick="ml.cargarForm(${index})">
+		<span class="icon is-left pt-2 mx-1">
+							<icon-eye></icon-eye>
+						</span>
+		ver</button></td>
     `;
 		if (producto.estatus === 1) {
 			contenido += `<td><button class="button is-danger" type='button' onclick="ml.eliminarLente(${producto.idProducto})">Desactivar</button></td>`;
