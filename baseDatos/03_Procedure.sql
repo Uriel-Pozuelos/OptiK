@@ -233,12 +233,49 @@ BEGIN
 END //
 DELIMITER ;
 
+
+
+
+CREATE TABLE empleado (
+    idEmpleado			INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    idPersona			INT NOT NULL,
+    idUsuario           INT NOT NULL,
+    numeroUnico         VARCHAR(65) NOT NULL DEFAULT '',
+    estatus             INT NOT NULL DEFAULT 1,
+    CONSTRAINT fk_empleado_persona FOREIGN KEY (idPersona) 
+                REFERENCES persona(idPersona),
+    CONSTRAINT fk_empleado_usuario FOREIGN KEY (idUsuario) 
+                REFERENCES usuario(idUsuario)
+);
+CREATE TABLE usuario (
+	idUsuario           INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nombre              VARCHAR(129) UNIQUE NOT NULL,
+    contrasenia         VARCHAR(129) NOT NULL,
+    rol                 VARCHAR(25) NOT NULL DEFAULT 'Empleado', -- Rol: Administrador; Empleado;
+    lastToken           VARCHAR(65) NOT NULL DEFAULT '', -- Esto es para la seguridad de los servicios
+    dateLastToken       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP -- STR_TO_DATE('01/01/1901 00:00:00', '%d/%m/%Y %H:%i:%S')
+);
+
+
+
+
+
+
 # procedimiento para saber si un usuario y contraseña son correctos
 DROP procedure IF EXISTS login;
 DELIMITER //
 CREATE PROCEDURE login(IN var_usuario VARCHAR(65), IN var_contrasena VARCHAR(65), OUT var_resultado INT)
 BEGIN
-    SELECT COUNT(*) INTO var_resultado FROM empleado WHERE usuario = var_usuario AND contrasena = var_contrasena;
+    declare var_estatus INT;
+    SELECT COUNT(*) INTO var_resultado FROM usuario WHERE nombre = var_usuario AND contrasenia = var_contrasena;
+
+    -- saber si el usuario esta activo dentro de empleado
+    IF var_resultado = 1 THEN
+        SELECT estatus INTO var_estatus FROM empleado WHERE idUsuario = (SELECT idUsuario FROM usuario WHERE nombre = var_usuario AND contrasenia = var_contrasena);
+        IF var_estatus = 0 THEN
+            SET var_resultado = 0;
+        END IF;
+    END IF;
 END //
 
 DELIMITER ;
