@@ -5,22 +5,25 @@ public class LenteContacto {
     private Producto producto;
     private String keratometria;
     private String fotografia;
+    private String tipo;
 
     public LenteContacto() {
     }
     //constructor para insertar todos los datos menos el id
 
-    public LenteContacto(Producto producto, String keratometria, String fotografia) {
+    public LenteContacto(Producto producto, String keratometria, String fotografia, String tipo) {
         this.producto = producto;
         this.keratometria = keratometria;
         this.fotografia = fotografia;
+        this.tipo = tipo;
     }
 
-    public LenteContacto(int idLenteContacto, Producto producto, String keratometria, String fotografia) {
+    public LenteContacto(int idLenteContacto, Producto producto, String keratometria, String fotografia,String tipo) {
         this.idLenteContacto = idLenteContacto;
         this.producto = producto;
         this.keratometria = keratometria;
         this.fotografia = fotografia;
+        this.tipo = tipo;
     }
 
     public int getIdLenteContacto() {
@@ -55,6 +58,17 @@ public class LenteContacto {
         this.fotografia = fotografia;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
+    
+    
     @Override
     public String toString() {
         return "LenteContacto{" +

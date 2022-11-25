@@ -12,7 +12,7 @@ import org.utl.dsm.optik.model.Producto;
 public class ControllerLenteContacto {
 
     public int insert(LenteContacto lenteContacto) throws Exception {
-        String query = "{CALL insertarLenteContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String query = "{CALL insertarLenteContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         ConexionMySQL conexion = new ConexionMySQL();
         Connection conn = conexion.open();
         int idProducto = 0;
@@ -27,15 +27,14 @@ public class ControllerLenteContacto {
         cstmt.setInt(5, lenteContacto.getProducto().getExistencias());
         cstmt.setString(6, lenteContacto.getKeratometria());
         cstmt.setString(7, lenteContacto.getFotografia());
-        cstmt.registerOutParameter(8, Types.INTEGER);
+        cstmt.setString(8, lenteContacto.getTipo());
         cstmt.registerOutParameter(9, Types.INTEGER);
-        cstmt.registerOutParameter(10, Types.VARCHAR);
-
+        cstmt.registerOutParameter(10, Types.INTEGER);
+        cstmt.registerOutParameter(11, Types.VARCHAR);
         cstmt.executeUpdate();
-
-        idProducto= cstmt.getInt(8);
-        idLenteContacto = cstmt.getInt(9);
-        codigoBarras = cstmt.getString(10);
+        idProducto= cstmt.getInt(9);
+        idLenteContacto = cstmt.getInt(10);
+        codigoBarras = cstmt.getString(11);
         // asignar los valores de los parametros de salida al objeto LenteContacto
         lenteContacto.setIdLenteContacto(idLenteContacto);
         lenteContacto.getProducto().setIdProducto(idProducto);
@@ -72,7 +71,9 @@ public class ControllerLenteContacto {
             producto.setExistencias(rs.getInt("existencias"));
             lenteContacto.setKeratometria(rs.getString("keratometria"));
             lenteContacto.setFotografia(rs.getString("fotografia"));
+            lenteContacto.setTipo(rs.getString("tipo"));
             producto.setEstatus(rs.getInt("estatus"));
+            
             lenteContacto.setProducto(producto);
             lentesContacto.add(lenteContacto);
         }
@@ -84,7 +85,7 @@ public class ControllerLenteContacto {
     }
 
     public String updateLenteContacto(LenteContacto lenteContacto) throws Exception {
-        String query = "{CALL actualizarLenteContacto(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String query = "{CALL actualizarLenteContacto(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         ConexionMySQL conexion = new ConexionMySQL();
         Connection conn = conexion.open();
         CallableStatement cstmt = conn.prepareCall(query);
@@ -96,7 +97,8 @@ public class ControllerLenteContacto {
         cstmt.setDouble(6, lenteContacto.getProducto().getPrecioVenta());
         cstmt.setInt(7, lenteContacto.getProducto().getExistencias());
         cstmt.setString(8, lenteContacto.getKeratometria());
-        cstmt.setString(9, lenteContacto.getFotografia());
+        cstmt.setString(9, lenteContacto.getTipo());
+        cstmt.setString(10, lenteContacto.getFotografia());
         cstmt.executeUpdate();
         cstmt.close();
         conn.close();

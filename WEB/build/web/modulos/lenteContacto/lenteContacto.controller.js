@@ -1,5 +1,6 @@
 let lentesContacto = [];
 let lenteContactoActual = null;
+tablaLenteC('1');
 
 fotografia.addEventListener('change', () => {
 	cambiarFoto();
@@ -13,6 +14,17 @@ export function cambiarFoto() {
 	reader.onload = function () {
 		const img = reader.result;
 		document.getElementById('imagen').src = img;
+		console.log(
+			document.getElementById('imagen').width,
+			document.getElementById('imagen').height
+		);
+		if (
+			document.getElementById('imagen').width > 252 ||
+			document.getElementById('imagen').height > 252
+		) {
+			mostrarAlerta('error', 'La imagen es muy grande');
+			document.getElementById('imagen').src = '../public/default.png';
+		}
 	};
 }
 
@@ -25,7 +37,8 @@ function getElements() {
 		existencias: document.getElementById('existencias'),
 		keratometria: document.getElementById('keratometria'),
 		fotografia: document.getElementById('fotografia'),
-		imagen: document.getElementById('imagen')
+		imagen: document.getElementById('imagen'),
+		tipo: document.getElementById('tipo')
 	};
 }
 console.log('lenteContacto.controller.js');
@@ -42,7 +55,8 @@ export async function guardar() {
 		precioVenta,
 		existencias,
 		keratometria,
-		fotografia
+		fotografia,
+		tipo
 	} = getElements();
 	let producto = {
 		nombre: nombre.value,
@@ -51,52 +65,45 @@ export async function guardar() {
 		precioVenta: precioVenta.value,
 		existencias: existencias.value
 	};
+	console.log(producto);
 	const image = fotografia.files[0];
 
-	imageToText(image, producto, keratometria.value);
+	imageToText(image, producto, keratometria.value, tipo.value);
 }
 
 export async function imageToText(
 	fotografia,
 	producto,
-	keratometria
+	keratometria,
+	tipo
 ) {
-	let reader = new FileReader();
-	reader.readAsDataURL(fotografia);
-	reader.onload = async function () {
-		const base64 = reader.result;
-		let datosLenteContacto = {
-			datosLenteContacto: JSON.stringify({
-				producto,
-				keratometria: keratometria,
-				fotografia: base64
-			})
-		};
-		const response = await fetch(
-			'http://localhost:8080/Optik/api/lenteContacto/guardar',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParams(datosLenteContacto)
-			}
-		);
-		const data = await response.json();
-		if (data.error) {
-			mostrarAlerta(
-				'error',
-				'no se pudo guardar el lente de contacto'
-			);
-			return;
+	console.log(tipo);
+	let datosLenteContacto = {
+		datosLenteContacto: JSON.stringify({
+			producto,
+			keratometria: keratometria,
+			fotografia: document.getElementById('imagen').src,
+			tipo: tipo
+		})
+	};
+	const response = await fetch(
+		'http://localhost:8080/Optik/api/lenteContacto/guardar',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: new URLSearchParams(datosLenteContacto)
 		}
-		mostrarAlerta('success', 'se guardo el lente de contacto');
-		tablaLenteC(1);
-		limpiarForm();
-	};
-	reader.onerror = function (error) {
-		console.log('Error: ', error);
-	};
+	);
+	const data = await response.json();
+	if (data.error) {
+		mostrarAlerta('error', 'no se pudo guardar el lente de contacto');
+		return;
+	}
+	mostrarAlerta('success', 'se guardo el lente de contacto');
+	tablaLenteC(1);
+	limpiarForm();
 }
 
 const mostrar = document.getElementById('mostrar');
@@ -133,7 +140,8 @@ function mostrarTabla(coincidencias, data) {
 	let contenido = '';
 	console.table(data);
 	data.forEach((lenteContacto, index) => {
-		const { producto, keratometria, fotografia } = lenteContacto;
+		const { producto, keratometria, fotografia, tipo } =
+			lenteContacto;
 		contenido +=
 			/*html*/
 			`
@@ -145,7 +153,8 @@ function mostrarTabla(coincidencias, data) {
     <td>${producto.precioVenta}</td>
     <td>${producto.existencias}</td>
     <td>${keratometria}</td>
-    <td><img src="${fotografia}" alt="fotografia" width="100px"/></td>
+		<td>${tipo}</td>
+    <td><img src="${fotografia}" alt="fotografia" width="100px" height=100px/></td>
 		<td><button class="button is-primary has-icons-left" type='button' onclick="ml.cargarForm(${index})">
 		<span class="icon is-left pt-2">
 							<icon-eye></icon-eye>
@@ -237,9 +246,9 @@ export function limpiarForm() {
 }
 
 export function cargarForm(index) {
-	const empleado = lentesContacto[index];
-	lenteContactoActual = empleado;
-	const { producto, keratometria, fotografia } = empleado;
+	const lenteA = lentesContacto[index];
+	lenteContactoActual = lenteA;
+	const { producto, keratometria, fotografia, tipo } = lenteA;
 	document.getElementById('nombre').value = producto.nombre;
 	document.getElementById('marca').value = producto.marca;
 	document.getElementById('precioCompra').value =
@@ -247,6 +256,7 @@ export function cargarForm(index) {
 	document.getElementById('precioVenta').value = producto.precioVenta;
 	document.getElementById('existencias').value = producto.existencias;
 	document.getElementById('keratometria').value = keratometria;
+	document.getElementById('tipo').value = tipo;
 	//poner la imagen en el input file
 	const imagen = document.getElementById('imagen');
 	imagen.src = fotografia;
@@ -269,7 +279,8 @@ export async function updateLenteC() {
 				existencias: document.getElementById('existencias').value
 			},
 			keratometria: document.getElementById('keratometria').value,
-			fotografia: document.getElementById('imagen').src
+			fotografia: document.getElementById('imagen').src,
+			tipo: document.getElementById('tipo').value
 		})
 	};
 
@@ -328,6 +339,9 @@ export function realizarBusqueda() {
 				.includes(busqueda) ||
 			lenteContacto.keratometria
 				.toLowerCase()
+				.includes(busqueda.toLowerCase()) ||
+			lenteContacto.tipo
+				.toLowerCase()
 				.includes(busqueda.toLowerCase())
 		) {
 			coincidencias.push(lenteContacto);
@@ -341,7 +355,7 @@ function mostrarAlerta(icon, mensaje) {
 	const Toast = Swal.mixin({
 		toast: true,
 		position: 'top-end',
-		showConfirmButton: false,
+		showConfirmButton: true,
 		timer: 3000,
 		timerProgressBar: true
 	});

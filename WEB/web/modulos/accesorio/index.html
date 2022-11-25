@@ -1,15 +1,10 @@
 <main class="pantalla">
 	<div class="center has-text-light">
-		<h1>Gestión de Lentes de contacto</h1>
+		<h1>Gestión de accesorios/h1>
 	</div>
 	<form id="form">
     
 		<div class="columns">
-      <div class="column" align="center">
-        <div class="image is-128x128">
-          <img src="../public/default.png" alt="image" id="imagen">
-        </div>
-      </div>
 
 			<div class="column">
 				<div class="field">
@@ -122,72 +117,13 @@
           </div>
         </div>
 
-        <div class="column">
-          <div class="field">
-            <label class="label has-text-light">Keratometria</label>
-            <div class="control">
-              <input
-                class="input"
-                type="number"
-                placeholder="Keratometria"
-                name="keratometria"
-                id="keratometria"
-              />
-            </div>
-            <p
-              class="help is-danger"
-              id="keratometriaP"
-              style="display: none"
-            >
-              El tipo es incorrecto
-            </p>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="field">
-            <label class="label has-text-light">Fotografia</label>
-            <div class="control">
-              <input
-                class="input"
-                type="file"
-                placeholder="Fotografia"
-                name="fotografia"
-                id="fotografia"
-                accept=".jpg, .jpeg, .png"
-                onchange="ml.cambiarFoto()"
-              />
-            </div>
-            <p
-              class="help is-danger"
-              id="fotografiaP"
-              style="display: none"
-            >
-              El tipo es incorrecto
-            </p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="field">
-            <label class="label has-text-light">Tipo</label>
-            <div class="control">
-              <div class="select">
-                <select name="tipo" id="tipo">
-                  <option value="estetico">Estético</option>
-                  <option value="graduacion">Graduación</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
 		</div>
 <div class="columns">
   <div class="column is-flex is-justify-content-space-between">
     <button class="button is-success hass-icons-left" type="button" id="guardar"
-    onclick="ml.guardar()"
+    onclick="mac.guardar()"
     >
     <span class="icon is-left pt-2">
       <icon-save></icon-save>
@@ -195,7 +131,7 @@
       <span>Guardar</span>
     </button>
     <button class="button is-primary has-icons-left" type="button" id="actualizar"
-    onclick="ml.updateLenteC();"
+    onclick="mac.updateAccesorio();"
     >
     <span class="icon is-left pt-2">
       <icon-update></icon-update>
@@ -203,7 +139,7 @@
       <span>Actualizar</span>
     </button>
     <button class="button is-warning has-icons-left" type="button" id="limpiar"
-    onclick="ml.limpiarForm()"
+    onclick="mac.limpiarForm()"
     >
     <span class="icon is-left pt-2">
       <icon-clean></icon-clean>
@@ -211,20 +147,20 @@
       <span>Limpiar</span>
     </button>
     <button id="mostrar" class="button is-primary has-icons-left" type="button"
-    onclick="ml.tablaLenteC('1')"
+    onclick="mac.tablaAccesorio('1')"
     >
     <span class="icon is-left pt-2">
       <icon-eye></icon-eye>
     </span>
-      <span>Ver lentes contacto</span>
+      <span>Ver accesorios</span>
     </button>
     <button id="mostrarD" class="button is-link has-icons-left" type="button"
-    onclick="ml.tablaLenteC('0')"
+    onclick="mac.tablaAccesorio('0')"
     >
     <span class="icon is-left pt-2">
       <icon-eye></icon-eye>
     </span>
-      <span>Ver lentes contacto inactivos</span>
+      <span>Ver accesorios inactivos</span>
     </button>
   </div>
 </div>
@@ -232,7 +168,7 @@
 	</form>
   <div class="card mt-5">
 		<header class="card-header flex p-2">
-			<h3 class="card-header-title">Tabla de lentes de contacto</h3>
+			<h3 class="card-header-title">Tabla de accesorios</h3>
 			<div class="control">
 				<input
 					type="text"
@@ -242,7 +178,7 @@
 				/>
 			</div>
 			<button id="buscarP" class="button is-dark p-3 has-icons-left" type="button"
-      onclick="ml.realizarBusqueda()" 
+      onclick="mac.realizarBusqueda()" 
       >
 			<span class="icon is-left pt-2">
         <icon-search></icon-search>
@@ -263,9 +199,6 @@
 							<th>Precio compra</th>
               <th>Precio venta</th>
               <th>Existencias</th>
-              <th>Keratometria</th>
-              <th>Tipo</th>
-              <th>Fotografia</th>
 							<th>Ver</th>
 							<th>Estatus</th>
 						</tr>

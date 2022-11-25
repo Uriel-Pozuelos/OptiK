@@ -180,6 +180,7 @@ CREATE PROCEDURE insertarLenteContacto(
                                         ,IN var_existencias INT -- 6
                                         ,IN var_keratometria INT -- 7
                                         ,IN var_fotografia LONGTEXT -- 8
+										,in var_tipo VARCHAR(129)
                                         ,OUT var_idProducto INT -- 9
                                         ,OUT var_idLenteContacto INT -- 10
                                         ,OUT var_codigoBarras VARCHAR(65) -- 1
@@ -189,7 +190,7 @@ BEGIN
     SET var_idProducto = LAST_INSERT_ID();
     SET var_codigoBarras = concat("OQ-",var_idProducto);
     UPDATE producto SET codigoBarras = var_codigoBarras WHERE idProducto = var_idProducto;
-    INSERT INTO lente_contacto(idProducto, keratometria, fotografia) VALUES(var_idProducto, var_keratometria, var_fotografia);
+    INSERT INTO lente_contacto(idProducto, keratometria, fotografia,tipo) VALUES(var_idProducto, var_keratometria, var_fotografia, var_tipo);
     SET var_idLenteContacto = LAST_INSERT_ID();
 END //
 DELIMITER ;
@@ -207,11 +208,15 @@ CREATE PROCEDURE actualizarLenteContacto(
                                         ,IN var_precioVenta DOUBLE -- 6
                                         ,IN var_existencias INT -- 7
                                         ,IN var_keratometria INT -- 8
+                                        ,in var_tipo VARCHAR(129)
                                         ,IN var_fotografia LONGTEXT -- 9
                                         )
 BEGIN
     UPDATE producto SET nombre = var_nombre, marca = var_marca, precioCompra = var_precioCompra, precioVenta = var_precioVenta, existencias = var_existencias WHERE idProducto = var_idProducto;
-    UPDATE lente_contacto SET keratometria = var_keratometria, fotografia = var_fotografia WHERE idLenteContacto = var_idLenteContacto;
+    UPDATE lente_contacto SET keratometria = var_keratometria, fotografia = var_fotografia, tipo = var_tipo WHERE idLenteContacto = var_idLenteContacto;
+    IF var_existencias = 0 THEN
+        UPDATE producto SET estatus = 0 WHERE idProducto = var_idProducto;
+    END IF;
 END //
 DELIMITER ;
 
@@ -233,34 +238,6 @@ BEGIN
 END //
 DELIMITER ;
 
-
-
-
-CREATE TABLE empleado (
-    idEmpleado			INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    idPersona			INT NOT NULL,
-    idUsuario           INT NOT NULL,
-    numeroUnico         VARCHAR(65) NOT NULL DEFAULT '',
-    estatus             INT NOT NULL DEFAULT 1,
-    CONSTRAINT fk_empleado_persona FOREIGN KEY (idPersona) 
-                REFERENCES persona(idPersona),
-    CONSTRAINT fk_empleado_usuario FOREIGN KEY (idUsuario) 
-                REFERENCES usuario(idUsuario)
-);
-CREATE TABLE usuario (
-	idUsuario           INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    nombre              VARCHAR(129) UNIQUE NOT NULL,
-    contrasenia         VARCHAR(129) NOT NULL,
-    rol                 VARCHAR(25) NOT NULL DEFAULT 'Empleado', -- Rol: Administrador; Empleado;
-    lastToken           VARCHAR(65) NOT NULL DEFAULT '', -- Esto es para la seguridad de los servicios
-    dateLastToken       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP -- STR_TO_DATE('01/01/1901 00:00:00', '%d/%m/%Y %H:%i:%S')
-);
-
-
-
-
-
-
 # procedimiento para saber si un usuario y contraseña son correctos
 DROP procedure IF EXISTS login;
 DELIMITER //
@@ -268,7 +245,6 @@ CREATE PROCEDURE login(IN var_usuario VARCHAR(65), IN var_contrasena VARCHAR(65)
 BEGIN
     declare var_estatus INT;
     SELECT COUNT(*) INTO var_resultado FROM usuario WHERE nombre = var_usuario AND contrasenia = var_contrasena;
-
     -- saber si el usuario esta activo dentro de empleado
     IF var_resultado = 1 THEN
         SELECT estatus INTO var_estatus FROM empleado WHERE idUsuario = (SELECT idUsuario FROM usuario WHERE nombre = var_usuario AND contrasenia = var_contrasena);
@@ -280,8 +256,9 @@ END //
 
 DELIMITER ;
 
-call login('admin', 'admin', @out1);
-
+call login('Diedsgo', 'admin', @out1);
+select @out1;
+select * from vista_empleados;
 
 -- procedimiento para insertar un armazon
 DROP procedure IF EXISTS insertarArmazon;
@@ -310,4 +287,99 @@ BEGIN
     SET var_idArmazon = LAST_INSERT_ID();
 END //
 DELIMITER ;
-call insertarArmazon("Redonda", "Ray-Ban","Square", "Plateado", "Material de titanio", ".png", "34.4, 56.17", "200", "300", "4", @out1, @out2, @out3);
+drop PROCEDURE IF EXISTS insertarArmazon;
+call insertarArmazon("Redonda","Square", "200", "300", "4", "Material de titanio", "Plateado", "34.4, 56.17","es ta bonito",".png", @out1, @out2, @out3);
+DELIMITER //
+
+
+CREATE TABLE accesorio(
+    idAccesorio         INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    idProducto          INT NOT NULL,    
+    CONSTRAINT fk_accesorio_producto FOREIGN KEY (idProducto) 
+                REFERENCES producto(idProducto)
+);
+CREATE TABLE producto(
+    idProducto          INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    codigoBarras        VARCHAR(65) NOT NULL DEFAULT '',
+    nombre              VARCHAR(255) NOT NULL,
+    marca               VARCHAR(129) NOT NULL,
+    precioCompra        DOUBLE NOT NULL DEFAULT 0.0,
+    precioVenta         DOUBLE NOT NULL DEFAULT 0.0,
+    existencias         INT NOT NULL DEFAULT 1,
+    estatus             INT NOT NULL DEFAULT 1 -- 1: Activo; 0: Inactivo o Eliminado
+);
+
+-- procedimiento para insertar un accesorio
+DROP procedure IF EXISTS insertarAccesorio;
+DELIMITER //
+CREATE PROCEDURE insertarAccesorio(
+                                IN var_nombre VARCHAR(255) -- 1
+                                ,IN var_marca VARCHAR(129) -- 2
+                                ,in var_precioCompra DOUBLE -- 5
+                                ,in var_precioVenta DOUBLE -- 6
+                                ,in var_existencias INT -- 7
+                                ,out var_idProducto INT -- 8
+                                ,out var_idAccesorio INT -- 9
+                                ,out var_codigoBarras VARCHAR(65) -- 10
+                                )
+BEGIN
+    INSERT INTO producto(nombre, marca, precioCompra, precioVenta, existencias) VALUES(var_nombre, var_marca, var_precioCompra, var_precioVenta, var_existencias);
+    SET var_idProducto = LAST_INSERT_ID();
+    SET var_codigoBarras = concat("OA-",var_idProducto);
+    UPDATE producto SET codigoBarras = var_codigoBarras WHERE idProducto = var_idProducto;
+    INSERT INTO accesorio(idProducto) VALUES(var_idProducto);
+    SET var_idAccesorio = LAST_INSERT_ID();
+END //
+DELIMITER ;
+ CALL insertarAccesorio("Redonda","Square", "34.4, 56.17","es ta bonito",".png", @out1, @out2, @out3);
+
+ -- procedimiento para actualizar un accesorio
+
+DROP procedure IF EXISTS actualizarAccesorio;
+DELIMITER //
+CREATE PROCEDURE actualizarAccesorio(
+                                IN var_idProducto INT -- 2
+                                ,IN var_nombre VARCHAR(255) -- 3
+                                ,IN var_marca VARCHAR(129) -- 4
+                                ,in var_precioCompra DOUBLE -- 5
+                                ,in var_precioVenta DOUBLE -- 6
+                                ,in var_existencias INT -- 7
+                                )
+BEGIN
+    UPDATE producto SET nombre = var_nombre, marca = var_marca, precioCompra = var_precioCompra, precioVenta = var_precioVenta, existencias = var_existencias WHERE idProducto = var_idProducto;
+    -- si la existencia es 0, se cambia el estatus a 0
+    IF var_existencias = 0 THEN
+        UPDATE producto SET estatus = 0 WHERE idProducto = var_idProducto;
+    END IF;
+END //
+DELIMITER ;
+
+-- procedimiento para eliminar un accesorio
+DROP procedure IF EXISTS eliminarAccesorio;
+DELIMITER //
+CREATE PROCEDURE eliminarAccesorio(
+                                IN var_idProducto INT -- 2
+                                )
+BEGIN
+    UPDATE producto SET estatus = 0 WHERE idProducto = var_idProducto;
+END //
+DELIMITER ;
+
+-- procedimiento para activar un accesorio
+
+DROP procedure IF EXISTS activarAccesorio;
+DELIMITER //
+CREATE PROCEDURE activarAccesorio(
+                                IN var_idProducto INT -- 2
+                                )
+BEGIN
+    UPDATE producto SET estatus = 1 WHERE idProducto = var_idProducto;
+END //
+DELIMITER ;
+
+-- vista para mostrar los accesorios
+DROP VIEW IF EXISTS vistaAccesorio;
+CREATE VIEW vistaAccesorio AS
+SELECT p.idProducto, p.codigoBarras, p.nombre, p.marca, p.precioCompra, p.precioVenta, p.existencias, p.estatus, a.idAccesorio
+FROM producto p
+INNER JOIN accesorio a ON p.idProducto = a.idProducto;

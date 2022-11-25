@@ -153,6 +153,11 @@ CREATE TABLE lente_contacto(
     CONSTRAINT fk_lentecontacto_producto FOREIGN KEY (idProducto) 
                 REFERENCES producto(idProducto)
 );
+alter table lente_contacto
+add  tipo              VARCHAR(129) NOT NULL;
+# agregamos 'estetico' como valor DEFAULT para el campo 'tipo'
+alter table lente_contacto
+alter column tipo set default 'estetico';
 
 -- ------------- TABLA EXAMEN_DE_LA_VISTA -------------- --
 CREATE TABLE examen_vista(
@@ -273,3 +278,13 @@ CREATE TABLE compra_producto(
     CONSTRAINT fk_compraproducto_producto FOREIGN KEY (idProducto) 
                 REFERENCES producto(idProducto)
 );
+
+GRANT INSERT,DELETE ON optiqalumnos.producto
+TO'Servidor'@'%';
+GRANT INSERT,DELETE ON optiqalumnos.solucion
+TO'Servidor'@'%';
+GRANT INSERT,DELETE ON optiqalumnos.armazon
+TO'Servidor'@'%';
+
+# a cada producto ponerle el valor 'estetico' en el campo 'tipo'
+UPDATE optiqalumnos.producto SET tipo = 'estetico' WHERE tipo IS NULL;

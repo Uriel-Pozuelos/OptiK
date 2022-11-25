@@ -1,3 +1,4 @@
+tablaEmpleado('1');
 const form = document.getElementById('guardar');
 let empleados = [];
 form.addEventListener('click', () => {
@@ -45,7 +46,6 @@ export function guardar() {
 	limpiarForm();
 	tablaEmpleado('1');
 }
-
 async function empleadoService(empleado) {
 	const urlEncoded = new URLSearchParams(empleado);
 	const reponse = await fetch(
@@ -568,7 +568,7 @@ function mostrarAlerta(icon, mensaje) {
 	const Toast = Swal.mixin({
 		toast: true,
 		position: 'top-end',
-		showConfirmButton: false,
+		showConfirmButton: true,
 		timer: 3000,
 		timerProgressBar: true
 	});

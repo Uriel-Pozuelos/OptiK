@@ -157,13 +157,12 @@ insert into solucion values(10,30,0);
  #8
  DROP VIEW IF EXISTS v_lenteContacto;
 CREATE VIEW v_lenteContacto AS(
-	SELECT lc.idLenteContacto, p.idProducto, lc.keratometria, lc.fotografia, p.codigoBarras, p.nombre, p.marca, p.precioCompra, p.precioVenta, p.existencias
+	SELECT lc.idLenteContacto,estatus,tipo ,p.idProducto, lc.keratometria, lc.fotografia, p.codigoBarras, p.nombre, p.marca, p.precioCompra, p.precioVenta, p.existencias
     FROM lente_contacto lc
     INNER JOIN producto p
     ON p.idProducto = lc.idProducto
-    WHERE p.estatus = 1
 );
-SELECT * FROM v_lenteContacto;
+SELECT * FROM v_lentecontacto where estatus =1;
 insert into producto values(42,'113403903','lente contacto morado','eyeSoul',550,770,9,0);
 insert into lente_contacto values(12,42,60,'foto.jpg');
 
@@ -180,3 +179,5 @@ CREATE VIEW v_lenteContacto_inactivos AS(
 SELECT * FROM v_lenteContacto_inactivos;
 
 
+
+SELECT  DATE_FORMAT(NOW(), '%H:%i');
