@@ -2,10 +2,6 @@ let lentesContacto = [];
 let lenteContactoActual = null;
 tablaLenteC('1');
 
-fotografia.addEventListener('change', () => {
-	cambiarFoto();
-});
-
 export function cambiarFoto() {
 	const { fotografia } = getElements();
 	const file = fotografia.files[0];
@@ -14,10 +10,6 @@ export function cambiarFoto() {
 	reader.onload = function () {
 		const img = reader.result;
 		document.getElementById('imagen').src = img;
-		console.log(
-			document.getElementById('imagen').width,
-			document.getElementById('imagen').height
-		);
 		if (
 			document.getElementById('imagen').width > 252 ||
 			document.getElementById('imagen').height > 252
@@ -41,7 +33,6 @@ function getElements() {
 		tipo: document.getElementById('tipo')
 	};
 }
-console.log('lenteContacto.controller.js');
 form = document.getElementById('guardar');
 form.addEventListener('click', () => {
 	guardar();
@@ -65,7 +56,6 @@ export async function guardar() {
 		precioVenta: precioVenta.value,
 		existencias: existencias.value
 	};
-	console.log(producto);
 	const image = fotografia.files[0];
 
 	imageToText(image, producto, keratometria.value, tipo.value);
@@ -77,7 +67,6 @@ export async function imageToText(
 	keratometria,
 	tipo
 ) {
-	console.log(tipo);
 	let datosLenteContacto = {
 		datosLenteContacto: JSON.stringify({
 			producto,
@@ -138,7 +127,6 @@ function mostrarTabla(coincidencias, data) {
 		lentesContacto = data;
 	}
 	let contenido = '';
-	console.table(data);
 	data.forEach((lenteContacto, index) => {
 		const { producto, keratometria, fotografia, tipo } =
 			lenteContacto;
@@ -163,7 +151,7 @@ function mostrarTabla(coincidencias, data) {
 		</button></td>
     `;
 		if (producto.estatus === 1) {
-			contenido += `<td><button class="button is-danger has-icons-left" type='button' onclick="ml.eliminarLente(${producto.idProducto})">
+			contenido += `<td><button class='button is-danger has-icons-left' type='button' onclick="ml.eliminarLente(${producto.idProducto})">
 			<span class="icon is-left pt-2">
 							<icon-delete></icon-delete>
 						</span>
@@ -178,9 +166,6 @@ function mostrarTabla(coincidencias, data) {
 		}
 	});
 	document.querySelector('tbody').innerHTML = contenido;
-}
-export function saludar() {
-	console.log('hola');
 }
 
 export async function eliminarLente(index) {
@@ -295,7 +280,7 @@ export async function updateLenteC() {
 		}
 	);
 	const data = await response.json();
-	console.log(data);
+
 	if (data.error) {
 		mostrarAlerta(
 			'error',
@@ -347,7 +332,7 @@ export function realizarBusqueda() {
 			coincidencias.push(lenteContacto);
 		}
 	}
-	console.table(coincidencias);
+
 	mostrarTabla(coincidencias, null);
 }
 

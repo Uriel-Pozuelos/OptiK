@@ -1,5 +1,6 @@
 const login = document.getElementById('login');
 login.addEventListener('click', async function () {
+	localStorage.setItem('vistaActual', '');
 	const datos = {
 		datosUsuario: JSON.stringify({
 			nombre: document.getElementById('nombre').value,
@@ -22,12 +23,6 @@ login.addEventListener('click', async function () {
 	if (data.result == 0) {
 		login.classList.remove('is-loading');
 		mostrarAlerta('error', 'Usuario o contraseña incorrectos');
-		return;
-	}
-	if (data.result == 1) {
-		login.classList.remove('is-loading');
-		mostrarAlerta('success', 'Bienvenido');
-		window.location.replace('modulos/');
 		return;
 	}
 });

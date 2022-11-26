@@ -1,5 +1,6 @@
 const login = document.getElementById('login');
 login.addEventListener('click', async function () {
+	localStorage.setItem('vistaActual', '');
 	const datos = {
 		datosUsuario: JSON.stringify({
 			nombre: document.getElementById('nombre').value,

@@ -3,7 +3,6 @@ package org.utl.dsm.optik.controller;
 
 import org.utl.dsm.optik.db.ConexionMySQL;
 import org.utl.dsm.optik.model.LenteContacto;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -561,7 +561,6 @@ export function realizarBusqueda() {
 			coincidencias.push(empleado);
 		}
 	}
-	console.table(coincidencias);
 	mostrarTabla(coincidencias, null);
 }
 function mostrarAlerta(icon, mensaje) {
