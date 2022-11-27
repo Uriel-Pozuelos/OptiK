@@ -175,6 +175,8 @@ export async function activarEmpleado(idEmpleado) {
 
 //funcion para cargar el formulario con los datos del empleado
 export function cargarForm(index) {
+	document.getElementById('guardar').classList.add('is-hidden');
+	document.getElementById('actualizar').classList.remove('is-hidden');
 	const empleado = empleados[index];
 	const { persona, usuario } = empleado;
 	document.getElementById('nombre').value = persona.nombre;
@@ -205,6 +207,8 @@ export function cargarForm(index) {
 const limpiar = document.getElementById('limpiar');
 limpiar.addEventListener('click', limpiarForm);
 export function limpiarForm() {
+	document.getElementById('guardar').classList.remove('is-hidden');
+	document.getElementById('actualizar').classList.add('is-hidden');
 	document.getElementById('nombre').value = '';
 	document.getElementById('apellidoPaterno').value = '';
 	document.getElementById('apellidoMaterno').value = '';

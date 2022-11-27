@@ -111,10 +111,14 @@ function mostrarTabla(coincidencias, data) {
 	document.querySelector('tbody').innerHTML = contenido;
 }
 export function limpiarForm() {
+	document.getElementById('guardar').classList.remove('is-hidden');
+	document.getElementById('actualizar').classList.add('is-hidden');
 	document.getElementById('form').reset();
 	accesorioActual = null;
 }
 export function cargarForm(index) {
+	document.getElementById('guardar').classList.add('is-hidden');
+	document.getElementById('actualizar').classList.remove('is-hidden');
 	const accesorioA = accesorio[index];
 	accesorioActual = accesorioA;
 	console.log(accesorioActual);
@@ -190,7 +194,10 @@ export function realizarBusqueda() {
 			coincidencias.push(accesorioA);
 		}
 	}
-	console.table(coincidencias);
+	if (coincidencias.length == 0) {
+		mostrarAlerta('warning', 'No se han encontrado coincidencias');
+		return;
+	}
 	mostrarTabla(coincidencias, null);
 }
 

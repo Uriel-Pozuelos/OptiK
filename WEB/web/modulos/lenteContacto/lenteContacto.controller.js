@@ -227,10 +227,15 @@ limpiar.addEventListener('click', () => {
 export function limpiarForm() {
 	document.getElementById('form').reset();
 	document.getElementById('imagen').src = '../public/default.png';
+	document.getElementById('guardar').classList.remove('is-hidden');
+	document.getElementById('actualizar').classList.add('is-hidden');
 	lenteContactoActual = null;
 }
 
 export function cargarForm(index) {
+	document.getElementById('guardar').classList.add('is-hidden');
+	document.getElementById('actualizar').classList.remove('is-hidden');
+
 	const lenteA = lentesContacto[index];
 	lenteContactoActual = lenteA;
 	const { producto, keratometria, fotografia, tipo } = lenteA;
@@ -332,7 +337,10 @@ export function realizarBusqueda() {
 			coincidencias.push(lenteContacto);
 		}
 	}
-
+	if (coincidencias.length == 0) {
+		mostrarAlerta('warning', 'No se han encontrado coincidencias');
+		return;
+	}
 	mostrarTabla(coincidencias, null);
 }
 

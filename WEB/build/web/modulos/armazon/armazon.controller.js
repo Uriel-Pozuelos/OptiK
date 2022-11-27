@@ -41,27 +41,15 @@ export function insertar() {
 		}
 	})
 		.then(response => response.json())
-		.then(
-			data =>
-				function (data) {
-					if (data.error) {
-					} else if (data.idProducto) {
-						alert(
-							'Armazon almacenado de forma correcta con id: ' +
-								data.idProducto
-						);
-					} else {
-						JSON.stringify(data);
-						alert(JSON.stringify(data));
-					}
-
-					JSON.stringify(data);
-				}
-		);
-	setTimeout(() => {
-		getAll(1);
-		limpiar();
-	}, 1000);
+		.then(data => {
+			if (data.error) {
+				mostrarAlerta('error', 'Error al guardar');
+				return;
+			}
+			mostrarAlerta('success', 'Guardado con exito');
+			getAll(1);
+			limpiar();
+		});
 }
 
 export function actualizar() {
@@ -114,21 +102,16 @@ export function actualizar() {
 		}
 	})
 		.then(response => response.json())
-		.then(
-			data =>
-				function (data) {
-					if (data.error) {
-						alert('Error');
-					} else if (data.idProducto) {
-						alert(
-							'Armazon actualizado de forma correcta con id: ' +
-								data.idProducto
-						);
-					} else {
-						JSON.stringify(data);
-					}
-				}
-		);
+		.then(data => {
+			if (data.error) {
+				mostrarAlerta('error', 'Error al actualizar');
+				return;
+			} else if (data.idArmazon) {
+				mostrarAlerta('success', 'Actualizado con exito');
+				getAll(1);
+				limpiar();
+			}
+		});
 	//actualizar la tabla de acuerdo al estatus
 	setTimeout(() => {
 		getAll(`${armazonA.producto.estatus}`);
@@ -185,17 +168,23 @@ export function cargarTablaArmazon(coincidencias, data) {
 		contenido +=
 			"<td><button type='button'  class='button is-primary has-icons-left' type='button' onclick='mar.cargarForm(" +
 			index +
-			");'>VER</td>";
+			`);'><span class="icon is-left pt-2">
+			<icon-eye></icon-eye>
+		</span></td>`;
 		if (rmazon.producto.estatus == 0) {
 			contenido +=
 				"<td><button type='button' class='button is-success has-icons-left' type='button' onclick='mar.activar(" +
 				producto.idProducto +
-				");'>ACTIVAR</td>";
+				`);'><span class="icon is-left pt-2">
+							<icon-check></icon-check>
+						</span></td>`;
 		} else {
 			contenido +=
 				"<td><button type='button' class='button is-danger has-icons-left' type='button' onclick='mar.eliminar(" +
 				producto.idProducto +
-				");'>DESACTIVAR</td>";
+				`);'><span class="icon is-left pt-2">
+				<icon-delete></icon-delete>
+			</span></td>`;
 		}
 		contenido += '</tr>';
 	});
@@ -203,6 +192,12 @@ export function cargarTablaArmazon(coincidencias, data) {
 }
 
 export function cargarForm(i) {
+	//agregar clase is-hidden a btnGuardar
+	document.getElementById('btnGuardar').classList.add('is-hidden');
+	document
+		.getElementById('btnActualizar')
+		.classList.remove('is-hidden');
+
 	document.getElementById('txtidArmazon').value =
 		armazon[i].idArmazon;
 	document.getElementById('txtidProducto').value =
@@ -229,6 +224,8 @@ export function cargarForm(i) {
 }
 
 export function limpiar() {
+	document.getElementById('btnGuardar').classList.remove('is-hidden');
+	document.getElementById('btnActualizar').classList.add('is-hidden');
 	document.getElementById('txtidArmazon').value = '';
 	document.getElementById('txtidProducto').value = '';
 	document.getElementById('txtcodigoBarras').value = '';
@@ -250,6 +247,7 @@ export function eliminar(i) {
 		`http://localhost:8080/Optik/api/armazon/actualizarestatus?idProducto=${i}&estatus=0`
 	);
 	setTimeout(() => {
+		mostrarAlerta('success', 'Se ha eliminado el armazon');
 		getAll(1);
 	}, 500);
 }
@@ -258,6 +256,7 @@ export function activar(i) {
 		`http://localhost:8080/Optik/api/armazon/actualizarestatus?idProducto=${i}&estatus=1`
 	);
 	setTimeout(() => {
+		mostrarAlerta('success', 'Se ha activado el armazon');
 		getAll(0);
 	}, 500);
 }
@@ -290,6 +289,10 @@ export function buscar() {
 		) {
 			coincidencias.push(rmazon);
 		}
+		if (coincidencias.length == 0) {
+			mostrarAlerta('warning', 'No se han encontrado coincidencias');
+			return;
+		}
 
 		cargarTablaArmazon(coincidencias, null);
 	}
@@ -304,4 +307,19 @@ export function cambiarFoto() {
 		const img = reader.result;
 		document.getElementById('image').src = img;
 	};
+}
+
+function mostrarAlerta(icon, mensaje) {
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: true,
+		timer: 3000,
+		timerProgressBar: true
+	});
+
+	Toast.fire({
+		icon: icon,
+		title: mensaje
+	});
 }

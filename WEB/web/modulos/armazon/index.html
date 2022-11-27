@@ -182,41 +182,49 @@
 		<div class="columns">
 			<div class="column is-flex is-justify-content-space-between">
 				<button
+						id="btnGuardar"
 						type="button"
 						onclick="mar.insertar()"
-						class="button is-success"
+						class="button is-success has-icons-left"
 					>
-						Guardar
+					<span class="icon is-left pt-2"><icon-save></icon-save></span>
+						<span>Guardar</span>
 					</button>
 					<button
+						id="btnActualizar"
 						type="button"
 						onclick="mar.actualizar();"
-						class="button is-primary"
+						class="button is-primary has-icons-left is-hidden"
 					>
-						Actualizar
+					
+					<span class="icon is-left pt-2"><icon-update></icon-update></span>
+						<span>Actualizar</span>
 					</button>
 					<button
 						type="button"
 						onclick="mar.limpiar();"
-						class="button is-warning"
+						class="button is-warning has-icons-left"
 					>
-						Limpiar
+					<span class="icon is-left pt-2"><icon-clean></icon-clean></span>
+						<span>Limpiar</span>
 					</button>
 					<button
 						type="button"
 						onclick="mar.getAll(1);"
-						class="button is-primary"
+						class="button is-primary has-icons-left"
 						id="gg-trash"
 					>
-						Ver armazones 
+					<span class="icon is-left pt-2"><icon-eye></icon-eye></span>
+						<span>Ver armazones </span>
 					</button>
 
 					<button
 						type="button"
 						onclick="mar.getAll(0);"
-						class="button is-link"
+						class="button is-link has-icons-left"
 					>
-						Ver armazones inactivos
+					<span class="icon is-left pt-2"><icon-eye></icon-eye></span>
+						<span>Ver armazones inactivos</span>
 					</button>
 					<!-- <button
 						type="button"

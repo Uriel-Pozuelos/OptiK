@@ -25,6 +25,7 @@ login.addEventListener('click', async function () {
 		mostrarAlerta('error', 'Usuario o contraseña incorrectos');
 		return;
 	}
+	window.location.href = 'modulos/';
 });
 
 function mostrarAlerta(icon, mensaje) {

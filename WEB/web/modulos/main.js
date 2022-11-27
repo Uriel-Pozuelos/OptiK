@@ -14,6 +14,7 @@ const cambiarEmpleado = async () => {
 	//cargar el script de empleado.controller.js con un import dinamico
 	const obj = await import('./empleado/empleado.controller.js');
 	ma = obj;
+	ma.tablaEmpleado('1');
 	//guardar en el localstorage la vista actual
 	localStorage.setItem('vistaActual', 'empleado');
 };
