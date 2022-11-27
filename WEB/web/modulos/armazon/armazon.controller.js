@@ -1,6 +1,9 @@
 let armazon = [];
 
 export function insertar() {
+	if (validar() == false) {
+		return;
+	}
 	let nombre = document.getElementById('txtnombre').value;
 	let marca = document.getElementById('txtmarca').value;
 	let precioCompra = document.getElementById('txtprecioCompra').value;
@@ -53,6 +56,9 @@ export function insertar() {
 }
 
 export function actualizar() {
+	if (validar() == false) {
+		return;
+	}
 	let idArmazon = document.getElementById('txtidArmazon').value;
 	let idProducto = document.getElementById('txtidProducto').value;
 	let nombre = document.getElementById('txtnombre').value;
@@ -322,4 +328,104 @@ function mostrarAlerta(icon, mensaje) {
 		icon: icon,
 		title: mensaje
 	});
+}
+
+const regexValidar = {
+	//validar letras, espacios y acentos
+	letras: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+	//validar numeros y puntos
+	numeros: /^[0-9.]+$/,
+	//validar numeros
+	numerosEnteros: /^[0-9]+$/,
+	//validar letras, espacios, acentos,numeros, puntos, comas, guiones y maximo 240 caracteres
+	letrasNumerosSimbolos: /^[a-zA-ZÀ-ÿ0-9\s.,-]{1,240}$/
+};
+
+function validar() {
+	let nombre = document.getElementById('txtnombre').value;
+	let marca = document.getElementById('txtmarca').value;
+	let precioCompra = document.getElementById('txtprecioCompra').value;
+	let precioVenta = document.getElementById('txtprecioVenta').value;
+	let existencias = document.getElementById('txtexistencias').value;
+	let modelo = document.getElementById('txtmodelo').value;
+	let color = document.getElementById('txtcolor').value;
+	let dimensiones = document.getElementById('txtdimensiones').value;
+	let fotografia = document.getElementById('image').src;
+	let descripcion = document.getElementById('txtdescripcion').value;
+	if (
+		document.getElementById('image').naturalWidth < 252 ||
+		document.getElementById('image').naturalHeight < 252
+	) {
+		mostrarAlerta('warning', 'La imagen debe ser de maximo 252x252');
+		return false;
+	}
+	if (
+		nombre == '' ||
+		marca == '' ||
+		precioCompra == '' ||
+		precioVenta == '' ||
+		existencias == '' ||
+		modelo == '' ||
+		color == '' ||
+		dimensiones == '' ||
+		fotografia == '' ||
+		descripcion == ''
+	) {
+		mostrarAlerta('warning', 'Todos los campos son obligatorios');
+		return false;
+	}
+	if (!regexValidar.letras.test(nombre)) {
+		mostrarAlerta('warning', 'El nombre solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.letras.test(marca)) {
+		mostrarAlerta('warning', 'La marca solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.numeros.test(precioCompra)) {
+		mostrarAlerta(
+			'warning',
+			'El precio de compra solo puede contener numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.numeros.test(precioVenta)) {
+		mostrarAlerta(
+			'warning',
+			'El precio de venta solo puede contener numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.numerosEnteros.test(existencias)) {
+		mostrarAlerta(
+			'warning',
+			'Las existencias solo puede contener numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.letras.test(modelo)) {
+		mostrarAlerta('warning', 'El modelo solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.letras.test(color)) {
+		mostrarAlerta('warning', 'El color solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.letrasNumerosSimbolos.test(dimensiones)) {
+		mostrarAlerta(
+			'warning',
+			'Las dimensiones solo puede contener letras, numeros, puntos, comas y guiones'
+		);
+		return false;
+	}
+	if (!regexValidar.letrasNumerosSimbolos.test(descripcion)) {
+		mostrarAlerta(
+			'warning',
+			'La descripcion solo puede contener letras, numeros, puntos, comas y guiones'
+		);
+		return false;
+	}
+	//validar si el width y height de la imagen es menor a 252x252
+
+	return true;
 }

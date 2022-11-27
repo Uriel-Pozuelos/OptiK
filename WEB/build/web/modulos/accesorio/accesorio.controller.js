@@ -13,6 +13,9 @@ function getElements() {
 }
 
 export async function guardar() {
+	if (validar() == false) {
+		return;
+	}
 	let { nombre, marca, precioCompra, precioVenta, existencias } =
 		getElements();
 	const datosAccesorio = {
@@ -132,6 +135,9 @@ export function cargarForm(index) {
 }
 
 export async function updateAccesorio() {
+	if (validar() == false) {
+		return;
+	}
 	const { producto } = accesorioActual;
 	const datosAccesorio = {
 		datosAccesorio: JSON.stringify({
@@ -260,4 +266,60 @@ function mostrarAlerta(icon, mensaje) {
 		icon: icon,
 		title: mensaje
 	});
+}
+
+const regexValidar = {
+	//validar letras, espacios y acentos
+	letras: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+	//validar numeros y puntos
+	numeros: /^[0-9.]+$/,
+	//validar numeros
+	numerosEnteros: /^[0-9]+$/
+};
+
+function validar() {
+	const { nombre, marca, precioCompra, precioVenta, existencias } =
+		getElements();
+
+	if (!regexValidar.letras.test(nombre.value)) {
+		mostrarAlerta('warning', 'El nombre solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.letras.test(marca.value)) {
+		mostrarAlerta('warning', 'La marca solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.numeros.test(precioCompra.value)) {
+		mostrarAlerta(
+			'warning',
+			'El precio de compra solo puede contener numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.numeros.test(precioVenta.value)) {
+		mostrarAlerta(
+			'warning',
+			'El precio de venta solo puede contener numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.numerosEnteros.test(existencias.value)) {
+		mostrarAlerta(
+			'warning',
+			'Las existencias solo puede contener numeros'
+		);
+		return false;
+	}
+	if (
+		nombre.value == '' ||
+		marca.value == '' ||
+		precioCompra.value == '' ||
+		precioVenta.value == '' ||
+		existencias.value == ''
+	) {
+		mostrarAlerta('warning', 'Todos los campos son obligatorios');
+		return false;
+	}
+
+	return true;
 }

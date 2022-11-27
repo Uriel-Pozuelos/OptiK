@@ -39,6 +39,10 @@ form.addEventListener('click', () => {
 });
 
 export async function guardar() {
+	if (validar() == false) {
+		return;
+	}
+
 	let {
 		nombre,
 		marca,
@@ -256,6 +260,9 @@ actualizar.addEventListener('click', () => {
 	updateLenteC();
 });
 export async function updateLenteC() {
+	if (validar() == false) {
+		return;
+	}
 	const { producto } = lenteContactoActual;
 	const datosLenteContacto = {
 		datosLenteContacto: JSON.stringify({
@@ -357,4 +364,77 @@ function mostrarAlerta(icon, mensaje) {
 		icon: icon,
 		title: mensaje
 	});
+}
+
+const regexValidar = {
+	//validar letras, espacios y acentos
+	letras: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+	//validar numeros y puntos
+	numeros: /^[0-9.]+$/,
+	//validar numeros
+	numerosEnteros: /^[0-9]+$/,
+	//validar letras, espacios, acentos,numeros, puntos, comas, guiones y maximo 240 caracteres
+	letrasNumerosSimbolos: /^[a-zA-ZÀ-ÿ0-9\s.,-]{1,240}$/
+};
+
+function validar() {
+	if (
+		document.getElementById('imagen').naturalWidth < 252 ||
+		document.getElementById('imagen').naturalHeight < 252
+	) {
+		mostrarAlerta('warning', 'La imagen debe ser de maximo 252x252');
+		return false;
+	}
+	//validar nombre
+	if (
+		!regexValidar.letras.test(document.getElementById('nombre').value)
+	) {
+		mostrarAlerta('warning', 'El nombre no es valido');
+		return false;
+	}
+	//validar marca
+	if (
+		!regexValidar.letras.test(document.getElementById('marca').value)
+	) {
+		mostrarAlerta('warning', 'La marca no es valida');
+		return false;
+	}
+	//validar precio de compra
+	if (
+		!regexValidar.numeros.test(
+			document.getElementById('precioCompra').value
+		)
+	) {
+		mostrarAlerta('warning', 'El precio de compra no es valido');
+		return false;
+	}
+	//validar precio de venta
+	if (
+		!regexValidar.numeros.test(
+			document.getElementById('precioVenta').value
+		)
+	) {
+		mostrarAlerta('warning', 'El precio de venta no es valido');
+		return false;
+	}
+	//validar existencias
+	if (
+		!regexValidar.numerosEnteros.test(
+			document.getElementById('existencias').value
+		)
+	) {
+		mostrarAlerta('warning', 'Las existencias no son validas');
+		return false;
+	}
+	//validar keratometria
+	if (
+		!regexValidar.letrasNumerosSimbolos.test(
+			document.getElementById('keratometria').value
+		)
+	) {
+		mostrarAlerta('warning', 'La keratometria no es valida');
+		return false;
+	}
+
+	return true;
 }

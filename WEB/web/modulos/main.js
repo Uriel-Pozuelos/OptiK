@@ -2,6 +2,7 @@ let ma = null;
 let ml = null;
 let mac = null;
 let mar = null;
+let mm = null;
 
 const empleado = document.getElementById('empleado');
 empleado.addEventListener('click', () => {
@@ -85,6 +86,22 @@ function cerrarSesion() {
 	}, 500);
 }
 
+const material = document.getElementById('material');
+material.addEventListener('click', () => {
+	cambiarMaterial();
+});
+const cambiarMaterial = async () => {
+	const res = await fetch('./material/index.html');
+	const data = await res.text();
+	document.getElementById('app').innerHTML = data;
+	//cargar el script de material.controller.js con un import dinamico
+	const obj = await import('./material/material.controller.js');
+	mm = obj;
+	mm.getAll();
+	//guardar en el localstorage la vista actual
+	localStorage.setItem('vistaActual', 'material');
+};
+
 function cargarVista() {
 	const vista = localStorage.getItem('vistaActual');
 	switch (vista) {
@@ -99,6 +116,9 @@ function cargarVista() {
 			break;
 		case 'lenteContacto':
 			cambiarLenteContacto();
+			break;
+		case 'material':
+			cambiarMaterial();
 			break;
 	}
 }

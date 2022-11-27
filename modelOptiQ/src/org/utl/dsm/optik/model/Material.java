@@ -5,21 +5,24 @@ public class Material {
     private String nombre;
     private double precioCompra;
     private double precioVenta;
+    private int estatus;
 
     public Material() {
     }
 
-    public Material(String nombre, double precioCompra, double precioVenta) {
+    public Material(String nombre, double precioCompra, double precioVenta, int estatus) {
         this.nombre = nombre;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
+        this.estatus = estatus;
     }
 
-    public Material(int idMaterial, String nombre, double precioCompra, double precioVenta) {
+    public Material(int idMaterial, String nombre, double precioCompra, double precioVenta, int estatus) {
         this.idMaterial = idMaterial;
         this.nombre = nombre;
         this.precioCompra = precioCompra;
         this.precioVenta = precioVenta;
+        this.estatus = estatus;
     }
 
     public int getIdMaterial() {
@@ -53,6 +56,15 @@ public class Material {
     public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
     }
+
+    public int getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(int estatus) {
+        this.estatus = estatus;
+    }
+    
 
     @Override
     public String toString() {

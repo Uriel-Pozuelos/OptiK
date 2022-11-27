@@ -6,11 +6,9 @@ form.addEventListener('click', () => {
 });
 
 export function guardar() {
-	//validar formulario
-	// if (validarForm() === false) {
-	// 	console.log('formulario invalido');
-	// 	return;
-	// }
+	if (validar() == false) {
+		return;
+	}
 	const empleado = {
 		datosEmpleados: JSON.stringify({
 			persona: {
@@ -237,10 +235,9 @@ export function actualizarEmpleado() {
 	//obtener los datos del formulario y ponerlos en un objeto empleado
 	const index = document.getElementById('index').value;
 	const em = empleados[index];
-	// if (validarForm() === false) {
-	// 	console.log('formulario invalido');
-	// 	return;
-	// }
+	if (validar() == false) {
+		return;
+	}
 
 	const { persona, usuario } = em;
 	const empleado = {
@@ -337,23 +334,26 @@ function convertirFecha(fecha) {
 }
 
 const regexValidar = {
-	//validar solo letras y números
-	letrasNumeros: /^[a-zA-Z0-9]+$/,
-	//validar solo letras y espacios
-	letras: /^[a-zA-Z ]+$/,
-	//validar solo números
-	numeros: /^[0-9]+$/,
-	//validar correo
-	correo: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-	//validar contraseña (al menos 8 caracteres, al menos una letra y un número)
-	contrasenia: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+	//validar letras, espacios y acentos
+	letras: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
+	//validar numeros y puntos
+	numeros: /^[0-9.]+$/,
+	//validar numeros
+	numerosEnteros: /^[0-9]+$/,
+	//validar letras, espacios, acentos,numeros, puntos, comas, guiones y maximo 240 caracteres
+	letrasNumerosSimbolos: /^[a-zA-ZÀ-ÿ0-9\s.,-]{1,240}$/,
+	//validar codigo postal
+	cp: /^[0-9]{5}$/,
+	//validar email
+	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+	//validar contrasenia de 8 a 20 caracteres, al menos una letra mayuscula, una letra minuscula, un numero y un caracter especial
+	contrasenia:
+		/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,20}$/,
+	//validar numero de telefono
+	telefono: /^[0-9]{10}$/
 };
 
-function validarForm() {
-	//arreglo para poner false si hay un error
-	let errores = [];
-	const body = document.querySelector('body');
-
+function validar() {
 	const nombre = document.getElementById('nombre');
 	const apellidoPaterno = document.getElementById('apellidoPaterno');
 	const apellidoMaterno = document.getElementById('apellidoMaterno');
@@ -367,138 +367,112 @@ function validarForm() {
 	const email = document.getElementById('email');
 	const nombreUsuario = document.getElementById('nombreUsuario');
 	const contrasenia = document.getElementById('contrasenia');
-	//validar nombre usando regex regexValidar.letrasNumeros
-	if (!regexValidar.letras.test(nombre.value)) {
-		nombre.classList.add('error');
-		document.getElementById('nombreP').style.display = 'block';
-		body.addEventListener('click', () => {
-			nombre.classList.remove('error');
-			document.getElementById('nombreP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letras.test(apellidoPaterno.value)) {
-		apellidoPaterno.classList.add('error');
-		document.getElementById('apellidoPaternoP').style.display =
-			'block';
-		body.addEventListener('click', () => {
-			apellidoPaterno.classList.remove('error');
-			document.getElementById('apellidoPaternoP').style.display =
-				'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letras.test(apellidoMaterno.value)) {
-		apellidoMaterno.classList.add('error');
-		document.getElementById('apellidoMaternoP').style.display =
-			'block';
-		body.addEventListener('click', () => {
-			apellidoMaterno.classList.remove('error');
-			document.getElementById('apellidoMaternoP').style.display =
-				'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.numeros.test(telCasa.value)) {
-		telCasa.classList.add('error');
-		document.getElementById('telCasaP').style.display = 'block';
-		body.addEventListener('click', () => {
-			telCasa.classList.remove('error');
-			document.getElementById('telCasaP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.numeros.test(telMovil.value)) {
-		telMovil.classList.add('error');
-		document.getElementById('telMovilP').style.display = 'block';
-		body.addEventListener('click', () => {
-			telMovil.classList.remove('error');
-			document.getElementById('telMovilP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letras.test(calle.value)) {
-		calle.classList.add('error');
-		document.getElementById('calleP').style.display = 'block';
-		body.addEventListener('click', () => {
-			calle.classList.remove('error');
-			document.getElementById('calleP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.numeros.test(numero.value)) {
-		numero.classList.add('error');
-		document.getElementById('numeroP').style.display = 'block';
-		body.addEventListener('click', () => {
-			numero.classList.remove('error');
-			document.getElementById('numeroP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letras.test(colonia.value)) {
-		colonia.classList.add('error');
-		document.getElementById('coloniaP').style.display = 'block';
-		body.addEventListener('click', () => {
-			colonia.classList.remove('error');
-			document.getElementById('coloniaP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letrasNumeros.test(cp.value)) {
-		cp.classList.add('error');
-		document.getElementById('cpP').style.display = 'block';
-		body.addEventListener('click', () => {
-			cp.classList.remove('error');
-			document.getElementById('cpP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letras.test(ciudad.value)) {
-		ciudad.classList.add('error');
-		document.getElementById('ciudadP').style.display = 'block';
-		body.addEventListener('click', () => {
-			ciudad.classList.remove('error');
-			document.getElementById('ciudadP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.correo.test(email.value)) {
-		email.classList.add('error');
-		document.getElementById('emailP').style.display = 'block';
-		body.addEventListener('click', () => {
-			email.classList.remove('error');
-			document.getElementById('emailP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.letrasNumeros.test(nombreUsuario.value)) {
-		nombreUsuario.classList.add('error');
-		document.getElementById('nombreUsuarioP').style.display = 'block';
-		body.addEventListener('click', () => {
-			nombreUsuario.classList.remove('error');
-			document.getElementById('nombreUsuarioP').style.display =
-				'none';
-		});
-		errores.push('error');
-	}
-	if (!regexValidar.contrasenia.test(contrasenia.value)) {
-		contrasenia.classList.add('error');
-		document.getElementById('contraseniaP').style.display = 'block';
-		body.addEventListener('click', () => {
-			contrasenia.classList.remove('error');
-			document.getElementById('contraseniaP').style.display = 'none';
-		});
-		errores.push('error');
-	}
-	//si no hay errores
-	if (errores.length === 0) {
-		return true;
-	}
-	if (errores.length > 0) {
-		//limpiar el arreglo
-		errores = [];
+
+	//validar que la fecha no sea mayor a la actual
+	const fechaNacimiento = document.getElementById('fechaNacimiento');
+	const fecha = new Date(fechaNacimiento.value);
+	const hoy = new Date();
+	if (fecha > hoy) {
+		mostrarAlerta('error', 'La fecha no puede ser mayor a la actual');
 		return false;
 	}
+
+	if (!regexValidar.letras.test(nombre.value)) {
+		mostrarAlerta('warning', 'El nombre solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.letras.test(apellidoPaterno.value)) {
+		mostrarAlerta(
+			'warning',
+			'El apellido paterno solo puede contener letras'
+		);
+		return false;
+	}
+	if (!regexValidar.letras.test(apellidoMaterno.value)) {
+		mostrarAlerta(
+			'warning',
+			'El apellido materno solo puede contener letras'
+		);
+		return false;
+	}
+	if (!regexValidar.telefono.test(telCasa.value)) {
+		mostrarAlerta(
+			'warning',
+			'El telefono de casa solo puede contener 10 numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.telefono.test(telMovil.value)) {
+		mostrarAlerta(
+			'warning',
+			'El telefono movil solo puede contener 10 numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.letras.test(calle.value)) {
+		mostrarAlerta('warning', 'La calle solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.numerosEnteros.test(numero.value)) {
+		mostrarAlerta(
+			'warning',
+			'El numero solo puede contener numeros enteros'
+		);
+		return false;
+	}
+	if (!regexValidar.letras.test(colonia.value)) {
+		mostrarAlerta('warning', 'La colonia solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.cp.test(cp.value)) {
+		mostrarAlerta(
+			'warning',
+			'El codigo postal solo puede contener 5 numeros'
+		);
+		return false;
+	}
+	if (!regexValidar.letras.test(ciudad.value)) {
+		mostrarAlerta('warning', 'La ciudad solo puede contener letras');
+		return false;
+	}
+	if (!regexValidar.email.test(email.value)) {
+		mostrarAlerta('warning', 'El email no es valido');
+		return false;
+	}
+	if (!regexValidar.letras.test(nombreUsuario.value)) {
+		mostrarAlerta(
+			'warning',
+			'El nombre de usuario solo puede contener letras'
+		);
+		return false;
+	}
+	if (!regexValidar.contrasenia.test(contrasenia.value)) {
+		mostrarAlerta(
+			'warning',
+			'La contrasenia debe tener de 8 a 20 caracteres, al menos una letra mayuscula, una letra minuscula, un numero y un caracter especial'
+		);
+		return false;
+	}
+	if (
+		nombre.value == '' ||
+		apellidoPaterno.value == '' ||
+		apellidoMaterno.value == '' ||
+		telCasa.value == '' ||
+		telMovil.value == '' ||
+		calle.value == '' ||
+		numero.value == '' ||
+		colonia.value == '' ||
+		cp.value == '' ||
+		ciudad.value == '' ||
+		email.value == '' ||
+		nombreUsuario.value == '' ||
+		contrasenia.value == ''
+	) {
+		mostrarAlerta('warning', 'Todos los campos son obligatorios');
+		return false;
+	}
+
+	return true;
 }
 
 const buscarP = document.getElementById('buscarP');
