@@ -25,6 +25,8 @@ login.addEventListener('click', async function () {
 		mostrarAlerta('error', 'Usuario o contraseña incorrectos');
 		return;
 	}
+	//agregar en el localstorage el token
+	localStorage.setItem('token', '1');
 	window.location.href = 'modulos/';
 });
 
