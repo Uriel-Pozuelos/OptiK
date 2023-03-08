@@ -425,3 +425,371 @@ class iconSearch extends HTMLElement {
 }
 
 customElements.define('icon-search', iconSearch);
+
+class buyIcon extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<?xml version="1.0" encoding="utf-8"?>
+<!-- Uploaded to SVGRepo https://www.svgrepo.com -->
+<!-- License: CC0. Made by SVG Repo: https://www.svgrepo.com/svg/308863/shopping-bag-buy-purchase-shopping -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="19px" height="19px" viewBox="0 0 196 260" enable-background="new 0 0 196 260" xml:space="preserve" fill="currentColor">
+<path d="M174.8,66H142V45.778C142,21.639,122.361,2,98.223,2h-0.445C73.639,2,54,21.639,54,45.778V66H21.2L2,258h192L174.8,66z
+	 M66,45.778C66,28.255,80.255,14,97.778,14h0.445C115.745,14,130,28.255,130,45.778V66H66V45.778z M60,107.18c-7.18,0-13-5.82-13-13
+	c0-5.014,2.843-9.357,7-11.526V93c0,3.313,2.687,6,6,6s6-2.687,6-6V82.654c4.157,2.169,7,6.512,7,11.526
+	C73,101.36,67.18,107.18,60,107.18z M136,106.68c-6.9,0-12.5-5.59-12.5-12.5c0-4.726,2.628-8.84,6.5-10.964V93c0,3.313,2.687,6,6,6
+	s6-2.687,6-6v-9.784c3.872,2.125,6.5,6.239,6.5,10.964C148.5,101.09,142.9,106.68,136,106.68z"/>
+</svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('buy-icon', buyIcon);
+
+class glassIcon extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M2 14C2 16.2091 3.79086 18 6 18C8.20914 18 10 16.2091 10 14C10 11.7909 8.20914 10 6 10C3.79086 10 2 11.7909 2 14ZM2 14V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M22 14C22 16.2091 20.2091 18 18 18C15.7909 18 14 16.2091 14 14C14 11.7909 15.7909 10 18 10C20.2091 10 22 11.7909 22 14ZM22 14V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M14 14H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+customElements.define('glass-icon', glassIcon);
+
+class iconTest extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+		fill="currentColor" width="20px" height="20px" viewBox="0 0 248 256" enable-background="new 0 0 248 256" xml:space="preserve">
+ <path d="M118,31v194l128,29V2L118,31z M130,40.59l104-23.57v221.96l-104-23.57V40.59z M2,30v224h39v-30h12
+	 c18.085,0,31.965-15.162,31.965-33.346v-19.666h14.033c3.755,0,6.72-2.965,6.72-6.621c0-0.889-0.099-1.779-0.494-2.569
+	 l-19.468-47.435c0,0-1.779-18.085-3.36-25.002C75.181,58.132,40.751,30,3,30C2.704,30,2.988,30,2,30z M54.824,116.635
+	 c0-4.941,3.953-8.894,8.894-8.894s8.894,3.953,8.894,8.894c0,4.941-3.953,8.894-8.894,8.894S54.824,121.576,54.824,116.635z
+		M187.753,93.085c0,8.688,7.989,15.48,18.183,15.126c8.703-0.303,16.317-5.684,18.794-12.826l-7.128,0.417
+	 c-2.101,3.898-6.586,6.722-11.666,6.955c-6.845,0.314-12.273-4.208-12.273-10.074c0-5.866,5.428-11.125,12.273-11.742
+	 c5.08-0.457,9.564,1.757,11.666,5.37l7.128-0.551c-2.477-6.806-10.091-11.152-18.794-10.272
+	 C195.743,76.519,187.753,84.397,187.753,93.085z M154.2,80.719c-6.748,0.682-12.303,5.553-14.045,11.582l5.099-0.394
+	 c1.554-3.38,4.954-5.947,8.947-6.306c5.633-0.507,10.32,3.552,10.32,9.063s-4.688,10.207-10.32,10.465
+	 c-3.992,0.183-7.392-1.922-8.947-5.09l-5.099,0.299c1.742,5.792,7.297,9.908,14.045,9.674c8.5-0.296,15.663-7.349,15.663-15.71
+	 S162.701,79.86,154.2,80.719z M224.73,138.695c0-5.306-5.121-9.662-11.275-9.706c-4.946-0.036-9.059,2.732-10.356,6.532l3.787,0.078
+	 c1.148-2.084,3.649-3.512,6.569-3.472c4.087,0.055,7.46,2.957,7.46,6.469s-3.373,6.239-7.46,6.081
+	 c-2.92-0.113-5.421-1.671-6.569-3.814l-3.787-0.119c1.297,3.867,5.41,6.849,10.356,7.07
+	 C219.609,148.091,224.73,144.002,224.73,138.695z M216.89,168.334c-4.221-0.313-7.604,2.329-7.604,5.883
+	 c0,2.92,2.277,5.617,5.426,6.722v-2.316c-1.726-0.857-2.917-2.463-2.917-4.188c0-2.382,2.272-4.141,5.095-3.92
+	 c2.854,0.224,5.2,2.385,5.2,4.816c0,1.761-1.234,3.171-3.003,3.707v2.336c3.245-0.486,5.643-2.802,5.643-5.813
+	 C224.73,171.898,221.183,168.652,216.89,168.334z M184.006,171.89c0,3.373,3.046,6.423,6.844,6.802
+	 c3.166,0.316,5.881-1.315,6.753-3.837l-2.524-0.228c-0.753,1.347-2.372,2.174-4.228,1.997c-2.539-0.242-4.584-2.276-4.584-4.536
+	 c0-2.26,2.045-3.939,4.584-3.74c1.856,0.145,3.476,1.253,4.228,2.731l2.524,0.21c-0.872-2.674-3.586-4.776-6.753-5.01
+	 C187.052,165.997,184.006,168.517,184.006,171.89z M167.109,176.201c3.484,0.347,6.359-2.051,6.359-5.349
+	 c0-2.71-1.943-5.152-4.575-6.076v2.104c1.435,0.747,2.436,2.2,2.436,3.786c0,2.189-1.902,3.788-4.22,3.568
+	 c-2.294-0.218-4.143-2.142-4.143-4.291c0-1.557,0.969-2.828,2.373-3.342v-2.088c-2.561,0.525-4.416,2.617-4.416,5.253
+	 C160.923,172.975,163.678,175.86,167.109,176.201z M151.075,169.743c0-3.073-2.55-5.768-5.643-6.002
+	 c-2.509-0.19-4.611,1.299-5.277,3.496l1.94,0.165c0.586-1.188,1.858-1.944,3.337-1.826c2.058,0.165,3.746,1.959,3.746,4
+	 s-1.688,3.537-3.746,3.337c-1.479-0.143-2.751-1.125-3.337-2.417l-1.94-0.179c0.666,2.315,2.768,4.176,5.277,4.429
+	 C148.525,175.06,151.075,172.817,151.075,169.743z M148.344,144.898c3.814,0.171,7.097-2.201,8.154-5.613l-3.056-0.096
+	 c-0.909,1.843-2.863,3.066-5.097,2.979c-3.047-0.117-5.494-2.629-5.494-5.602s2.447-5.358,5.494-5.317
+	 c2.234,0.03,4.188,1.355,5.097,3.245l3.056,0.063c-1.057-3.467-4.34-6.01-8.154-6.038c-4.553-0.033-8.189,3.546-8.189,7.976
+	 S143.791,144.694,148.344,144.898z M169.655,137.439c0,3.891,2.796,7.304,6.677,8.534v-3.097c-2.13-1.006-3.595-3.053-3.595-5.356
+	 c0-3.179,2.8-5.726,6.289-5.678c3.543,0.049,6.463,2.747,6.463,6.014c0,2.367-1.538,4.362-3.738,5.224v3.133
+	 c4.04-0.908,7.038-4.216,7.038-8.27c0-4.934-4.43-8.983-9.763-9.023C173.813,128.881,169.655,132.703,169.655,137.439z"/>
+ </svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('icon-test', iconTest);
+
+class iconMaterial extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg width="19px" height="19px" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><title>ionicons-v5-h</title><path d="M440.9,136.3a4,4,0,0,0,0-6.91L288.16,40.65a64.14,64.14,0,0,0-64.33,0L71.12,129.39a4,4,0,0,0,0,6.91L254,243.88a4,4,0,0,0,4.06,0Z"/><path d="M54,163.51A4,4,0,0,0,48,167V340.89a48,48,0,0,0,23.84,41.39L234,479.51a4,4,0,0,0,6-3.46V274.3a4,4,0,0,0-2-3.46Z"/><path d="M272,275v201a4,4,0,0,0,6,3.46l162.15-97.23A48,48,0,0,0,464,340.89V167a4,4,0,0,0-6-3.45l-184,108A4,4,0,0,0,272,275Z"/></svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('icon-material', iconMaterial);
+
+class iconBox extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6.109.902L.4 4.457l3.911 3.279L10 4.043 6.109.902zm7.343 15.09a.44.44 0 0 1-.285-.102L10 13.262l-3.167 2.629a.447.447 0 0 1-.529.03l-2.346-1.533v.904L10 19.098l6.042-3.807v-.904l-2.346 1.533a.44.44 0 0 1-.244.072zM19.6 4.457L13.89.902 10 4.043l5.688 3.693L19.6 4.457zM10 11.291l3.528 2.928 5.641-3.688-3.481-2.795L10 11.291zm-3.528 2.928L10 11.291 4.311 7.736l-3.48 2.795 5.641 3.688z"/></svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('icon-box', iconBox);
+
+class iconExit extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="19px" height="19px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve" fill="currentColor">
+<path id="XMLID_1456_" d="M60,60.7V79c0,2.2-1.6,4-3.8,4H4c-2.2,0-4-1.8-4-4V13c0-2.2,1.8-4,4-4h52.2c2.2,0,3.8,1.8,3.8,4v18.3
+	c0,2.2-1.8,4-4,4s-4-1.8-4-4V17H8v58h44V60.7c0-2.2,1.8-4,4-4S60,58.5,60,60.7z M90.8,43L75.2,27.2c-1.6-1.6-4.1-1.6-5.7,0
+	c-1.6,1.6-1.6,4.1,0,5.7l8.9,9L29.9,42c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c0,0,0,0,0,0l48.5-0.1l-8.9,9c-1.6,1.6-1.5,4.1,0,5.7
+	c0.8,0.8,1.8,1.2,2.8,1.2c1,0,2.1-0.4,2.8-1.2l15.7-15.8C92.4,47.1,92.4,44.6,90.8,43z"/>
+</svg>
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+				* {
+					padding: 0%;
+					margin: 0%;
+					box-sizing: border-box;
+				}
+			</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('icon-exit', iconExit);
+
+class qualite extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+      
+      <span class="qua1">QUA</span><span class="lite1">lite</span>
+    
+      ${this.getStyles()}
+    `;
+		return template;
+	}
+
+	getStyles() {
+		return `
+      <style>
+      .qua1 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #385499;
+      }
+      .lite1 {
+        font-size: 20px;
+        font-weight: lighter;
+      }
+          </style>
+    `;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('qualite-text', qualite);
+
+class cosoIcon extends HTMLElement {
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	getTemplate() {
+		const template = document.createElement('template');
+		template.innerHTML = `
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" id="blobSvg">                        <defs>                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">                            <stop offset="0%" style="stop-color: rgb(0, 128, 255);"></stop>                            <stop offset="100%" style="stop-color: rgb(239, 98, 159);"></stop>                        </linearGradient>                        </defs>                        <path id="blob" fill="url(#gradient)">                            <animate attributeName="d" dur="10000ms" repeatCount="indefinite" values="M440.5,320.5Q418,391,355.5,442.5Q293,494,226,450.5Q159,407,99,367Q39,327,31.5,247.5Q24,168,89,125.5Q154,83,219.5,68Q285,53,335.5,94.5Q386,136,424.5,193Q463,250,440.5,320.5Z;M453.78747,319.98894Q416.97789,389.97789,353.96683,436.87838Q290.95577,483.77887,223.95577,447.43366Q156.95577,411.08845,105.64373,365.97789Q54.33169,320.86732,62.67444,252.61056Q71.01719,184.3538,113.01965,135.21007Q155.02211,86.06634,220.52211,66.46683Q286.02211,46.86732,335.5,91.94472Q384.97789,137.02211,437.78747,193.51106Q490.59704,250,453.78747,319.98894Z;M411.39826,313.90633Q402.59677,377.81265,342.92059,407.63957Q283.24442,437.46649,215.13648,432.5428Q147.02853,427.61911,82.23325,380.9572Q17.43796,334.29529,20.45223,250.83809Q23.46649,167.38089,82.5856,115.05707Q141.70471,62.73325,212.19045,63.73015Q282.67618,64.72705,352.67308,84.79839Q422.66998,104.86972,421.43486,177.43486Q420.19974,250,411.39826,313.90633Z;M440.5,320.5Q418,391,355.5,442.5Q293,494,226,450.5Q159,407,99,367Q39,327,31.5,247.5Q24,168,89,125.5Q154,83,219.5,68Q285,53,335.5,94.5Q386,136,424.5,193Q463,250,440.5,320.5Z;"></animate> </path></svg>
+		
+			${this.getStyles()}
+		`;
+		return template;
+	}
+
+	getStyles() {
+		return `
+			<style>
+					</style>
+		`;
+	}
+
+	render() {
+		this.shadowRoot.appendChild(
+			this.getTemplate().content.cloneNode(true)
+		);
+	}
+
+	connectedCallback() {
+		this.render();
+	}
+}
+
+customElements.define('coso-icon', cosoIcon);

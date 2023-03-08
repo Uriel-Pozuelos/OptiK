@@ -9,6 +9,7 @@ DROP DATABASE IF EXISTS optiqalumnos;
 CREATE DATABASE optiqalumnos;
 
 USE optiqalumnos;
+describe material;
 
 -- ------------- TABLA USUARIO -------------- --
 CREATE TABLE usuario (
@@ -19,6 +20,9 @@ CREATE TABLE usuario (
     lastToken           VARCHAR(65) NOT NULL DEFAULT '', -- Esto es para la seguridad de los servicios
     dateLastToken       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP -- STR_TO_DATE('01/01/1901 00:00:00', '%d/%m/%Y %H:%i:%S')
 );
+
+INSERT into usuario(nombre, contrasenia,rol,lastToken,dateLastToken)
+values ("liz","root","cliente","","");
 
 -- ------------- TABLA PERSONA -------------- --
 CREATE TABLE persona (
@@ -153,12 +157,13 @@ CREATE TABLE lente_contacto(
     CONSTRAINT fk_lentecontacto_producto FOREIGN KEY (idProducto) 
                 REFERENCES producto(idProducto)
 );
-alter table lente_contacto
+alter table lentecontacto
 add  tipo              VARCHAR(129) NOT NULL;
 # agregamos 'estetico' como valor DEFAULT para el campo 'tipo'
-alter table lente_contacto
+alter table lentecontacto
 alter column tipo set default 'estetico';
 
+select * from lentecontacto;
 -- ------------- TABLA EXAMEN_DE_LA_VISTA -------------- --
 CREATE TABLE examen_vista(
     idExamenVista       INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -287,4 +292,4 @@ GRANT INSERT,DELETE ON optiqalumnos.armazon
 TO'Servidor'@'%';
 
 # a cada producto ponerle el valor 'estetico' en el campo 'tipo'
-UPDATE optiqalumnos.producto SET tipo = 'estetico' WHERE tipo IS NULL;
+UPDATE lente_contacto SET tipo = 'estetico' WHERE tipo = '';

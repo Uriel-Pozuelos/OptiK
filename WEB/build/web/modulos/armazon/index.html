@@ -180,27 +180,31 @@
 			
 		</div>
 		<div class="columns">
-			<div class="column is-flex is-justify-content-space-between">
+			<div class="column" id="btnGuardar">
 				<button
-						id="btnGuardar"
-						type="button"
-						onclick="mar.insertar()"
-						class="button is-success has-icons-left"
-					>
-					<span class="icon is-left pt-2"><icon-save></icon-save></span>
-						<span>Guardar</span>
-					</button>
-					<button
-						id="btnActualizar"
-						type="button"
-						onclick="mar.actualizar();"
-						class="button is-primary has-icons-left is-hidden"
-					>
-					
-					<span class="icon is-left pt-2"><icon-update></icon-update></span>
-						<span>Actualizar</span>
-					</button>
-					<button
+				type="button"
+				onclick="mar.insertar()"
+				class="button is-success has-icons-left"
+			>
+			<span class="icon is-left pt-2"><icon-save></icon-save></span>
+				<span>Guardar</span>
+			</button>
+			</div>
+
+			<div class="column is-hidden" id="btnActualizar">
+				<button
+				
+				type="button"
+				onclick="mar.actualizar();"
+				class="button is-primary has-icons-left "
+			>
+			
+			<span class="icon is-left pt-2"><icon-update></icon-update></span>
+				<span>Actualizar</span>
+			</button>
+			</div>
+			<div class="column">
+				<button
 						type="button"
 						onclick="mar.limpiar();"
 						class="button is-warning has-icons-left"
@@ -208,17 +212,22 @@
 					<span class="icon is-left pt-2"><icon-clean></icon-clean></span>
 						<span>Limpiar</span>
 					</button>
-					<button
-						type="button"
-						onclick="mar.getAll(1);"
-						class="button is-primary has-icons-left"
-						id="gg-trash"
-					>
-					<span class="icon is-left pt-2"><icon-eye></icon-eye></span>
-						<span>Ver armazones </span>
-					</button>
+			</div>
+			<div class="column">
+				<button
+				type="button"
+				onclick="mar.getAll(1);"
+				class="button is-primary has-icons-left"
+				id="gg-trash"
+			>
+			<span class="icon is-left pt-2"><icon-eye></icon-eye></span>
+				<span>Ver armazones </span>
+			</button>
 
-					<button
+			</div>
+			<div class="column">
+
+				<button
 						type="button"
 						onclick="mar.getAll(0);"
 						class="button is-link has-icons-left"
@@ -226,15 +235,9 @@
 					<span class="icon is-left pt-2"><icon-eye></icon-eye></span>
 						<span>Ver armazones inactivos</span>
 					</button>
-					<!-- <button
-						type="button"
-						onclick="mar.eliminar();"
-						class="btn btn-danger"
-						id="gg-trash"
-					>
-						eliminar
-					</button> -->
 			</div>
+
+
 		</div>
 		<div class="card mt-5">
 			<header class="card-header flex p-2">

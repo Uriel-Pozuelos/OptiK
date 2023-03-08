@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package org.utl.dsm.optik.model;
+
+import java.util.Date;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -87,6 +87,15 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" + "idUsuario=" + idUsuario + ", nombre=" + nombre + ", contrasenia=" + contrasenia + ", rol=" + rol + ", lastToken=" + lastToken + ", dateLastToken=" + dateLastToken + '}';
+    }
+
+    
+    public void setLastToken(){
+        String u = this.getNombre();
+        String p = this.getContrasenia();
+        String k = new Date().toString();
+        String x = DigestUtils.sha256Hex(u+";"+p+";"+k);
+        this.lastToken = x;
     }
     
     

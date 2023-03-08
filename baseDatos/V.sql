@@ -1,11 +1,11 @@
-SELECT * FROM db_escuela.v_alumno;
+use db_escuela;
 
-//crear trigger para la tabla alumno
+DELIMITER //
 CREATE TRIGGER tr_alumno
 AFTER INSERT ON db_escuela.alumno
 FOR EACH ROW
 BEGIN
-INSERT INTO db_escuela.v_alumno VALUES (NEW.id_alumno, NEW.nombre, NEW.apellido, NEW.dni, NEW.fecha_nacimiento, NEW.id_domicilio, NEW.id_curso);
+INSERT INTO alumno(nombre) VALUES ( nombre);
 END;
 
 

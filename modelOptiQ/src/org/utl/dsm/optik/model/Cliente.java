@@ -10,22 +10,22 @@ package org.utl.dsm.optik.model;
  */
 public class Cliente {
     private int idCliente;
-    private int idPersona;
+    private Persona persona;
     private String numeroUnico;
     private int estatus;
 
     public Cliente() {
     }
 
-    public Cliente(int idPersona, String numeroUnico, int estatus) {
-        this.idPersona = idPersona;
+    public Cliente(Persona persona, String numeroUnico, int estatus) {
+        this.persona = persona;
         this.numeroUnico = numeroUnico;
         this.estatus = estatus;
     }
 
-    public Cliente(int idCliente, int idPersona, String numeroUnico, int estatus) {
+    public Cliente(int idCliente, Persona persona, String numeroUnico, int estatus) {
         this.idCliente = idCliente;
-        this.idPersona = idPersona;
+        this.persona = persona;
         this.numeroUnico = numeroUnico;
         this.estatus = estatus;
     }
@@ -38,12 +38,12 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public int getIdPersona() {
-        return idPersona;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setIdPersona(int idPersona) {
-        this.idPersona = idPersona;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     public String getNumeroUnico() {
@@ -64,8 +64,11 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", idPersona=" + idPersona + ", numeroUnico=" + numeroUnico + ", estatus=" + estatus + '}';
+        return "Cliente{" + "idCliente=" + idCliente + ", persona=" + persona + ", numeroUnico=" + numeroUnico + ", estatus=" + estatus + '}';
     }
+    
+    
+
     
     
     

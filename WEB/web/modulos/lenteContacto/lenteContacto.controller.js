@@ -33,7 +33,7 @@ function getElements() {
 		tipo: document.getElementById('tipo')
 	};
 }
-form = document.getElementById('guardar');
+let form = document.getElementById('guardar');
 form.addEventListener('click', () => {
 	guardar();
 });
@@ -79,24 +79,42 @@ export async function imageToText(
 			tipo: tipo
 		})
 	};
-	const response = await fetch(
-		'http://localhost:8080/Optik/api/lenteContacto/guardar',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams(datosLenteContacto)
+	try {
+		const {
+			usuario: { lastToken = '' }
+		} = JSON.parse(localStorage.getItem('currentUser'));
+		const response = await fetch(
+			'http://localhost:8080/Optik/api/lenteContacto/guardar',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams(
+					JSON.stringify({
+						datosLenteContacto,
+						token: lastToken
+					})
+				)
+			}
+		);
+		const data = await response.json();
+		if (data.error) {
+			mostrarAlerta(
+				'error',
+				'no se pudo guardar el lente de contacto'
+			);
+			return;
 		}
-	);
-	const data = await response.json();
-	if (data.error) {
-		mostrarAlerta('error', 'no se pudo guardar el lente de contacto');
-		return;
+		mostrarAlerta('success', 'se guardo el lente de contacto');
+		tablaLenteC(1);
+		limpiarForm();
+	} catch (error) {
+		mostrarAlerta(
+			'error',
+			'no hay token, Cierre sesion y vuelva a iniciar'
+		);
 	}
-	mostrarAlerta('success', 'se guardo el lente de contacto');
-	tablaLenteC(1);
-	limpiarForm();
 }
 
 const mostrar = document.getElementById('mostrar');
@@ -105,23 +123,39 @@ mostrar.addEventListener('click', () => {
 });
 
 export async function tablaLenteC(estatus) {
-	const response = await fetch(
-		'http://localhost:8080/Optik/api/lenteContacto/getalllente',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({ estatus: estatus })
+	try {
+		const {
+			usuario: { lastToken = '' }
+		} = JSON.parse(localStorage.getItem('currentUser'));
+		console.log({ lastToken });
+		const response = await fetch(
+			'http://localhost:8080/Optik/api/lenteContacto/getalllente',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({
+					estatus: estatus,
+					token: lastToken
+				})
+			}
+		).catch(error => {
+			console.log('error en la peticion');
+		});
+		const data = await response.json();
+		if (data.error) {
+			alert(data.error);
+			return;
 		}
-	);
-	const data = await response.json();
-	if (data.error) {
-		alert(data.error);
-		return;
+		//crear la tabla
+		mostrarTabla(null, data);
+	} catch (error) {
+		mostrarAlerta(
+			'error',
+			'no hay token, Cierre sesion y vuelva a iniciar'
+		);
 	}
-	//crear la tabla
-	mostrarTabla(null, data);
 }
 
 function mostrarTabla(coincidencias, data) {
@@ -173,28 +207,40 @@ function mostrarTabla(coincidencias, data) {
 }
 
 export async function eliminarLente(index) {
-	const response = await fetch(
-		'http://localhost:8080/Optik/api/lenteContacto/deleteLente',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({
-				idLente: index
-			})
+	try {
+		const {
+			usuario: { lastToken = '' }
+		} = JSON.parse(localStorage.getItem('currentUser'));
+		console.log({ lastToken });
+		const response = await fetch(
+			'http://localhost:8080/Optik/api/lenteContacto/deleteLente',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({
+					idLente: index,
+					token: lastToken
+				})
+			}
+		);
+		const data = await response.json();
+		if (data.error) {
+			mostrarAlerta(
+				'error',
+				'no se pudo eliminar el lente de contacto'
+			);
+			return;
 		}
-	);
-	const data = await response.json();
-	if (data.error) {
+		mostrarAlerta('success', 'se elimino el lente de contacto');
+		tablaLenteC('1');
+	} catch (error) {
 		mostrarAlerta(
 			'error',
-			'no se pudo eliminar el lente de contacto'
+			'no hay token, Cierre sesion y vuelva a iniciar'
 		);
-		return;
 	}
-	mostrarAlerta('success', 'se elimino el lente de contacto');
-	tablaLenteC('1');
 }
 
 const mostrarD = document.getElementById('mostrarD');
@@ -202,25 +248,41 @@ mostrarD.addEventListener('click', () => {
 	tablaLenteC(0);
 });
 export async function activarLente(index) {
-	const response = await fetch(
-		'http://localhost:8080/Optik/api/lenteContacto/activateLente',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({
-				idLente: index
-			})
+	try {
+		const {
+			usuario: { lastToken = '' }
+		} = JSON.parse(localStorage.getItem('currentUser'));
+
+		const response = await fetch(
+			'http://localhost:8080/Optik/api/lenteContacto/activateLente',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: new URLSearchParams({
+					idLente: index,
+					token: lastToken
+				})
+			}
+		);
+
+		const data = await response.json();
+		if (data.error) {
+			mostrarAlerta(
+				'error',
+				'no se pudo activar el lente de contacto'
+			);
+			return;
 		}
-	);
-	const data = await response.json();
-	if (data.error) {
-		mostrarAlerta('error', 'no se pudo activar el lente de contacto');
-		return;
+		mostrarAlerta('success', 'se activo el lente de contacto');
+		tablaLenteC('0');
+	} catch (error) {
+		mostrarAlerta(
+			'error',
+			'no hay token, Cierre sesion y vuelva a iniciar'
+		);
 	}
-	mostrarAlerta('success', 'se activo el lente de contacto');
-	tablaLenteC('0');
 }
 
 const limpiar = document.getElementById('limpiar');
@@ -280,7 +342,10 @@ export async function updateLenteC() {
 			tipo: document.getElementById('tipo').value
 		})
 	};
-
+	const {
+		usuario: { lastToken = '' }
+	} = JSON.parse(localStorage.getItem('currentUser'));
+	console.log({ lastToken });
 	const response = await fetch(
 		'http://localhost:8080/Optik/api/lenteContacto/updateLente',
 		{
@@ -288,7 +353,12 @@ export async function updateLenteC() {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
-			body: new URLSearchParams(datosLenteContacto)
+			body: new URLSearchParams(
+				JSON.stringify({
+					datosLenteContacto,
+					token: lastToken
+				})
+			)
 		}
 	);
 	const data = await response.json();

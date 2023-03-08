@@ -2,20 +2,20 @@ package org.utl.dsm.optik.model;
 
 public class PresupuestoLentesContacto {
     private int idPresupuestoLentesContacto;
-    private ExamenVista examenVista;
+    private Examen_Vista examenVista;
     private LenteContacto lenteContacto;
     private String clave;
 
     public PresupuestoLentesContacto() {
     }
 
-    public PresupuestoLentesContacto(ExamenVista examenVista, LenteContacto lenteContacto, String clave) {
+    public PresupuestoLentesContacto(Examen_Vista examenVista, LenteContacto lenteContacto, String clave) {
         this.examenVista = examenVista;
         this.lenteContacto = lenteContacto;
         this.clave = clave;
     }
 
-    public PresupuestoLentesContacto(int idPresupuestoLentesContacto, ExamenVista examenVista, LenteContacto lenteContacto, String clave) {
+    public PresupuestoLentesContacto(int idPresupuestoLentesContacto, Examen_Vista examenVista, LenteContacto lenteContacto, String clave) {
         this.idPresupuestoLentesContacto = idPresupuestoLentesContacto;
         this.examenVista = examenVista;
         this.lenteContacto = lenteContacto;
@@ -30,11 +30,11 @@ public class PresupuestoLentesContacto {
         this.idPresupuestoLentesContacto = idPresupuestoLentesContacto;
     }
 
-    public ExamenVista getExamenVista() {
+    public Examen_Vista getExamenVista() {
         return examenVista;
     }
 
-    public void setExamenVista(ExamenVista examenVista) {
+    public void setExamenVista(Examen_Vista examenVista) {
         this.examenVista = examenVista;
     }
 

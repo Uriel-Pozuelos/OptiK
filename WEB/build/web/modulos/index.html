@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Optik</title>
+		<link rel="icon" href="../public/logo.svg" />
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="../css/bulma.min.css" />
 		<link rel="stylesheet" href="../css/style.css" />
@@ -9,6 +10,8 @@
 			rel="stylesheet"
 			href="../css/sweetalert2/sweetalert2.min.css"
 		/>
+		<link rel="stylesheet" href="../css/nprogress.css" />
+
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
@@ -16,16 +19,17 @@
 	</head>
 	<body class="has-background-info">
 		<header>
-			<!-- <nav class="has-background-white flex">
-				<qualite-text></qualite-text>
-			</nav> -->
 			<nav
 				class="navbar is-flex is-justify-content-space-between"
 				role="navigation"
 				aria-label="main navigation"
 			>
 				<div class="navbar-brand">
-					<a class="navbar-item mt-2">
+					<a
+						class="navbar-item mt-2"
+						id="inicio"
+						onclick="cambiarHome()"
+					>
 						<span class="qua1">QUA</span
 						><span class="lite1">lite</span>
 					</a>
@@ -44,26 +48,25 @@
 				</div>
 				<div id="navbarBasicExample" class="navbar-menu">
 					<div class="navbar-start has-background-white">
-						<a class="navbar-item has-icons-left" href="#">
-							<span class="icon is-left pt-2">
-								<icon-home></icon-home>
-							</span>
-							Home</a
-						>
 						<a class="navbar-item has-icons-left" id="empleado">
 							<span class="icon is-left pt-2">
 								<icon-person></icon-person>
 							</span>
-							Empleado
+							<span>Empleado</span>
 						</a>
-						<a class="navbar-item has-icons-left">
+						<a class="navbar-item has-icons-left" id="cliente">
 							<span class="icon is-left pt-2">
 								<icon-person></icon-person> </span
-							>Cliente
+							><span>Cliente</span>
 						</a>
 
 						<div class="navbar-item has-dropdown is-hoverable">
-							<a class="navbar-link"> Productos</a>
+							<a class="navbar-link" class="has-icons-left">
+								<span class="icon is-left pt-2">
+									<icon-material></icon-material>
+								</span>
+								<span>Productos</span>
+							</a>
 
 							<div class="navbar-dropdown">
 								<a class="navbar-item" id="armazon"> Armazones </a>
@@ -75,14 +78,47 @@
 								</a>
 								<hr class="navbar-divider" />
 								<a class="navbar-item"> Soluciones </a>
+								<hr class="navbar-divider" />
+								<a class="navbar-item" id="material"> Material </a>
 							</div>
 						</div>
-						<a class="navbar-item"> Graduacion Lentes </a>
-						<a class="navbar-item"> Examen vista </a>
-						<a class="navbar-item"> Compra </a>
-						<a class="navbar-item" id="material"> Material </a>
-						<a class="navbar-item" onclick="cerrarSesion()">
-							Cerrar sesión
+						<a class="navbar-item has-icons-left" id="graduacion">
+							<span class="icon is-left pt-2">
+								<icon-eye></icon-eye>
+							</span>
+							<span>Graduacion Lentes</span>
+						</a>
+						<a class="navbar-item has-icon-left" id="examenVista">
+							<span class="icon -is-left pt-2">
+								<icon-test></icon-test>
+							</span>
+							<span>Examen de Vista</span>
+						</a>
+						<a class="navbar-item" id="compraProducto">
+							<span class="icon -is-left pt-2">
+								<buy-icon></buy-icon>
+							</span>
+							<span>Compra</span>
+						</a>
+						<a
+							class="navbar-item"
+							id="venta"
+							class="has-icons-left"
+						>
+							<span class="icon is-left pt-2">
+								<buy-icon></buy-icon>
+							</span>
+							<span>Venta</span>
+						</a>
+						<a
+							class="navbar-item"
+							onclick="cerrarSesion()"
+							class="has-icons-left"
+						>
+							<span class="icon is-left pt-2">
+								<icon-exit></icon-exit>
+							</span>
+							<span>Cerrar sesión</span>
 						</a>
 					</div>
 				</div>
@@ -92,8 +128,9 @@
 			id="app"
 			style="padding-left: 20px; padding-right: 20px"
 		></div>
-		<script src="main.js"></script>
+		<script src="../js/nprogress.js"></script>
 		<script src="../css/sweetalert2/sweetalert2.all.min.js"></script>
 		<script src="../components/icon-person.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>

@@ -51,9 +51,8 @@ export function getAll() {
 	})
 		.then(response => response.json())
 		.then(data => {
-			console.table(data);
 			if (data.error) {
-				alert(data.error);
+				mostrarAlerta('error', 'Error al obtener los materiales');
 			} else {
 				cargarTablaMaterial(data);
 			}
@@ -74,9 +73,8 @@ export function getInactivos() {
 	})
 		.then(response => response.json())
 		.then(data => {
-			console.table(data);
 			if (data.error) {
-				alert(data.error);
+				mostrarAlerta('error', 'Error al cargar los materiales');
 			} else {
 				cargarTablaMaterial(data);
 			}
@@ -85,31 +83,19 @@ export function getInactivos() {
 
 export function cargarTablaMaterial(data) {
 	materiales = data;
+	console.log(materiales);
 
 	let contenido = '';
 	for (let i = 0; i < data.length; i++) {
 		contenido += `
                     <tr>
+												<td>${data[i].codigoBarras} </td>
                         <td>${data[i].nombre} </td>
                         <td>${data[i].precioCompra} </td>
-                        <td>${data[i].precioVenta}</td>
                         <td> <button class="button is-primary has-icons-left" type='button' onclick='mm.cargarForm(${i});'><span class="icon is-left pt-2">
-												<icon-eye></icon-eye>
+												<icon-check></icon-check>
 											</span></button></td>
                     `;
-		if (data[i].estatus === 1) {
-			contenido += `
-                        <td><button class='button is-danger has-icons-left' type='button' onclick='mm.eliminar(${data[i].idMaterial})';><span class="icon is-left pt-2">
-												<icon-delete></icon-delete>
-											</span></button></td>
-                       `;
-		} else {
-			contenido += ` <td><button class="button is-success has-icons-left" type='button' onclick='mm.activar(${data[i].idMaterial})';><span class="icon is-left pt-2">
-			<icon-check></icon-check>
-		</span></button></td>
-               </tr>
-            `;
-		}
 	}
 
 	document.querySelector('tbody').innerHTML = contenido;
@@ -159,7 +145,6 @@ export function actualizar() {
 	})
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
 			if (data.error) {
 				mostrarAlerta('error', 'El material no se puedo actualizar');
 				return;
@@ -184,7 +169,6 @@ export function limpiar() {
 }
 
 export function eliminar(i) {
-	console.log(i);
 	let ma = {
 		idMaterial: i
 	};
@@ -217,7 +201,6 @@ export function eliminar(i) {
 }
 
 export function activar(i) {
-	console.log(i);
 	let ma = {
 		idMaterial: i
 	};

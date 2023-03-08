@@ -72,7 +72,7 @@
 				<div class="field">
 					<label class="label has-text-light">Genero</label>
 					<div class="control">
-						<div class="select">
+						<div class="select is-fullwidth">
 							<select name="genero" id="genero">
 								<option value="M">Masculino</option>
 								<option value="F">Femenino</option>
@@ -275,7 +275,7 @@
 			<div class="column">
 				<div class="field">
 					<label class="label has-text-light">Estado</label>
-					<div class="select">
+					<div class="select is-fullwidth">
 						<select id="estado" name="estado">
 							<!-- estados de México -->
 							<option value="Aguascalientes">Aguascalientes</option>
@@ -374,7 +374,7 @@
 				<div class="field">
 					<label class="label has-text-light">Rol</label>
 					<div class="control">
-						<div class="select">
+						<div class="select is-fullwidth">
 							<select name="rol" id="rol">
 								<option value="Administrador">Administrador</option>
 								<option value="Usuario">Usuario</option>
@@ -384,67 +384,76 @@
 				</div>
 			</div>
 		</div>
-		<div class="column is-flex is-justify-content-space-between">
-			<button
-				class="button is-success has-icons-left"
-				type="button"
-				id="guardar"
-				onclick="ma.guardar()"
-			>
-				<span class="icon is-left pt-2">
-					<icon-save></icon-save>
-				</span>
-				<span>Guardar</span>
-			</button>
-			<button
-				class="button is-primary has-icons-left is-hidden"
-				type="button"
-				id="actualizar"
-				onclick="ma.actualizarEmpleado()"
-			>
-				<span class="icon is-left pt-2">
-					<icon-update></icon-update>
-				</span>
-				<span>Actualizar</span>
-			</button>
-			<button
-				class="button is-warning has-icons-left"
-				type="button"
-				id="limpiar"
-				onclick="ma.limpiarForm()"
-			>
-				<span class="icon is-left pt-2">
-					<icon-clean></icon-clean>
-				</span>
-				<span>Limpiar</span>
-			</button>
-			<button
-				id="mostrar"
-				class="button is-primary has-icons-left"
-				type="button"
-				onclick="ma.tablaEmpleado('1');"
-			>
-				<span class="icon is-left pt-2">
-					<icon-eye></icon-eye>
-				</span>
-				<span>Ver empleados</span>
-			</button>
-			<button
-				id="mostrarD"
-				class="button is-link has-icons-left"
-				type="button"
-				onclick="ma.tablaEmpleado('0');"
-			>
-				<span class="icon is-left pt-2">
-					<icon-eye></icon-eye>
-				</span>
-				<span>Ver empleados inactivos</span>
-			</button>
+
+		<div class="columns">
+			<div class="column" id="guardar">
+				<button
+					class="button is-success has-icons-left"
+					type="button"
+					onclick="ma.guardar()"
+				>
+					<span class="icon is-left pt-2">
+						<icon-save></icon-save>
+					</span>
+					<span>Guardar</span>
+				</button>
+			</div>
+			<div class="column is-hidden" id="actualizar">
+				<button
+					class="button is-primary has-icons-left"
+					type="button"
+					onclick="ma.actualizarEmpleado()"
+				>
+					<span class="icon is-left pt-2">
+						<icon-update></icon-update>
+					</span>
+					<span>Actualizar</span>
+				</button>
+			</div>
+			<div class="column">
+				<button
+					class="button is-warning has-icons-left"
+					type="button"
+					id="limpiar"
+					onclick="ma.limpiarForm()"
+				>
+					<span class="icon is-left pt-2">
+						<icon-clean></icon-clean>
+					</span>
+					<span>Limpiar</span>
+				</button>
+			</div>
+			<div class="column">
+				<button
+					id="mostrar"
+					class="button is-primary has-icons-left"
+					type="button"
+					onclick="ma.tablaEmpleado('1');"
+				>
+					<span class="icon is-left pt-2">
+						<icon-eye></icon-eye>
+					</span>
+					<span>Ver empleados</span>
+				</button>
+			</div>
+			<div class="column">
+				<button
+					id="mostrarD"
+					class="button is-link has-icons-left"
+					type="button"
+					onclick="ma.tablaEmpleado('0');"
+				>
+					<span class="icon is-left pt-2">
+						<icon-eye></icon-eye>
+					</span>
+					<span>Ver empleados inactivos</span>
+				</button>
+			</div>
 		</div>
 	</form>
 	<input type="text" id="index" style="display: none" />
 
-	<div class="card">
+	<div class="card mt-5">
 		<header class="card-header flex p-2">
 			<h3 class="card-header-title">Tabla de empleados</h3>
 			<div class="control">

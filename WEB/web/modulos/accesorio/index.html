@@ -121,16 +121,23 @@
 
 		</div>
 <div class="columns">
-  <div class="column is-flex is-justify-content-space-between">
-    <button class="button is-success hass-icons-left" type="button" id="guardar"
-    onclick="mac.guardar()"
-    >
-    <span class="icon is-left pt-2">
-      <icon-save></icon-save>
-    </span>
-      <span>Guardar</span>
-    </button>
-    <button class="button is-primary has-icons-left is-hidden" type="button" id="actualizar"
+	
+	<div class="column" id="guardar">
+		<div class="field">
+			<button class="button is-success hass-icons-left" type="button" 
+			onclick="mac.guardar()"
+			>
+			<span class="icon is-left pt-2">
+				<icon-save></icon-save>
+			</span>
+				<span>Guardar</span>
+			</button>
+		</div>
+		
+	</div> 
+	<div class="column is-hidden" id="actualizar">
+		<div class="field">
+			<button class="button is-primary has-icons-left " type="button" 
     onclick="mac.updateAccesorio();"
     >
     <span class="icon is-left pt-2">
@@ -138,7 +145,11 @@
     </span>
       <span>Actualizar</span>
     </button>
-    <button class="button is-warning has-icons-left" type="button" id="limpiar"
+		</div>
+		
+	</div>
+	<div class="column">
+		<button class="button is-warning has-icons-left" type="button" id="limpiar"
     onclick="mac.limpiarForm()"
     >
     <span class="icon is-left pt-2">
@@ -146,7 +157,9 @@
     </span>
       <span>Limpiar</span>
     </button>
-    <button id="mostrar" class="button is-primary has-icons-left" type="button"
+	</div>
+	<div class="column">
+		<button id="mostrar" class="button is-primary has-icons-left" type="button"
     onclick="mac.tablaAccesorio('1')"
     >
     <span class="icon is-left pt-2">
@@ -154,7 +167,10 @@
     </span>
       <span>Ver accesorios</span>
     </button>
-    <button id="mostrarD" class="button is-link has-icons-left" type="button"
+	</div>
+	
+	<div class="column" id="mostrarD">
+		<button id="mostrarD" class="button is-link has-icons-left" type="button"
     onclick="mac.tablaAccesorio('0')"
     >
     <span class="icon is-left pt-2">
@@ -162,7 +178,8 @@
     </span>
       <span>Ver accesorios inactivos</span>
     </button>
-  </div>
+	</div>
+
 </div>
 
 	</form>

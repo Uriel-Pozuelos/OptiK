@@ -2,18 +2,18 @@ package org.utl.dsm.optik.model;
 
 public class Presupuesto {
     private int idPresupuesto;
-    private ExamenVista examenVista;
+    private Examen_Vista examenVista;
     private String clave;
 
     public Presupuesto() {
     }
 
-    public Presupuesto(ExamenVista examenVista, String clave) {
+    public Presupuesto(Examen_Vista examenVista, String clave) {
         this.examenVista = examenVista;
         this.clave = clave;
     }
 
-    public Presupuesto(int idPresupuesto, ExamenVista examenVista, String clave) {
+    public Presupuesto(int idPresupuesto, Examen_Vista examenVista, String clave) {
         this.idPresupuesto = idPresupuesto;
         this.examenVista = examenVista;
         this.clave = clave;
@@ -27,11 +27,11 @@ public class Presupuesto {
         this.idPresupuesto = idPresupuesto;
     }
 
-    public ExamenVista getExamenVista() {
+    public Examen_Vista getExamenVista() {
         return examenVista;
     }
 
-    public void setExamenVista(ExamenVista examenVista) {
+    public void setExamenVista(Examen_Vista examenVista) {
         this.examenVista = examenVista;
     }
 

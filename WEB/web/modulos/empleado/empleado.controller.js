@@ -40,9 +40,6 @@ export function guardar() {
 	};
 	//mandar por urlEncoded el objeto empleado al servicio
 	empleadoService(empleado);
-	//limpiar el formulario
-	limpiarForm();
-	tablaEmpleado('1');
 }
 async function empleadoService(empleado) {
 	const urlEncoded = new URLSearchParams(empleado);
@@ -62,6 +59,7 @@ async function empleadoService(empleado) {
 		return;
 	}
 	mostrarAlerta('success', 'Empleado guardado correctamente');
+	limpiarForm();
 }
 const btnMostrar = document.getElementById('mostrar');
 btnMostrar.addEventListener('click', () => {
@@ -308,6 +306,7 @@ async function updateService(empleado) {
 	mostrarAlerta('success', 'Empleado actualizado correctamente');
 	//actualizar la tabla
 	tablaEmpleado('1');
+	limpiarForm();
 }
 
 export async function eliminarEmpleado(idEmpleado) {

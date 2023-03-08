@@ -40,6 +40,7 @@ export async function guardar() {
 		}
 	);
 	const data = await response.json();
+	console.table(data);
 	if (data.error) {
 		mostrarAlerta('error', 'no se pudo guardar el lente de contacto');
 		return;
@@ -75,7 +76,6 @@ function mostrarTabla(coincidencias, data) {
 		accesorio = data;
 	}
 	let contenido = '';
-	console.table(data);
 	data.forEach((accesorio, index) => {
 		const { producto } = accesorio;
 		contenido +=
@@ -124,7 +124,6 @@ export function cargarForm(index) {
 	document.getElementById('actualizar').classList.remove('is-hidden');
 	const accesorioA = accesorio[index];
 	accesorioActual = accesorioA;
-	console.log(accesorioActual);
 	const { producto } = accesorioA;
 	document.getElementById('nombre').value = producto.nombre;
 	document.getElementById('marca').value = producto.marca;
@@ -164,7 +163,6 @@ export async function updateAccesorio() {
 		}
 	);
 	const data = await response.json();
-	console.log(data);
 	if (data.error) {
 		mostrarAlerta(
 			'error',

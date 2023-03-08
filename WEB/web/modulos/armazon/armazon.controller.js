@@ -71,8 +71,6 @@ export function actualizar() {
 	let dimensiones = document.getElementById('txtdimensiones').value;
 	let fotografia = document.getElementById('image').src;
 	let descripcion = document.getElementById('txtdescripcion').value;
-	console.log(armazon);
-	console.log(idArmazon);
 	//encontrar el armazon a actualizar con el idArmazon
 	let armazonA = armazon.find(
 		armazon => armazon.idArmazon == idArmazon
@@ -273,7 +271,6 @@ export function buscar() {
 
 	for (let i = 0; i < armazon.length; i++) {
 		const rmazon = armazon[i];
-		console.table(rmazon);
 		if (
 			rmazon.producto.nombre
 				.toLowerCase()

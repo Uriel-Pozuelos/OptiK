@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package org.utl.dsm.rest;
 
 import com.google.gson.Gson;
@@ -13,6 +10,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import org.utl.dsm.optik.controller.ControllerAcceso;
 import org.utl.dsm.optik.controller.ControllerLenteContacto;
 import org.utl.dsm.optik.model.LenteContacto;
 
@@ -22,12 +20,30 @@ public class LenteContactoRest {
     @POST
     @Path("guardar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response insertarLenteContacto(@FormParam("datosLenteContacto") @DefaultValue("") String datosLenteContacto){
+    public Response insertarLenteContacto(@FormParam("datosLenteContacto") @DefaultValue("") String datosLenteContacto
+    ,@FormParam("token") @DefaultValue("") String token) {
+          String out = "";
+        try{
+             if(!new ControllerAcceso().validarToken(token)){
+        out = """
+              {"error":"Acceso no valido"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        }catch(Exception e){
+        out = """
+              {"error":"Faltan credenciales de acceso"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        
         Gson gson = new Gson();
         LenteContacto lenteContacto = new LenteContacto();
         lenteContacto = gson.fromJson(datosLenteContacto, LenteContacto.class);
+        
+        
         ControllerLenteContacto objCLC = new ControllerLenteContacto();
-        String out = "";
+      
         try{
             objCLC.insert(lenteContacto);
         }catch(Exception ex){
@@ -43,9 +59,25 @@ public class LenteContactoRest {
     @Path("getalllente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllLenteContacto(@FormParam("estatus") @DefaultValue("1") String estatus){
-        
+    public Response getAllLenteContacto(@FormParam("estatus") @DefaultValue("1") String estatus
+            ,@FormParam("token") @DefaultValue("") String token) {
         String out = "";
+        try{
+             if(!new ControllerAcceso().validarToken(token)){
+        out = """
+              {"error":"Acceso no valido"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        }catch(Exception e){
+        out = """
+              {"error":"Faltan credenciales de acceso"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+       
+        
+        
         Gson gson = new Gson();
         try {
             ControllerLenteContacto objLC = new ControllerLenteContacto();
@@ -64,12 +96,26 @@ public class LenteContactoRest {
     @Path("updateLente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateLenteContacto(@FormParam("datosLenteContacto") @DefaultValue("") String datosLenteContacto){
+    public Response updateLenteContacto(@FormParam("datosLenteContacto") @DefaultValue("") String datosLenteContacto
+    ,@FormParam("token") @DefaultValue("") String token){
+         String out = "";
+        try{
+             if(!new ControllerAcceso().validarToken(token)){
+        out = """
+              {"error":"Acceso no valido"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        }catch(Exception e){
+        out = """
+              {"error":"Faltan credenciales de acceso"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
         Gson gson = new Gson();
         LenteContacto lenteContacto = new LenteContacto();
         lenteContacto = gson.fromJson(datosLenteContacto, LenteContacto.class);
         ControllerLenteContacto objCLC = new ControllerLenteContacto();
-        String out = "";
         try{
             objCLC.updateLenteContacto(lenteContacto);
         }catch(Exception ex){
@@ -83,10 +129,24 @@ public class LenteContactoRest {
     @Path("deleteLente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteLenteContacto(@FormParam("idLente") @DefaultValue("") String idLente){
+    public Response deleteLenteContacto(@FormParam("idLente") @DefaultValue("") String idLente
+    ,@FormParam("token") @DefaultValue("") String token){
+         String out = "";
+        try{
+             if(!new ControllerAcceso().validarToken(token)){
+        out = """
+              {"error":"Acceso no valido"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        }catch(Exception e){
+        out = """
+              {"error":"Faltan credenciales de acceso"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
         Gson gson = new Gson();
         ControllerLenteContacto objCLC = new ControllerLenteContacto();
-        String out = "";
         try{
             objCLC.deleteLenteContacto(idLente);
         }catch(Exception ex){
@@ -102,10 +162,24 @@ public class LenteContactoRest {
     @Path("activateLente")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response activateLenteContacto(@FormParam("idLente") @DefaultValue("") String idLente){
+    public Response activateLenteContacto(@FormParam("idLente") @DefaultValue("") String idLente
+    ,@FormParam("token") @DefaultValue("") String token){
+         String out = "";
+        try{
+             if(!new ControllerAcceso().validarToken(token)){
+        out = """
+              {"error":"Acceso no valido"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        }catch(Exception e){
+        out = """
+              {"error":"Faltan credenciales de acceso"}
+              """;
+         return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
         Gson gson = new Gson();
         ControllerLenteContacto objCLC = new ControllerLenteContacto();
-        String out = "";
         try{
             objCLC.activateLenteContacto(idLente);
         }catch(Exception ex){

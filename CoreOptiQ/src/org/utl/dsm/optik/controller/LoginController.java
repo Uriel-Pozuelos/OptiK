@@ -8,6 +8,7 @@ import java.sql.Connection;
 
 public class LoginController {
     public int login(Usuario usuario) throws Exception {
+        System.out.println(usuario.toString());
        String query = "CALL login(?,?,?)";
        int resultado = 0;
         ConexionMySQL conexion = new ConexionMySQL();
