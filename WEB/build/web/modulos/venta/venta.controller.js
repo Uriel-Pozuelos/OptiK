@@ -45,6 +45,7 @@ const validarCantidad = (cantidad, existencias) => {
 };
 
 // Función para calcular el total de la venta
+// Función para calcular el total de la venta
 export const calcularTotal = index => {
 	//hacemos un array con las celdas de la tabla
 	const productos2 = Array.from(
@@ -59,15 +60,12 @@ export const calcularTotal = index => {
 	//y en cada iteración podemos obtener el valor anterior
 	const total = productos2.reduce((accum, tr, indexVt) => {
 		const precioVenta = Number(tr.children[2].innerHTML);
-		ids.precioUnitario.push(precioVenta);
 		const cantidad = Number(
 			document.getElementById(`total${indexVt}`).value
 		);
-		ids.cantidad.push(cantidad);
 		const descuento = Number(
 			document.querySelector(`#descuento${indexVt}`).value
 		);
-		ids.descuento.push(cantidad);
 
 		if (
 			!validarNumero(cantidad, 'Cantidad no valida') ||
@@ -78,6 +76,20 @@ export const calcularTotal = index => {
 		}
 
 		const preDescuento = descuento / 100;
+		// Check if the product has already been added to the ids object
+		const existingIndex = ids.ids.indexOf(index);
+		if (existingIndex !== -1) {
+			// Replace the previous values for this product
+			ids.cantidad[existingIndex] = cantidad;
+			ids.precioUnitario[existingIndex] = precioVenta;
+			ids.descuento[existingIndex] = descuento;
+		} else {
+			// Add a new entry for this product
+			ids.ids.push(index);
+			ids.cantidad.push(cantidad);
+			ids.precioUnitario.push(precioVenta);
+			ids.descuento.push(descuento);
+		}
 		return accum + precioVenta * cantidad * (1 - preDescuento);
 	}, 0);
 
@@ -184,9 +196,10 @@ let detalleVentaProducto = {
 	},
 	ventasProducto: []
 };
-export function vender() {
+
+export async function vender() {
 	const random = Math.floor(Math.random() * 1000000);
-	detalleVentaProducto.venta.clave = `OQ-${random}`;
+	detalleVentaProducto.venta.clave = `OQV-${random}`;
 	detalleVentaProducto.venta.empleado = JSON.parse(
 		localStorage.getItem('currentUser')
 	);
@@ -202,6 +215,24 @@ export function vender() {
 			}
 		];
 	});
-
 	console.log(detalleVentaProducto);
+	let params = new URLSearchParams({
+		datosVentaProducto: JSON.stringify(detalleVentaProducto)
+	});
+
+	const data = fetch('http://localhost:8080/Optik/api/vp/insertar', {
+		method: 'POST',
+		headers: {
+			'Content-Type':
+				'application/x-www-form-urlencoded;charset=UTF-8'
+		},
+		body: params
+	}).then(resp => resp.json());
+
+	if (data.error) {
+		mostrarAlerta('error', data.error);
+		return;
+	}
+
+	mostrarAlerta('success', 'Venta realizada con exito');
 }

@@ -20,55 +20,52 @@ import org.utl.dsm.optik.model.VentaProducto;
  */
 public class ControllerVentaProducto {
 
-    public boolean generarVenta(DetalleVentaProducto dvp) throws SQLException {
+   public boolean generarVenta(DetalleVentaProducto dvp) {
         boolean r = false;
         ConexionMySQL conMySQL = new ConexionMySQL();
         Connection conn = conMySQL.open();
+        Statement stmt = null;
         ResultSet rs = null;
-        final Statement stmt = conn.createStatement();
+
         try {
             conn.setAutoCommit(false);
-            String query1 = "INSERT INTO venta(idEmpleado,clave) VALUES( " + dvp.getVenta().getEmpleado().getIdEmpleado() + ""
-                    + " ," + dvp.getVenta().getClave() + " ";
+            stmt = conn.createStatement();
+
+            String query1 = "INSERT INTO venta (idEmpleado, clave) VALUES(" + dvp.getVenta().getEmpleado().getIdEmpleado() + ",'" + dvp.getVenta().getClave() + "')";
+            System.out.println(query1);
             stmt.execute(query1);
-            rs = stmt.executeQuery("SELECT LAST_INSERT_ID();");
+            rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
             if (rs.next()) {
                 dvp.getVenta().setIdVenta(rs.getInt(1));
-
             }
-            var lista = dvp.getVentasProducto();
 
-            lista.forEach((VentaProducto vp) -> {
-                String query2 = "INSERT INTO venta_producto VALUES("
-                        + dvp.getVenta().getIdVenta()
-                        + "," + vp.getProducto().getIdProducto()
-                        + "," + vp.getCantidad() + ","
-                        + vp.getPrecioUnitario() + ","
-                        + vp.getDescuento();
-                try {
-                    stmt.execute(query2);
-                } catch (Exception ex) {
-                    try {
-                        conn.rollback();
-                    } catch (SQLException ex1) {
-                        ex1.printStackTrace();
-                   
-                    }
-                }
-
-            });
+            for (int i = 0; i < dvp.getVentasProducto().size(); i++) {
+                String query2 = "INSERT INTO venta_producto VALUES(" + dvp.getVenta().getIdVenta() + "," + dvp.getVentasProducto().get(i).getProducto().getIdProducto() + "," + dvp.getVentasProducto().get(i).getCantidad() + "," + dvp.getVentasProducto().get(i).getPrecioUnitario() + "," + dvp.getVentasProducto().get(i).getDescuento() + ")";
+                System.out.println(query2);
+                stmt.execute(query2);
+               
+            }
             conn.commit();
             conn.setAutoCommit(true);
-            r = true;
+
             rs.close();
             stmt.close();
             conn.close();
-
+            conMySQL.close();
+            r = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            return r;
+            try {
+                ex.printStackTrace();
+                System.out.println("error");
+                conn.rollback();
+                conn.setAutoCommit(true);
+                conn.close();
+                conMySQL.close();
+                r = false;
+            } catch (SQLException ex1) {
+            }
+            r = false;
         }
-
         return r;
     }
 }

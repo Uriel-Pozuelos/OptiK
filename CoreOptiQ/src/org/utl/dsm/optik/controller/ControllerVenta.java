@@ -48,7 +48,7 @@ public class ControllerVenta {
     }
     
     public List<Producto> findByString (String filtro) throws SQLException{
-        String query = "SELECT * FROM producto WHERE  nombre like '%"+filtro+"%' or codigoBarras like like '%"+filtro+"%";
+        String query = "SELECT * FROM producto WHERE  nombre like '%"+filtro+"%' or codigoBarras like '%"+filtro+"%";
         ConexionMySQL objConexion = new ConexionMySQL();
         Connection conn = objConexion.open();
         PreparedStatement pstmt = conn.prepareStatement(query);

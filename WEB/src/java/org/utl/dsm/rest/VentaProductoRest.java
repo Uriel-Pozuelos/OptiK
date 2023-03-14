@@ -13,7 +13,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.utl.dsm.optik.controller.ControllerTratamiento;
+import org.utl.dsm.optik.controller.ControllerVentaLente;
 import org.utl.dsm.optik.controller.ControllerVentaProducto;
+import org.utl.dsm.optik.model.DetalleVentaPre;
 import org.utl.dsm.optik.model.DetalleVentaProducto;
 import org.utl.dsm.optik.model.Tratamiento;
 
@@ -32,6 +34,7 @@ public class VentaProductoRest {
         String out = "";
         dvp = gson.fromJson(datosVentaProducto, DetalleVentaProducto.class);
         ControllerVentaProducto cvp = new ControllerVentaProducto();
+        System.out.println(dvp.toString());
         try {
             boolean r = cvp.generarVenta(dvp);
             if (r) {
@@ -48,7 +51,35 @@ public class VentaProductoRest {
             out = "{\"error\":" + ex.toString() + "}";
             return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
         }
-        out = gson.toJson(dvp);
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+    
+    
+    @Path("ventalc")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ventalc(@FormParam("datosVentaLc") @DefaultValue("") String datosVentaLc) {
+        Gson gson = new Gson();
+        DetalleVentaPre dvp = new DetalleVentaPre();
+        String out = "";
+        dvp = gson.fromJson(datosVentaLc, DetalleVentaPre.class);
+        ControllerVentaLente cvp = new ControllerVentaLente();
+        try {
+            boolean r = cvp.generarVentaLC(dvp);
+            if (r) {
+                out = """
+               "result":"venta hecha correctamente";
+                """;
+            } else {
+                out = """
+               "error":"venta no hecha correctamente";
+                """;
+            }
+
+        } catch (Exception ex) {
+            out = "{\"error\":" + ex.toString() + "}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
         return Response.status(Response.Status.OK).entity(out).build();
     }
     

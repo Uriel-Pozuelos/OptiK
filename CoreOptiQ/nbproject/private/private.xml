@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/EmpleadoController.java</file>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/LoginController.java</file>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/ControllerVentaProducto.java</file>
             <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/ControllerVenta.java</file>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/ControllerAccesorio.java</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/CoreOptiQ/src/org/utl/dsm/optik/controller/ControllerVentaLente.java</file>
         </group>
     </open-files>
 </project-private>
