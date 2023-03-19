@@ -100,16 +100,25 @@
 							</span>
 							<span>Compra</span>
 						</a>
-						<a
-							class="navbar-item"
-							id="venta"
-							class="has-icons-left"
-						>
-							<span class="icon is-left pt-2">
-								<buy-icon></buy-icon>
-							</span>
-							<span>Venta</span>
-						</a>
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link" class="has-icons-left">
+								<span class="icon is-left pt-2">
+									<buy-icon></buy-icon>
+								</span>
+								<span>Ventas</span>
+							</a>
+
+							<div class="navbar-dropdown">
+								<a class="navbar-item" id="venta"> Venta Productos</a>
+								<hr class="navbar-divider" />
+								<a class="navbar-item" id="ventaL"> Venta Lentes </a>
+								<hr class="navbar-divider" />
+								<a class="navbar-item" id="ventaVC">
+									Venta Lentes de Contacto
+								</a>
+								<hr class="navbar-divider" />
+							</div>
+						</div>
 						<a
 							class="navbar-item"
 							onclick="cerrarSesion()"

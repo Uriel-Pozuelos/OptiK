@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package org.utl.dsm.rest;
 
 import com.google.gson.Gson;
@@ -47,8 +44,7 @@ public class VentaRest {
         Gson objGson = new Gson();
         try {
             ControllerVenta cv = new ControllerVenta();
-            List<Producto> pl;
-            pl = cv.findByString(filtro);
+            List<Producto> pl = cv.findByString(filtro);
             out = objGson.toJson(pl);
         } catch (Exception Err) {
             out = "{\"error\":" + Err.toString() + "}";

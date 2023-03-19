@@ -9,16 +9,18 @@ public class VentaPresupuesto {
     private double precioUnitario;
     private double descuento;
     private List<PresupuestoLentes> ventaPresupuesto;
+    private PresupuestoLentes presupuestoLentes;
 
     public VentaPresupuesto() {
     }
 
-    public VentaPresupuesto(Venta venta, int cantidad, double precioUnitario, double descuento, List<PresupuestoLentes> ventaPresupuesto) {
+    public VentaPresupuesto(Venta venta, int cantidad, double precioUnitario, double descuento, List<PresupuestoLentes> ventaPresupuesto, PresupuestoLentes presupuestoLentes) {
         this.venta = venta;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.descuento = descuento;
         this.ventaPresupuesto = ventaPresupuesto;
+        this.presupuestoLentes = presupuestoLentes;
     }
 
     public Venta getVenta() {
@@ -61,9 +63,15 @@ public class VentaPresupuesto {
         this.ventaPresupuesto = ventaPresupuesto;
     }
 
+    public PresupuestoLentes getPresupuestoLentes() {
+        return presupuestoLentes;
+    }
+
+    public void setPresupuestoLentes(PresupuestoLentes presupuestoLentes) {
+        this.presupuestoLentes = presupuestoLentes;
+    }
+
   
-    
-    
 
    
 }

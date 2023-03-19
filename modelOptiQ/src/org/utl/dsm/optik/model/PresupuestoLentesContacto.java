@@ -2,7 +2,6 @@ package org.utl.dsm.optik.model;
 
 public class PresupuestoLentesContacto {
     private int idPresupuestoLentesContacto;
- 
     private LenteContacto lenteContacto;
     private Presupuesto presupuesto;
     private String clave;

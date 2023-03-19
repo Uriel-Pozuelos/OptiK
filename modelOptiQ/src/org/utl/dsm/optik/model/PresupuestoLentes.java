@@ -1,5 +1,7 @@
 package org.utl.dsm.optik.model;
 
+import java.util.List;
+
 public class PresupuestoLentes {
     private int idPresupuestoLentes;
     private Presupuesto presupuesto;
@@ -7,25 +9,28 @@ public class PresupuestoLentes {
     private Tipo_mica tipoMica;
     private Material material;
     private Armazon armazon;
+    private List<Tratamiento> listaTratamiento;
 
     public PresupuestoLentes() {
     }
 
-    public PresupuestoLentes(Presupuesto presupuesto, int alturaOblea, Tipo_mica tipoMica, Material material, Armazon armazon) {
-        this.presupuesto = presupuesto;
-        this.alturaOblea = alturaOblea;
-        this.tipoMica = tipoMica;
-        this.material = material;
-        this.armazon = armazon;
-    }
-
-    public PresupuestoLentes(int idPresupuestoLentes, Presupuesto presupuesto, int alturaOblea, Tipo_mica tipoMica, Material material, Armazon armazon) {
+    public PresupuestoLentes(int idPresupuestoLentes, Presupuesto presupuesto, int alturaOblea, Tipo_mica tipoMica, Material material, Armazon armazon, List<Tratamiento> listaTratamiento) {
         this.idPresupuestoLentes = idPresupuestoLentes;
         this.presupuesto = presupuesto;
         this.alturaOblea = alturaOblea;
         this.tipoMica = tipoMica;
         this.material = material;
         this.armazon = armazon;
+        this.listaTratamiento = listaTratamiento;
+    }
+
+    public PresupuestoLentes(Presupuesto presupuesto, int alturaOblea, Tipo_mica tipoMica, Material material, Armazon armazon, List<Tratamiento> listaTratamiento) {
+        this.presupuesto = presupuesto;
+        this.alturaOblea = alturaOblea;
+        this.tipoMica = tipoMica;
+        this.material = material;
+        this.armazon = armazon;
+        this.listaTratamiento = listaTratamiento;
     }
 
     public int getIdPresupuestoLentes() {
@@ -76,15 +81,13 @@ public class PresupuestoLentes {
         this.armazon = armazon;
     }
 
-    @Override
-    public String toString() {
-        return "PresupuestoLentes{" +
-                "idPresupuestoLentes=" + idPresupuestoLentes +
-                ", presupuesto=" + presupuesto.toString() +
-                ", alturaOblea=" + alturaOblea +
-                ", tipoMica=" + tipoMica.toString() +
-                ", material=" + material.toString() +
-                ", armazon=" + armazon.toString() +
-                '}';
+    public List<Tratamiento> getListaTratamiento() {
+        return listaTratamiento;
     }
+
+    public void setListaTratamiento(List<Tratamiento> listaTratamiento) {
+        this.listaTratamiento = listaTratamiento;
+    }
+
+    
 }

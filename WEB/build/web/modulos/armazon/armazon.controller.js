@@ -1,9 +1,16 @@
 let armazon = [];
 
+/**
+ * Función que se encarga de insertar un nuevo producto de armazón en la base de datos.
+ * @function insertar
+ * @returns {void}
+ */
 export function insertar() {
+        // Verificar si los datos del formulario son válidos
 	if (validar() == false) {
 		return;
 	}
+        // Obtener los datos del formulario
 	let nombre = document.getElementById('txtnombre').value;
 	let marca = document.getElementById('txtmarca').value;
 	let precioCompra = document.getElementById('txtprecioCompra').value;
@@ -14,7 +21,7 @@ export function insertar() {
 	let dimensiones = document.getElementById('txtdimensiones').value;
 	let fotografia = document.getElementById('image').src;
 	let descripcion = document.getElementById('txtdescripcion').value;
-
+        // Crear objeto producto con los datos básicos del producto
 	let producto = {
 		nombre: nombre,
 		marca: marca,
@@ -22,6 +29,7 @@ export function insertar() {
 		precioVenta: precioVenta,
 		existencias: existencias
 	};
+        // Crear objeto ar con los datos específicos del armazón
 	let ar = {
 		producto: producto,
 		modelo: modelo,
@@ -30,7 +38,7 @@ export function insertar() {
 		descripcion: descripcion,
 		fotografia: fotografia
 	};
-
+        // Convertir objeto ar a una cadena de consulta para enviarlo al servidor
 	let rmazon = { datosArmazon: JSON.stringify(ar) };
 
 	let parametros = new URLSearchParams(rmazon);
@@ -50,10 +58,20 @@ export function insertar() {
 				return;
 			}
 			mostrarAlerta('success', 'Guardado con exito');
+                        // Obtener todos los productos de armazón de la base de datos y mostrarlos en la página
 			getAll(1);
 			limpiar();
 		});
 }
+
+
+/**
+ *   Actualiza un registro de armazón en la base de datos y en la tabla de la vista.
+ *   @function
+ * 
+ * @returns {void}
+ */
+
 
 export function actualizar() {
 	if (validar() == false) {
@@ -144,6 +162,14 @@ export function getAll(estatus) {
 		});
 }
 
+
+/**
+ * Carga los datos de la tabla de armazones con los datos proporcionados
+ * @param {Array} coincidencias - Lista de coincidencias filtradas para mostrar en la tabla (opcional)
+ * @param {Array} data - Lista completa de armazones para cargar en la tabla (si no se proporcionan coincidencias)
+ * @returns {void}
+ */
+
 export function cargarTablaArmazon(coincidencias, data) {
 	if (coincidencias) {
 		data = coincidencias;
@@ -195,6 +221,12 @@ export function cargarTablaArmazon(coincidencias, data) {
 	document.getElementById('tbArmazon').innerHTML = contenido;
 }
 
+/**
+ * 
+ * @param {int} i - indice del armazon que se va a cargar en el formulario
+ * @returns {void}
+ */
+
 export function cargarForm(i) {
 	//agregar clase is-hidden a btnGuardar
 	document.getElementById('btnGuardar').classList.add('is-hidden');
@@ -227,6 +259,10 @@ export function cargarForm(i) {
 	document.getElementById('image').src = armazon[i].fotografia;
 }
 
+/**
+ * Limpia los campos en el formulario
+ * @returns {void}
+ */
 export function limpiar() {
 	document.getElementById('btnGuardar').classList.remove('is-hidden');
 	document.getElementById('btnActualizar').classList.add('is-hidden');
@@ -246,6 +282,11 @@ export function limpiar() {
 	document.getElementById('image').src = '../public/default.png';
 }
 
+/**
+ * 
+ * @param {int} i - indice del armazon que se va a eliminar
+ * @returns {void}
+ */
 export function eliminar(i) {
 	fetch(
 		`http://localhost:8080/Optik/api/armazon/actualizarestatus?idProducto=${i}&estatus=0`
@@ -255,6 +296,11 @@ export function eliminar(i) {
 		getAll(1);
 	}, 500);
 }
+/**
+ * 
+ * @param {int} i - indice del armazon que se va a activar
+ * @returns {void}
+ */
 export function activar(i) {
 	fetch(
 		`http://localhost:8080/Optik/api/armazon/actualizarestatus?idProducto=${i}&estatus=1`
@@ -326,7 +372,15 @@ function mostrarAlerta(icon, mensaje) {
 		title: mensaje
 	});
 }
-
+/**
+*   Objeto regexValidar para validar diferentes tipos de cadenas.
+*   @typedef {Object} RegexValidar
+*   @property {RegExp} letras - Expresión regular para validar letras, espacios y acentos.
+*   @property {RegExp} numeros - Expresión regular para validar números y puntos.
+*   @property {RegExp} numerosEnteros - Expresión regular para validar números enteros.
+*   @property {RegExp} letrasNumerosSimbolos - 
+*   Expresión regular para validar letras, espacios, acentos, números, puntos, comas, guiones y máximo 240 caracteres.
+*/
 const regexValidar = {
 	//validar letras, espacios y acentos
 	letras: /^[a-zA-ZÀ-ÿ\s]{1,40}$/,
@@ -338,6 +392,10 @@ const regexValidar = {
 	letrasNumerosSimbolos: /^[a-zA-ZÀ-ÿ0-9\s.,-]{1,240}$/
 };
 
+/**
+ * Valida que los campos tengan los datos correctos en base a regezValidar
+ * @returns {Boolean} Regresa true si los campos son validos para llenar, false si no
+ */
 function validar() {
 	let nombre = document.getElementById('txtnombre').value;
 	let marca = document.getElementById('txtmarca').value;

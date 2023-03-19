@@ -243,6 +243,45 @@ const cambiarHome = async () => {
 	document.getElementById('app').innerHTML = data;
 	NProgress.done();
 };
+
+const ventaL = document.getElementById('ventaL');
+ventaL.addEventListener('click', () => {
+	cambiarVentaL();
+});
+
+const cambiarVentaL = async () => {
+	NProgress.start();
+	const res = await fetch('./ventaLentes/index.html');
+	const data = await res.text();
+	document.getElementById('app').innerHTML = data;
+	//cargar el script de ventaLentes.controller.js con un import dinamico
+	const obj = await import('./ventaLentes/ventaL.controller.js');
+	mv = obj;
+	mv.inicializarVentaLentes();
+	NProgress.done();
+	//guardar en el localstorage la vista actual
+	localStorage.setItem('vistaActual', 'ventaLente');
+};
+
+const ventaLC = document.getElementById('ventaVC');
+ventaLC.addEventListener('click', () => {
+	cambiarVentaLC();
+});
+
+const cambiarVentaLC = async () => {
+	NProgress.start();
+	const res = await fetch('./ventaLentesC/index.html');
+	const data = await res.text();
+	document.getElementById('app').innerHTML = data;
+	//cargar el script de ventaLentesC.controller.js con un import dinamico
+	const obj = await import('./ventaLentesC/ventaLente.controller.js');
+	mv = obj;
+	mv.inicializarComponentes();
+	NProgress.done();
+	//guardar en el localstorage la vista actual
+	localStorage.setItem('vistaActual', 'ventaLenteC');
+};
+
 function cargarVista() {
 	const vista = localStorage.getItem('vistaActual');
 	switch (vista) {
@@ -279,6 +318,12 @@ function cargarVista() {
 		case 'venta':
 			cambiarVenta();
 			break;
+		case 'ventaLente':
+			cambiarVentaL();
+			break;
+		case 'ventaLenteC':
+			cambiarVentaLC();
+			break;
 	}
 }
 
@@ -314,20 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
 //agregar la clase has-text-link al a que tenga el id de la vista actual cada vez que se cargue la pagina
 //cada vez que sea clickeado un a se debe eliminar la clase has-text-link de todos los a y agregarla al a clickeado
 
-const vistaActual = localStorage.getItem('vistaActual');
-const a = document.getElementById(vistaActual);
-a.classList.add('has-text-link');
-a.classList.add('has-text-weight-bold');
-const as = document.querySelectorAll('a');
-as.forEach(a => {
-	a.addEventListener('click', () => {
-		as.forEach(a => {
-			a.classList.remove('has-text-link');
-			a.classList.remove('has-text-weight-bold');
-		});
-		a.classList.add('has-text-link');
-		a.classList.add('has-text-weight-bold');
-	});
-});
+// const vistaActual = localStorage.getItem('vistaActual');
+// const a = document.getElementById(vistaActual);
+// a.classList.add('has-text-link');
+// a.classList.add('has-text-weight-bold');
+// const as = document.querySelectorAll('a');
+// as.forEach(a => {
+// 	a.addEventListener('click', () => {
+// 		as.forEach(a => {
+// 			a.classList.remove('has-text-link');
+// 			a.classList.remove('has-text-weight-bold');
+// 		});
+// 		a.classList.add('has-text-link');
+// 		a.classList.add('has-text-weight-bold');
+// 	});
+// });
 
 //funcion que utilice memoization para que no se vuelva a ejecutar la funcion si los parametros son los mismos
