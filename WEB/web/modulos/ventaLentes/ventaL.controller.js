@@ -185,6 +185,15 @@ export function agregarProducto(idProducto) {
   </tr>`;
 
 	document.querySelector('#tblVLC').innerHTML += contenido;
+	//calcular el total
+	let total = 0;
+	productosAgregar.forEach(idProducto => {
+		let producto = productos.find(
+			producto => producto.producto.idProducto == idProducto
+		);
+		total += producto.producto.precioVenta;
+	});
+	document.querySelector('#total').textContent = total;
 }
 
 function mostrarAlerta(icon, mensaje) {
@@ -205,7 +214,7 @@ function mostrarAlerta(icon, mensaje) {
 export async function guardarVentaLenteContacto() {
 	let clave = `OQ-${Math.floor(Math.random() * 100000000000)}`;
 	let empleado = JSON.parse(localStorage.getItem('currentUser'));
-	let total = document.querySelector('#total').value;
+	let total = Number(document.querySelector('#total').textContent);
 	let venta = { clave, empleado };
 	//encontrar en el arreglo de examenes de vista el id del examen seleccionado
 	let idExamenVista = document.querySelector('#selectExamen').value;
@@ -226,9 +235,15 @@ export async function guardarVentaLenteContacto() {
 		let precio = Number(
 			tr.querySelector('td:nth-child(2)').textContent
 		);
-
+		console.log({
+			cantidad,
+			descuento,
+			precio
+		});
+		const preDescuento = descuento / 100;
 		//se calcula el total de la venta
-		total += precio * cantidad * (1 - descuento / 100);
+		total += precio * cantidad * (1 - preDescuento);
+		console.log(total);
 		document.querySelector('#total').value = total;
 
 		let lenteContacto = lentesContacto.find(

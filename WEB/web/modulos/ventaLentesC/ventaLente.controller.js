@@ -1,6 +1,7 @@
 let clientes = [];
 let examenVista = [];
 let armazones = [];
+let materiales = [];
 
 export function inicializarComponentes() {
 	getAllClientes();
@@ -177,6 +178,7 @@ export function getAllMaterial() {
 			if (data.error) {
 				mostrarAlerta('error', 'Error al obtener los materiales');
 			} else {
+				materiales = data;
 				let select = document.querySelector('#selectMaterial');
 				select = "<option value=''>Seleccione un material</option>";
 				data.forEach(material => {
@@ -191,68 +193,191 @@ export function getAllMaterial() {
 		});
 }
 
+let presupuestoLentes = [];
+let ventaPresupuesto = [];
 const venta = document.querySelector('#buscarL');
 venta.addEventListener('click', async () => {
 	let clave = `OQ-${Math.floor(Math.random() * 100000000000)}`;
-	let empleado = JSON.parse(localStorage.getItem('currentUser'));
-	//encontrar en el arreglo de examenes de vista el id del examen seleccionado
-	let idExamenVista = document.querySelector('#selectExamen').value;
-	idExamenVista = examenVista.find(
-		examenVista => examenVista.idExamenVista == idExamenVista
+
+	//obtener de la tabla la alturaOblea, cantidad, costo y descuento
+	let tabla = Array.from(
+		document.querySelectorAll('#tblPresupuestoLete tr')
 	);
-	const presupuesto = {
-		examenVista: idExamenVista,
-		clave: clave
+	tabla.forEach((tr, index) => {
+		let alturaOblea = tr.querySelector('td:nth-child(1) input').value;
+		console.log({ alturaOblea });
+		let cantidad = tr.querySelector('td:nth-child(2) input').value;
+		console.log({ cantidad });
+		let precioVenta = tr.querySelector('td:nth-child(3) input').value;
+		let descuento = tr.querySelector('td:nth-child(4) input').value;
+
+		let pre = Number(descuento) / 100;
+		precioVenta = Number(precioVenta) * Number(cantidad) * (1 - pre);
+		console.log({ pre, precioVenta, cantidad });
+
+		//agregar alturaOblea al objeto de presupuestoLentes
+		presupuestoLentes[index].alturaOblea = alturaOblea;
+		//agregar cantidad al objeto de ventaPresupuesto
+		ventaPresupuesto.push({
+			cantidad: cantidad,
+			precioVenta: precioVenta,
+			descuento: descuento,
+			precioUnitario: precioVenta,
+			ventaPresupuesto: presupuestoLentes,
+			presupuestoLentes: presupuestoLentes[index]
+		});
+	});
+
+	let ventas = {
+		clave: clave,
+		empleado: JSON.parse(localStorage.getItem('currentUser'))
 	};
 
-	const presupuestoLentes = {
-		armazon:
-			armazones[document.querySelector('#selectArmazon').value],
-		material:
-			materiales[document.querySelector('#selectMaterial').value],
-		alturaOblea: '',
-		listaTratamiento: [],
-		tipoMica: {}
+	const DetalleVentaPresupuestoLentes = {
+		venta: ventas,
+		ventaPresupuesto: ventaPresupuesto
 	};
+	console.log(DetalleVentaPresupuestoLentes);
 
-	//ver que checkbox estan seleccionados de los tratamientos
-	const tratamientos = document.querySelectorAll('#tratamientos');
+	const datosVLC = new URLSearchParams();
+	datosVLC.append(
+		'datosVLC',
+		JSON.stringify(DetalleVentaPresupuestoLentes)
+	);
+
+	const data = await fetch(
+		'http://localhost:8080/Optik/api/vp/generarVLC',
+		{
+			method: 'POST',
+			body: datosVLC,
+			headers: {
+				'Content-Type':
+					'application/x-www-form-urlencoded;charset=UTF-8'
+			}
+		}
+	).then(response => response.json());
+
+	if (data.error) {
+		mostrarAlerta('error', 'Error al generar el presupuesto');
+	} else {
+		mostrarAlerta('success', 'Presupuesto generado correctamente');
+	}
+});
+let tratamientosO = new Map();
+tratamientosO.set('antirreflejante', {
+	idTratamiento: 1,
+	nombre: 'Antirreflejante',
+	precioVenta: 100,
+	precioCompra: 50
+});
+tratamientosO.set('blue-free', {
+	idTratamiento: 2,
+	nombre: 'Blue Free',
+	precioVenta: 100,
+	precioCompra: 50
+});
+tratamientosO.set('fotocromatico', {
+	idTratamiento: 3,
+	nombre: 'Fotocromatico',
+	precioVenta: 100,
+	precioCompra: 50
+});
+tratamientosO.set('entintado', {
+	idTratamiento: 4,
+	nombre: 'Entintado',
+	precioVenta: 100,
+	precioCompra: 50
+});
+let tiposMica = new Map();
+tiposMica.set('graduacion', {
+	idTipoMica: 1,
+	nombre: 'Graduacion',
+	precioVenta: 100,
+	precioCompra: 50
+});
+tiposMica.set('estetica', {
+	idTipoMica: 2,
+	nombre: 'Estetica',
+	precioVenta: 100,
+	precioCompra: 50
+});
+
+let contenido = '';
+export function agregarLente() {
+	let precioLentes = 0;
+	let armazon = armazones.find(
+		armazon =>
+			armazon.idArmazon ==
+			document.querySelector('#selectArmazon').value
+	);
+	console.log({ armazon });
+	let material = materiales.find(
+		material =>
+			material.idMaterial ==
+			document.querySelector('#selectMaterial').value
+	);
+	console.log({ material });
+	let tipoMica = document.querySelector('#selectMica').value;
+	console.log({ tipoMica });
+	precioLentes += tiposMica.get(tipoMica).precioVenta;
+	let mica = tiposMica.get(tipoMica);
+
+	let tratamientos = document.querySelectorAll('#chkTratamiento');
+	let listaTratamiento = [];
+	//enlazar los tratamientos seleccionados con el map de tratamientos
 	tratamientos.forEach(tratamiento => {
 		if (tratamiento.checked) {
-			presupuestoLentes.listaTratamiento.push({
-				idTratamiento: tratamiento.value
-			});
+			listaTratamiento.push(tratamientosO.get(tratamiento.value));
 		}
 	});
 
-	//ver que tipo de mica esta seleccionado
-	const tipoMica = document.querySelector('#selectMica');
-	if (tipoMica.value === 'estetica') {
-		presupuestoLentes.tipoMica = {
-			idTipoMica: 1,
-			nombre: 'Estetica',
-			precioVenta: 400,
-			precioCompra: 300
-		};
-	}
-	if (tipoMica.value === 'graduacion') {
-		presupuestoLentes.tipoMica = {
-			idTipoMica: 2,
-			nombre: 'Graduacion',
-			precioVenta: 600,
-			precioCompra: 500
-		};
-	}
+	//calcular el precio de los lentes
+	precioLentes += armazon.producto.precioVenta;
+	precioLentes += material.precioVenta;
+	//calcular el pprecio del tipo de mica con el objeto tipoMica
 
-	const venta = {
-		empleado: empleado,
-		clave: clave
-	};
+	listaTratamiento.forEach(tratamiento => {
+		precioLentes += tratamiento.precioVenta;
+	});
+	//agregar a presupuestoLentes
+	presupuestoLentes.push({
+		presupuesto: {
+			examenVista: examenVista.find(
+				examenVista =>
+					examenVista.idExamenVista ==
+					document.querySelector('#selectGraduacion').value
+			),
+			clave: `OQ-${Math.floor(Math.random() * 100000000000)}`,
+			empleado: JSON.parse(localStorage.getItem('currentUser')),
+			clientes: clientes.find(
+				cliente =>
+					cliente.idCliente ==
+					document.querySelector('#selectCliente').value
+			),
+			graduacionLentes: '',
+			fecha: ''
+		},
+		alturaOblea: 0,
+		tipoMica: mica,
+		material: material,
+		armazon: armazon,
+		listaTratamiento: listaTratamiento
+	});
 
-	const ventaPresupuestosLC = [];
+	console.log(presupuestoLentes);
 
-	const DetalleVentaPresupuestoLentes = {
-		venta: venta,
-		ventaPresupuestosLC: ventaPresupuestosLC
-	};
-});
+	console.log(precioLentes);
+	//agrergar los lentes a la lista de lentes
+	let tabla = document.querySelector('#tblPresupuestoLete');
+
+	contenido += `
+		<tr>
+		<td><input type="text" class="input" value="0" name="alturaOblea"/></td>
+		<td><input type="text" class="input" value="1" name="cantidad"/></td>
+		<td><input type="text" class="input" value="${precioLentes}" disabled name="costo"/></td>
+		<td><input type="text" class="input" value="0" name="descuento"/></td>
+		</tr>
+		`;
+
+	tabla.innerHTML = contenido;
+}

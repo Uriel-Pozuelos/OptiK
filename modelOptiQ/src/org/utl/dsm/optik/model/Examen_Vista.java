@@ -1,5 +1,6 @@
 package org.utl.dsm.optik.model;
 
+
 public class Examen_Vista {
     private int idExamenVista;
     private String clave;

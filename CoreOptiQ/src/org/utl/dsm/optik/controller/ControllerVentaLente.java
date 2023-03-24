@@ -130,7 +130,7 @@ public class ControllerVentaLente {
             //Se genera la venta
             String query0 = "INSERT INTO venta(idEmpleado, clave) VALUES ("
                     + dvp.getVenta().getEmpleado().getIdEmpleado() + ","
-                    + dvp.getVenta().getClave() + ");";
+                    +"'"+ dvp.getVenta().getClave() +"'" + ");";
             stmt.execute(query0);
             //Se obtiene el id genrado con la insercion de venta
             rs = stmt.executeQuery(query);
@@ -144,7 +144,7 @@ public class ControllerVentaLente {
                 //Se insertan los presupuestos
                 String query1 = "INSERT INTO presupuesto(idExamenVista, clave)"
                         + "VALUES (" + dvp.getVentaPresupuesto().get(i).getPresupuestoLentes().getPresupuesto().getExamenVista().getIdExamenVista() + ","
-                        + dvp.getVentaPresupuesto().get(i).getPresupuestoLentes().getPresupuesto().getClave()+ ");";
+                        +"'"+ dvp.getVentaPresupuesto().get(i).getPresupuestoLentes().getPresupuesto().getClave()+"'"+ ");";
                 stmt.execute(query1);
                 rs = stmt.executeQuery(query);
                 //Obtenemos el id de presupuesto y lo guardamos

@@ -7,7 +7,6 @@ package org.utl.dsm.optik.controller;
 import org.utl.dsm.optik.model.Compra;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import org.utl.dsm.optik.db.ConexionMySQL;
 import org.utl.dsm.optik.model.Compra_Producto;

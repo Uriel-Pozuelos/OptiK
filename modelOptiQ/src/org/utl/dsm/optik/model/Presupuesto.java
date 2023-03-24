@@ -1,5 +1,4 @@
 package org.utl.dsm.optik.model;
-
 public class Presupuesto {
     private int idPresupuesto;
     private Examen_Vista examenVista;

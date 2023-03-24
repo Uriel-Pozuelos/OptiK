@@ -89,22 +89,22 @@
 				<label class="label has-text-white">Tratamientos</label>
 				<div class="is-fullwidth flex is-flex-direction-row has-text-light is-justify-content-space-between" id="tratamientos">
 				<label class="checkbox">
-					<input type="checkbox" id="chkTratamiento" />
+					<input type="checkbox" id="chkTratamiento" value="antirreflejante"/>
 					Antirreflejante
 				</label>
 
 				<label class="checkbox has-text-white">
-					<input type="checkbox" id="chkTratamiento" />
+					<input type="checkbox" id="chkTratamiento" value="blue-free"/>
 					Blue free
 				</label>
 
 				<label class="checkbox has-text-white">
-					<input type="checkbox" id="chkTratamiento" />
+					<input type="checkbox" id="chkTratamiento" value="fotocromatico"/>
 					Fotocromático
 				</label>
 
 				<label class="checkbox has-text-white">
-					<input type="checkbox" id="chkTratamiento"/>
+					<input type="checkbox" id="chkTratamiento" value="entintado"/>
 					Entintado
 				</label>
 			</div>
@@ -112,7 +112,21 @@
 
 				</div>
 			</div>
-
+			<div class="columns">
+        <div class="column center" id="agregar">
+            <div class="field">
+                <button
+                    type="button"
+                    onclick="mv.agregarLente()"
+                    class="button is-success has-icon-left"
+                    >
+                    <span class="icon is-left pt-2"><icon-save></icon-save></span>
+                    <span>Agregar</span>
+                </button>
+            </div>
+        </div>
+        
+    </div>
 	<!-- -----------------------------------------------TABLA PRESUPUESTO LENTE ------------------------------ -->
 
 	<div class="card mt-5">
@@ -146,7 +160,6 @@
 							<td>Cantidad</td>
 							<td>Costo</td>
 							<td>Descuento</td>
-							<td>Agregar</td>
 							<!-- <td>Estado</td> -->
 						</tr>
 					</thead>

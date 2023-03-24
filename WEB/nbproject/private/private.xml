@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/VentaRest.java</file>
-            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/VentaProductoRest.java</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/AccesoriosRest.java</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/ArmazonRest.java</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/web/main.js</file>
+            <file>file:/C:/Users/urieh/Documents/NetBeansProjects/OptiQ/WEB/src/java/org/utl/dsm/rest/LenteContactoRest.java</file>
         </group>
     </open-files>
 </project-private>

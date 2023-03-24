@@ -99,11 +99,11 @@ public class VentaProductoRest {
             boolean r = cvl.generarVentaLentes(dvplc);
             if (r) {
                 out = """
-               "result":"venta hecha correctamente";
+                      {"result":"venta hecha correctamente"}
                 """;
             } else {
                 out = """
-               "error":"venta no hecha correctamente";
+                      {"error":"venta no hecha correctamente"}
                 """;
             }
 
