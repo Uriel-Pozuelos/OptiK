@@ -71,7 +71,16 @@ public class VentaPresupuesto {
         this.presupuestoLentes = presupuestoLentes;
     }
 
-  
 
-   
+    @Override
+    public String toString() {
+        return "VentaPresupuesto{" +
+                "venta=" + venta +
+                ", cantidad=" + cantidad +
+                ", precioUnitario=" + precioUnitario +
+                ", descuento=" + descuento +
+                ", ventaPresupuesto=" + ventaPresupuesto +
+                ", presupuestoLentes=" + presupuestoLentes +
+                '}';
+    }
 }

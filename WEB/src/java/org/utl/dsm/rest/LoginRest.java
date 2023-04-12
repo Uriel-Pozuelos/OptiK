@@ -45,6 +45,7 @@ public class LoginRest extends Application{
         out = "{\"result\":"+String.valueOf(result) +"}";
         return Response.status(Response.Status.OK).entity(out).build();
     }
+
     
     @Path("ingresar2")
     @POST

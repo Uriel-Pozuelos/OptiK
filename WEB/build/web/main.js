@@ -1,3 +1,5 @@
+const SERVER = 'https://405d-187-190-161-30.ngrok.io/Optik';
+
 const login = document.getElementById('login');
 login.addEventListener('click', async function () {
 	localStorage.setItem('vistaActual', '');
@@ -14,17 +16,18 @@ login.addEventListener('click', async function () {
 	};
 	//agregar is-loading como clase al boton
 	login.classList.add('is-loading');
-	const response = await fetch(
-		'http://localhost:8080/Optik/api/login/ingresar2',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams(datos)
-		}
-	);
-	const data = await response.json();
+	const response = await fetch(`${SERVER}/api/login/ingresar2`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		body: new URLSearchParams(datos)
+	});
+	const data = await response.json().catch(error => {
+		login.classList.remove('is-loading');
+		mostrarAlerta('error', 'Usuario o contraseña incorrectos');
+		return;
+	});
 	console.log(data);
 	if (data.error) {
 		login.classList.remove('is-loading');

@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.utl.dsm.optik.controller.ControllerVenta;
+import org.utl.dsm.optik.controller.ControllerGetAllVentas;
 import org.utl.dsm.optik.model.Producto;
 
 /**
@@ -52,5 +53,55 @@ public class VentaRest {
         }
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
+    @Path("getAllDetalles")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDetalles() {
+        String out = "";
+        Gson objGson = new Gson();
+        try {
+            ControllerGetAllVentas cv = new ControllerGetAllVentas();
+            var pl = cv.getAllDetalleVentaProducto();
+            out = objGson.toJson(pl);
+        } catch (Exception Err) {
+            out = "{\"error\":" + Err.toString() + "}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @Path("getAllDetallesLC")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDetallesLC() {
+        String out = "";
+        Gson objGson = new Gson();
+        try {
+            ControllerGetAllVentas cv = new ControllerGetAllVentas();
+            var pl = cv.getAllVentaLenteContacto();
+            out = objGson.toJson(pl);
+        } catch (Exception Err) {
+            out = "{\"error\":" + Err.toString() + "}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @Path("getAllDetallesL")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDetallesL() {
+        String out = "";
+        Gson objGson = new Gson();
+        try {
+            ControllerGetAllVentas cv = new ControllerGetAllVentas();
+            var pl = cv.getAllVentaLente();
+            out = objGson.toJson(pl);
+        } catch (Exception Err) {
+            out = "{\"error\":" + Err.toString() + "}";
+            return Response.status(Response.Status.BAD_REQUEST).entity(out).build();
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
 }

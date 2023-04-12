@@ -2,6 +2,7 @@
 package org.utl.dsm.optik.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 /**
@@ -20,7 +21,8 @@ public class ConexionMySQL {
         Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection(url, usuario, password);
     return conn;
-    }catch (Exception e) {
+    }catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
             throw new Error("error al conectar bd con user "+usuario);
     } 
     } 
@@ -28,7 +30,8 @@ public class ConexionMySQL {
     public void close(){
     try{
     conn.close();
-    } catch(Exception e){
+    } catch(SQLException e){
+        e.printStackTrace();
         throw new Error("problema al cerrar la base de datos");
     }
     

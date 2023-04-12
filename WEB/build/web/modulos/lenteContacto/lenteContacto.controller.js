@@ -1,6 +1,7 @@
 let lentesContacto = [];
 let lenteContactoActual = null;
 tablaLenteC('1');
+const SERVER = 'https://405d-187-190-161-30.ngrok.io/Optik';
 
 export function cambiarFoto() {
 	const { fotografia } = getElements();
@@ -84,7 +85,7 @@ export async function imageToText(
 			usuario: { lastToken = '' }
 		} = JSON.parse(localStorage.getItem('currentUser'));
 		const response = await fetch(
-			'http://localhost:8080/Optik/api/lenteContacto/guardar',
+			`${SERVER}/api/lenteContacto/guardar`,
 			{
 				method: 'POST',
 				headers: {
@@ -129,7 +130,7 @@ export async function tablaLenteC(estatus) {
 		} = JSON.parse(localStorage.getItem('currentUser'));
 		console.log({ lastToken });
 		const response = await fetch(
-			'http://localhost:8080/Optik/api/lenteContacto/getalllente',
+			`${SERVER}/api/lenteContacto/getalllente`,
 			{
 				method: 'POST',
 				headers: {
@@ -213,7 +214,7 @@ export async function eliminarLente(index) {
 		} = JSON.parse(localStorage.getItem('currentUser'));
 		console.log({ lastToken });
 		const response = await fetch(
-			'http://localhost:8080/Optik/api/lenteContacto/deleteLente',
+			`${SERVER}/api/lenteContacto/deleteLente`,
 			{
 				method: 'POST',
 				headers: {
@@ -254,7 +255,7 @@ export async function activarLente(index) {
 		} = JSON.parse(localStorage.getItem('currentUser'));
 
 		const response = await fetch(
-			'http://localhost:8080/Optik/api/lenteContacto/activateLente',
+			`${SERVER}/api/lenteContacto/activateLente`,
 			{
 				method: 'POST',
 				headers: {
@@ -347,7 +348,7 @@ export async function updateLenteC() {
 	} = JSON.parse(localStorage.getItem('currentUser'));
 	console.log({ lastToken });
 	const response = await fetch(
-		'http://localhost:8080/Optik/api/lenteContacto/updateLente',
+		`${SERVER}/api/lenteContacto/updateLente`,
 		{
 			method: 'POST',
 			headers: {

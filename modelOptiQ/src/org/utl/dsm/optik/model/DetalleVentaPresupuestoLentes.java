@@ -37,11 +37,8 @@ public class DetalleVentaPresupuestoLentes {
         this.ventaPresupuesto = ventaPresupuesto;
     }
 
-   
-
-   
-
-    
-    
-    
+    @Override
+    public String toString() {
+        return "DetalleVentaPresupuestoLentes{" + "venta=" + venta + ", ventaPresupuesto=" + ventaPresupuesto + '}';
+    }
 }

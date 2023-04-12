@@ -34,7 +34,8 @@ public class DetalleVentaProducto {
 
     @Override
     public String toString() {
-        String mensaje = "";
-        return "DetalleVentaProducto{" + "venta=" + venta.toString() + ", ventasProducto=" + ventasProducto.stream().map(VentaProducto::toString).collect(Collectors.joining()) + '}';
-    }   
+        return "DetalleVentaProducto{" + "venta=" + venta + ", ventasProducto=" + ventasProducto + '}';
+    }
+
+      
 }

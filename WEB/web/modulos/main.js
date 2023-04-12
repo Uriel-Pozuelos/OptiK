@@ -10,11 +10,27 @@ let mev,
 	mcp,
 	mc,
 	mv = null;
+let detalle = null;
 
 const venta = document.getElementById('venta');
 venta.addEventListener('click', () => {
 	cambiarVenta();
 });
+const SERVER = 'https://405d-187-190-161-30.ngrok.io/Optik';
+
+
+const cambiarDetalle = async () => {
+	NProgress.start();
+	const res = await fetch('./registroVentaP/index.html');
+	const data = await res.text();
+	document.getElementById('app').innerHTML = data;
+	//cargar el script de detalle.controller.js con un import dinamico
+	const obj = await import('./registroVentaP/registro.controller.js');
+	detalle = obj;
+	NProgress.done();
+	//guardar en el localstorage la vista actual
+	localStorage.setItem('vistaActual', 'detalle');
+}
 
 const cambiarVenta = async () => {
 	NProgress.start();
@@ -119,18 +135,15 @@ async function cerrarSesion() {
 		window.location.replace('../');
 	}
 	NProgress.start();
-	const data = await fetch(
-		'http://localhost:8080/Optik/api/login/logout',
-		{
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			body: new URLSearchParams({
-				datosUsuario: currentUser
-			})
-		}
-	).then(resp => resp.json());
+	const data = await fetch(`${SERVER}/api/login/logout`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		body: new URLSearchParams({
+			datosUsuario: currentUser
+		})
+	}).then(resp => resp.json());
 	if (data.response) {
 		localStorage.setItem('vistaActual', '');
 		localStorage.setItem('currentUser', '');
@@ -323,6 +336,9 @@ function cargarVista() {
 			break;
 		case 'ventaLenteC':
 			cambiarVentaLC();
+			break;
+		case 'detalle':
+			cambiarDetalle();
 			break;
 	}
 }
